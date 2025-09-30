@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+}
+
+header {
+  text-align: center;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+header img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #00ffcc;
+}
+
+nav {
+  text-align: center;
+  margin: 20px 0;
+}
+
+nav a {
+  color: #00ffcc;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+section {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+table,
+th,
+td {
+  border: 1px solid #00ffcc;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.skills ul {
+  list-style: square;
+}
+
+.contact {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.gallery {
+  width: 300px;
+  height: 300px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 2px solid #333;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  margin-top: 20px;
+}
