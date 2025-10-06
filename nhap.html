@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thông tin cá nhân</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Nền động đen */
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      font-family: Arial, sans-serif;
+    }
+    .background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      overflow: hidden;
+      z-index: 0;
+    }
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      animation: float 10s infinite;
+    }
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0.5); }
+      50%  { transform: translateY(50vh) scale(1.2); }
+      100% { transform: translateY(-20vh) scale(0.5); }
+    }
+
+    /* Container trắng */
+    .container {
+      width: 60%;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.6);
+      text-align: center;
+      color: #2c3e50;
+      position: relative;
+      z-index: 1;
+    }
+    h1 { color: #2c3e50; }
+    p  { font-size: 18px; margin: 8px 0; }
+
+    .avatar {
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      width: 150px; height: 150px;
+      object-fit: cover;
+      border: 3px solid #2c3e50;
+    }
+
+    /* Nút */
+    .buttons { margin-top: 20px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px;
+      padding: 12px 20px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      font-weight: bold;
+      color: white;
+      transition: 0.3s;
+    }
+    .btn-detail  { background-color: #3498db; } /* xanh dương */
+    .btn-skill   { background-color: #2ecc71; } /* xanh lá */
+    .btn-exp     { background-color: #f39c12; } /* cam */
+    .btn-contact { background-color: #e74c3c; } /* đỏ */
+    .btn:hover { opacity: 0.85; }
+
+    /* Nội dung ẩn */
+    .info-section {
+      margin-top: 40px;
+      text-align: left;
+      display: none;
+    }
+    .info-section h2 { color: #2c3e50; }
+  </style>
+</head>
+<body>
+  <!-- Nền động -->
+  <div class="background">
+    <div class="circle" style="width:80px;height:80px;left:10%;animation-duration:12s;"></div>
+    <div class="circle" style="width:50px;height:50px;left:50%;animation-duration:15s;"></div>
+    <div class="circle" style="width:100px;height:100px;left:80%;animation-duration:20s;"></div>
+  </div>
+
+  <!-- Nội dung chính -->
+  <div class="container">
+    <img src="your-avatar.jpg" alt="Ảnh đại diện" class="avatar">
+    <h1>Thông tin cá nhân</h1>
+    <p><b>Họ và tên:</b> Phan Nguyễn Tuấn Khanh</p>
+    <p><b>Ngày sinh:</b> 21/09/2005</p>
+    <p><b>Giới tính:</b> Nam</p>
+
+    <div class="buttons">
+      <button class="btn btn-detail" onclick="showSection('detail')"><i class="fas fa-list"></i> Chi tiết</button>
+      <button class="btn btn-skill" onclick="showSection('skill')"><i class="fas fa-graduation-cap"></i> Trình độ</button>
+      <button class="btn btn-exp" onclick="showSection('exp')"><i class="fas fa-briefcase"></i> Kinh nghiệm</button>
+      <button class="btn btn-contact" onclick="showSection('contact')"><i class="fas fa-envelope"></i> Liên hệ</button>
+    </div>
+
+    <div id="detail" class="info-section">
+      <h2><i class="fas fa-map-marker-alt"></i> Chi tiết</h2>
+      <p><b>Địa chỉ:</b> 50 Thích Tịnh Khiết, Huế</p>
+      <p><b>Facebook:</b> <a href="https://facebook.com" target="_blank">facebook.com/khanh</a></p>
+    </div>
+    <div id="skill" class="info-section">
+      <h2><i class="fas fa-graduation-cap"></i> Trình độ</h2>
+      <p>Sinh viên năm 2, ĐHSP Huế - Khoa Tin học</p>
+    </div>
+    <div id="exp" class="info-section">
+      <h2><i class="fas fa-briefcase"></i> Kinh nghiệm</h2>
+      <p>- Tham gia dự án nhỏ về website</p>
+      <p>- Lập trình C#, Java cơ bản</p>
+    </div>
+    <div id="contact" class="info-section">
+      <h2><i class="fas fa-envelope"></i> Liên hệ</h2>
+      <p>Email: kphan7151@gmail.com</p>
+      <p>Điện thoại: 0775 565 357</p>
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll(".info-section").forEach(sec => sec.style.display = "none");
+      document.getElementById(sectionId).style.display = "block";
+    }
+  </script>
+</body>
+</html>

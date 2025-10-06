@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông tin cá nhân</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        p {
+            font-size: 18px;
+            margin: 8px 0;
+        }
+        .avatar {
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #2c3e50;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-detail {
+            background-color: #90ee90; /* xanh lá nhạt */
+            color: #2c3e50;
+        }
+        .btn-skill {
+            background-color: #ffb6c1; /* hồng nhạt */
+            color: #2c3e50;
+        }
+        .btn-exp {
+            background-color: #d8b4fe; /* tím nhạt */
+            color: #2c3e50;
+        }
+        .btn-contact {
+            background-color: #ff7f7f; /* đỏ nhạt */
+            color: #2c3e50;
+        }
+        /* Nội dung ẩn */
+        .info-section {
+            margin-top: 40px;
+            text-align: left;
+            display: none;
+        }
+        .info-section h2 {
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Avatar -->
+        <img src="C:\Users\COMPUTER\Pictures\Saved Pictures\z7028566238929_e68780227d0c6337b8edf3a4d81d91c6.jpg" alt="Ảnh đại diện" class="avatar">
+        
+        <h1>Thông tin cá nhân</h1>
+        <p><b>Họ và tên:</b> Phan Nguyễn Tuấn Khanh</p>
+        <p><b>Ngày sinh:</b> 21/09/2005</p>
+        <p><b>Giới tính:</b> Nam</p>
+
+
+        <!-- Nút chức năng -->
+        <div class="buttons">
+            <button class="btn btn-detail" onclick="showSection('detail')"><i class="fas fa-list"></i> Chi tiết</button>
+            <button class="btn btn-skill" onclick="showSection('skill')"><i class="fas fa-graduation-cap"></i> Trình độ</button>
+            <button class="btn btn-exp" onclick="showSection('exp')"><i class="fas fa-briefcase"></i> Kinh nghiệm</button>
+            <button class="btn btn-contact" onclick="showSection('contact')"><i class="fas fa-envelope"></i> Liên hệ</button>
+        </div>
+
+        <!-- Nội dung của từng nút -->
+        <div id="detail" class="info-section">
+            <h2><i class="fas fa-map-marker-alt"></i> Chi tiết</h2>
+            <p><b>Địa chỉ đầy đủ:</b> 50 Thích Tịnh Khiết, Thành phố Huế, Việt Nam</p>
+            <p><b>Facebook:</b> <a href="https://facebook.com" target="_blank">facebook.com/khanh</a></p>
+        </div>5
+
+        <div id="skill" class="info-section">
+            <h2><i class="fas fa-graduation-cap"></i> Trình độ học vấn</h2>
+            <p>Sinh viên năm 2, Trường Đại học Sư phạm Huế - Khoa Tin học</p>
+            <p>Chuyên ngành: Hệ thống Thông tin</p>
+        </div>
+
+        <div id="exp" class="info-section">
+            <h2><i class="fas fa-briefcase"></i> Kinh nghiệm</h2>
+            <p>- Tham gia các dự án nhỏ về website.</p>
+            <p>- Lập trình C#, Java cơ bản.</p>
+        </div>
+
+        <div id="contact" class="info-section">
+            <h2><i class="fas fa-envelope"></i> Liên hệ</h2>
+            <p>Email: kphan7151@gmail.com</p>
+            <p>Điện thoại: 0775 565 357</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function showSection(sectionId) {
+            // Ẩn tất cả các phần
+            var sections = document.querySelectorAll(".info-section");
+            sections.forEach(function(sec) {
+                sec.style.display = "none";
+            });
+            // Hiện phần được chọn
+            document.getElementById(sectionId).style.display = "block";
+        }
+    </script>
+</body>
+</html>
