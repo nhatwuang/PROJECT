@@ -2,88 +2,64 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>CV Cá nhân - Nguyễn Cửu Nhật Quang</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
+    <title>Hệ thống đặt vé</title>
+    <link rel="stylesheet" href="WED-CA-NHAN.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-
   <body>
-    <header>
-      <img src="My wed/20250729_163734.jpg" alt="Ảnh đại diện" />
-      <h1>Nguyễn Cửu Nhật Quang</h1>
-      <p>Sinh viên khoa Tin học - ĐHSP</p>
-    </header>
+    <!-- Thanh menu -->
+    <div class="navbar">
+      <a href="#">Trang chủ</a>
+      <a href="#">Quản lý vé</a>
+      <a href="#">Doanh nghiệp</a>
+      <a href="#">Khách hàng</a>
+      <a href="#">Admin</a>
+    </div>
 
-    <nav>
-      <a href="#gioithieu">Giới thiệu</a>
-      <a href="#hocvan">Học vấn</a>
-      <a href="#kynang">Kỹ năng</a>
-      <a href="#lienhe">Liên hệ</a>
-    </nav>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#">📊 Thống kê</a>
+      <a href="#">🎟️ Vé</a>
+      <a href="#">🏢 Doanh nghiệp</a>
+      <a href="#">👤 Khách hàng</a>
+      <a href="#">⚙️ Cài đặt</a>
+    </div>
 
-    <section id="gioithieu">
-      <h2>Giới thiệu</h2>
-      <p>
-        Mình là một sinh viên ngành Tin học, đam mê công nghệ và lập trình. Mục
-        tiêu là kết hợp tin học và công nghệ để tạo ra những ứng dụng hữu ích
-        cho giáo dục và đời sống.
-      </p>
-    </section>
-
-    <section id="hocvan">
-      <h2>Học vấn</h2>
-      <table>
-        <tr>
-          <th>Năm</th>
-          <th>Trường</th>
-          <th>Thành tích</th>
-        </tr>
-        <tr>
-          <td>2023 - 2027</td>
-          <td>ĐH Sư phạm</td>
-          <td>Sinh viên giỏi</td>
-        </tr>
-      </table>
-    </section>
-
-    <section id="kynang" class="skills">
-      <h2>Kỹ năng</h2>
-      <ul>
-        <li>Lập trình C#, Java</li>
-        <li>Phát triển ứng dụng WinForms</li>
-        <li>Lập trình web</li>
-        <li>SQL, thiết kế cơ sở dữ liệu</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Bộ ảnh</h2>
-      <img src="" alt="Ảnh minh họa 1" class="gallery" />
-      <img src="" alt="Ảnh minh họa 2" class="gallery" />
-      <img src="" alt="Ảnh minh họa 3" class="gallery" />
-    </section>
-
-    <section id="lienhe" class="contact">
-      <div>
-        <h3>Email</h3>
-        <p>q2u6a0n1g@gmail.com</p>
+    <!-- Nội dung -->
+    <div class="content">
+      <h2>📊 Bảng điều khiển</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Vé đã bán</h3>
+          <p>Số lượng: <b id="ve">120</b></p>
+        </div>
+        <div class="card">
+          <h3>Dịch vụ</h3>
+          <p>Đang hoạt động: <b id="dichvu">15</b></p>
+        </div>
+        <div class="card">
+          <h3>Khách hàng</h3>
+          <p>Tổng: <b id="khachhang">350</b></p>
+        </div>
+        <div class="card">
+          <h3>Doanh nghiệp</h3>
+          <p>Tham gia: <b id="doanhnghiep">25</b></p>
+        </div>
+        <div class="card">
+          <h3>Admin</h3>
+          <p>Quản trị: <b id="admin">5</b></p>
+        </div>
       </div>
-      <div>
-        <h3>Facebook</h3>
-        <a
-          href="https://www.facebook.com/nq.wypo?mibextid=ZbWKwL"
-          target="_blank"
-          >Trang cá nhân</a
-        >
-      </div>
-      <div>
-        <h3>Số điện thoại</h3>
-        <p>0338397090</p>
-      </div>
-    </section>
 
-    <footer>
-      <p>© 2025 - Nguyễn Cửu Nhật Quang</p>
-    </footer>
+      <!-- Biểu đồ -->
+      <div class="chart-container">
+        <h3>Biểu đồ vé bán ra theo tháng</h3>
+        <canvas id="ticketChart"></canvas>
+      </div>
+
+      <footer>© 2025 Hệ thống đặt vé - Giao diện đen trắng tối giản</footer>
+    </div>
+
+    <script src="WED-CA-NHAN.js"></script>
   </body>
 </html>
