@@ -1,88 +1,70 @@
-// Hàm hiển thị thông báo đẹp
-function showNotification(message, type = "success") {
-  const container = document.getElementById("notification");
-  const toast = document.createElement("div");
-  toast.classList.add("toast", type);
-  toast.textContent = message;
+// Chuyển tab đăng nhập / đăng ký
+document.getElementById("login-tab").addEventListener("click", () => {
+  document.getElementById("login-tab").classList.add("active");
+  document.getElementById("register-tab").classList.remove("active");
+  document.getElementById("login-content").classList.add("active");
+  document.getElementById("register-content").classList.remove("active");
+});
 
-  container.appendChild(toast);
+document.getElementById("register-tab").addEventListener("click", () => {
+  document.getElementById("register-tab").classList.add("active");
+  document.getElementById("login-tab").classList.remove("active");
+  document.getElementById("register-content").classList.add("active");
+  document.getElementById("login-content").classList.remove("active");
+});
 
-  // Tự động ẩn sau 3 giây
-  setTimeout(() => {
-    toast.remove();
-  }, 3000);
-}
+// Lưu tài khoản vào localStorage
+document.getElementById("registerForm").addEventListener("submit", (e) => {
+  e.preventDefault();
 
-document.addEventListener("DOMContentLoaded", function () {
-  const loginTab = document.getElementById("login-tab");
-  const registerTab = document.getElementById("register-tab");
-  const loginContent = document.getElementById("login-content");
-  const registerContent = document.getElementById("register-content");
+  const name = document.getElementById("regName").value;
+  const email = document.getElementById("regEmail").value;
+  const pass = document.getElementById("regPassword").value;
+  const repass = document.getElementById("regRePassword").value;
+  const role = document.getElementById("regRole").value;
 
-  // Chuyển tab
-  loginTab.addEventListener("click", () => {
-    loginTab.classList.add("active");
-    registerTab.classList.remove("active");
-    loginContent.classList.add("active");
-    registerContent.classList.remove("active");
-  });
+  if (pass !== repass) {
+    alert("❌ Mật khẩu nhập lại không khớp!");
+    return;
+  }
 
-  registerTab.addEventListener("click", () => {
-    registerTab.classList.add("active");
-    loginTab.classList.remove("active");
-    registerContent.classList.add("active");
-    loginContent.classList.remove("active");
-  });
+  const users = JSON.parse(localStorage.getItem("users")) || [];
 
-  // Đăng ký
-  document
-    .getElementById("registerForm")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
+  if (users.some((u) => u.email === email)) {
+    alert("⚠️ Email đã được đăng ký!");
+    return;
+  }
 
-      const name = document.getElementById("regName").value;
-      const email = document.getElementById("regEmail").value;
-      const pass = document.getElementById("regPassword").value;
-      const repass = document.getElementById("regRePassword").value;
+  users.push({ name, email, pass, role });
+  localStorage.setItem("users", JSON.stringify(users));
 
-      if (pass !== repass) {
-        showNotification("Mật khẩu nhập lại không khớp!", "error");
-        return;
-      }
+  alert("✅ Đăng ký thành công! Hãy đăng nhập.");
+  document.getElementById("login-tab").click();
+  e.target.reset();
+});
 
-      const user = { name, email, pass };
-      localStorage.setItem("user_" + email, JSON.stringify(user));
-      showNotification("Đăng ký thành công! Hãy đăng nhập.", "success");
+// Xử lý đăng nhập
+document.getElementById("loginForm").addEventListener("submit", (e) => {
+  e.preventDefault();
 
-      // chuyển sang tab đăng nhập
-      loginTab.click();
-    });
+  const email = document.getElementById("loginEmail").value;
+  const pass = document.getElementById("loginPassword").value;
 
-  // Đăng nhập
-  document.getElementById("loginForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const user = users.find((u) => u.email === email && u.pass === pass);
 
-    const email = document.getElementById("loginEmail").value;
-    const pass = document.getElementById("loginPassword").value;
+  if (!user) {
+    alert("❌ Email hoặc mật khẩu không đúng!");
+    return;
+  }
 
-    const userData = localStorage.getItem("user_" + email);
-    if (!userData) {
-      showNotification("Email chưa được đăng ký!", "error");
-      return;
-    }
+  // Lưu thông tin người dùng đăng nhập
+  localStorage.setItem("loggedUser", JSON.stringify(user));
 
-    const user = JSON.parse(userData);
-
-    if (user.pass !== pass) {
-      showNotification("Mật khẩu không đúng!", "error");
-      return;
-    }
-
-    localStorage.setItem("username", user.name);
-    showNotification("Đăng nhập thành công!", "success");
-
-    setTimeout(() => {
-      window.location.href = "trangchu.html";
-    }, 1000);
-  });
+  // Điều hướng theo loại tài khoản
+  if (user.role === "business") {
+    window.location.href = "phim-doanhnghiep.html";
+  } else {
+    window.location.href = "phim.html";
+  }
 });
