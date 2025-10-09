@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lab3 - Thông tin cá nhân</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+
+      /* Background Hạt Nhân */
+      background: url('https://m.yodycdn.com/blog/hinh-nen-thien-nhien-4k-yody-vn-51.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+     
+      z-index: 0;
+    }
+
+    .form-container {
+      position: relative;
+      z-index: 1;
+      background: #ffffffcc;  
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #006644;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .group {
+      margin-bottom: 16px;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .radio-group label,
+    .checkbox-group label {
+      font-weight: normal;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+
+    .forgot-password a {
+      font-size: 13px;
+      color: #00796B;
+      text-decoration: none;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    input[type="submit"] {
+      background: #00796B;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 15px;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background: #005f56;
+    }
+
+    small {
+      color: #555;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Thông Tin Cá Nhân</h2>
+    <form action="#" method="post">
+      
+
+      <div class="group">
+        <label for="fullname">Họ và tên</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Vui lòng nhập tên của bạn" required />
+      </div>
+
+      
+      <div class="group">
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" name="password" placeholder="Vui lòng nhập mật khẩu" required />
+        <div class="forgot-password">
+          <a href="forgot.html">Quên mật khẩu?</a>
+        </div>
+      </div>
+
+      
+      <div class="group">
+        <label>Giới tính</label>
+        <div class="radio-group">
+          <label><input type="radio" name="gender" value="Nam" /> Nam</label>
+          <label><input type="radio" name="gender" value="Nữ" /> Nữ</label>
+        </div>
+      </div>
+
+      
+      <div class="group">
+        <label for="country">Quốc tịch</label>
+        <select id="country" name="country">
+          <option value="">-- Chọn quốc tịch --</option>
+          <option value="ro">Raumania</option>
+          <option value="vn">Việt Nam</option>
+          <option value="us">Mỹ</option>
+          <option value="jp">Nhật Bản</option>
+          <option value="kr">Hàn Quốc</option>
+        </select>
+      </div>
+
+      
+      <div class="group">
+        <label for="major">Ngành học</label>
+        <select id="major" name="major">
+          <option value="">-- Chọn ngành học --</option>
+          <option value="cntt">Sư phạm Tin học</option>
+          <option value="kt">Kinh tế</option>
+          <option value="yd">Y dược</option>
+          <option value="ktc">Kiến trúc</option>
+        </select>
+      </div>
+
+      
+      <div class="group">
+        <label>Sở thích</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="hobby[]" value="Thể thao" /> Thể thao</label>
+          <label><input type="checkbox" name="hobby[]" value="Âm nhạc" /> Âm nhạc</label>
+          <label><input type="checkbox" name="hobby[]" value="Du lịch" /> Du lịch</label>
+          <label><input type="checkbox" name="hobby[]" value="Tập Gym" /> Tập Gym</label>
+          <label><input type="checkbox" name="hobby[]" value="Game" /> Game</label>
+        </div>
+      </div>
+
+      
+      <div class="group">
+        <label for="note">Ghi chú</label>
+        <small>Bạn có thể để lại thông tin bổ sung hoặc yêu cầu riêng tại đây.</small>
+        <textarea id="note" name="note" rows="4" placeholder="Ví dụ: Tôi bị đẹp trai..."></textarea>
+      </div>
+
+    
+      <input type="submit" value="Gửi thông tin" />
+    </form>
+  </div>
+</body>
+</html>
