@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Vé Xem Phim</title>
+    <link rel="stylesheet" href="giaodienphim.css">
+</head>
+<body>
+    <header>
+        <h1>🎬 Đặt Vé Xem Phim</h1>
+    </header>
+
+    <main>
+        <section class="movie-info">
+            <label for="movie">Chọn phim:</label>
+            <select id="movie">
+                <option value="75000">Avengers: Endgame (75.000đ)</option>
+                <option value="90000">Spider-Man: No Way Home (90.000đ)</option>
+                <option value="100000">The Batman (100.000đ)</option>
+            </select>
+        </section>
+
+        <section class="seat-container">
+            <div class="screen">Màn hình</div>
+            <div class="seats" id="seats"></div>
+        </section>
+
+        <section class="summary">
+            <p>Số ghế đã chọn: <span id="count">0</span></p>
+            <p>Tổng tiền: <span id="total">0</span>đ</p>
+            <button id="bookBtn">Đặt vé</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Đặt Vé Phim Online</p>
+    </footer>
+
+    <script src="giaodienphim.js"></script>
+</body>
+</html>

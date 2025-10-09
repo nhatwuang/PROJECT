@@ -62,3 +62,19 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const buttons = document.querySelectorAll(".service-item a");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const service = btn.parentElement.querySelector("h3").textContent;
+
+      if (service.includes("phim")) window.location.href = "giaodienphim.html";
+      else if (service.includes("xe")) window.location.href = "giaodienxe.html";
+      else if (service.includes("khách sạn")) window.location.href = "giaodienkhachsan.html";
+      else if (service.includes("sự kiện")) window.location.href = "giaodiensukien.html";
+    });
+  });
+});
