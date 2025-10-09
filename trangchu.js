@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const service = btn.parentElement.querySelector("h3").textContent;
 
-      if (service.includes("phim")) window.location.href = "giaodienphim.html";
+      if (service.includes("phim")) window.location.href = "phim.html";
       else if (service.includes("xe")) window.location.href = "giaodienxe.html";
       else if (service.includes("khách sạn")) window.location.href = "giaodienkhachsan.html";
       else if (service.includes("sự kiện")) window.location.href = "giaodiensukien.html";

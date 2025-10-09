@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookNow - Đặt Vé Phim</title>
+    <link rel="stylesheet" href="phim.css"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Thanh điều hướng -->
+    <header>
+      <div class="logo">🎬 BookNow</div>
+      <nav>
+        <ul>
+          <li><a href="#" class="active">Trang chủ</a></li>
+          <li><a href="#">Phim</a></li>
+          <li><a href="#">Rạp</a></li>
+          <li><a href="#">Sự kiện</a></li>
+        </ul>
+      </nav>
+      <div class="auth">
+        <button class="login-btn">Đăng nhập</button>
+      </div>
+    </header>
+
+    <!-- Đặt vé nhanh -->
+    <section class="quick-book">
+      <h2>🎟️ ĐẶT VÉ NHANH</h2>
+      <div class="booking-box">
+        <select id="cinema">
+          <option>1. Chọn Rạp</option>
+          <option>CGV Vincom</option>
+          <option>Lotte Cần Thơ</option>
+        </select>
+
+        <select id="movie">
+          <option>2. Chọn Phim</option>
+          <option>Inside Out 2</option>
+          <option>Deadpool & Wolverine</option>
+        </select>
+
+        <select id="date">
+          <option>3. Chọn Ngày</option>
+          <option>09/10/2025</option>
+          <option>10/10/2025</option>
+        </select>
+
+        <select id="time">
+          <option>4. Chọn Suất</option>
+          <option>10:30</option>
+          <option>14:00</option>
+          <option>19:30</option>
+        </select>
+
+        <button id="book-now">ĐẶT NGAY</button>
+      </div>
+    </section>
+
+    <!-- Phim đang chiếu -->
+    <section class="movies">
+      <h2>🎬 PHIM ĐANG CHIẾU</h2>
+      <div class="movie-list">
+        <div class="movie">
+          <img src="phim1.jpg" alt="Phim 1" />
+          <h3>Inside Out 2</h3>
+          <button>Xem Chi Tiết</button>
+        </div>
+        <div class="movie">
+          <img src="phim2.jpg" alt="Phim 2" />
+          <h3>Deadpool & Wolverine</h3>
+          <button>Xem Chi Tiết</button>
+        </div>
+        <div class="movie">
+          <img src="phim3.jpg" alt="Phim 3" />
+          <h3>Con Nhót Mót Chồng</h3>
+          <button>Xem Chi Tiết</button>
+        </div>
+        <div class="movie">
+          <img src="phim4.jpg" alt="Phim 4" />
+          <h3>Despicable Me 4</h3>
+          <button>Xem Chi Tiết</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chân trang -->
+    <footer>
+      <p>© 2025 BookNow. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
