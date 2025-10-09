@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookNow Admin - Quản lý Rạp Phim</title>
+    <link rel="stylesheet" href="trangchu-doangnghiep.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Thanh tiêu đề -->
+    <header>
+      <h1>🎬 BookNow Business</h1>
+      <div class="user-info">
+        <span>Xin chào, Doanh nghiệp</span>
+        <button id="logout-btn">Đăng xuất</button>
+      </div>
+    </header>
+
+    <!-- Thanh menu bên -->
+    <aside>
+      <ul>
+        <li class="active" data-section="dashboard">📊 Tổng quan</li>
+        <li data-section="movies">🎥 Quản lý Phim</li>
+        <li data-section="cinemas">🏢 Quản lý Rạp</li>
+        <li data-section="showtimes">🕐 Quản lý Suất Chiếu</li>
+      </ul>
+    </aside>
+
+    <!-- Nội dung chính -->
+    <main>
+      <!-- Tổng quan -->
+      <section id="dashboard" class="active">
+        <h2>Tổng quan doanh thu</h2>
+        <div class="stats">
+          <div class="card">
+            <h3>🎟️ Vé đã bán</h3>
+            <p id="tickets">1,250</p>
+          </div>
+          <div class="card">
+            <h3>💰 Doanh thu</h3>
+            <p id="revenue">350,000,000₫</p>
+          </div>
+          <div class="card">
+            <h3>🎞️ Phim đang chiếu</h3>
+            <p id="movies">12</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quản lý phim -->
+      <section id="movies">
+        <h2>Quản lý Phim</h2>
+        <form id="movie-form">
+          <input type="text" id="movie-name" placeholder="Tên phim" required />
+          <input type="text" id="genre" placeholder="Thể loại" required />
+          <input
+            type="number"
+            id="duration"
+            placeholder="Thời lượng (phút)"
+            required
+          />
+          <input type="url" id="poster" placeholder="URL poster" required />
+          <button type="submit">➕ Thêm phim</button>
+        </form>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Poster</th>
+              <th>Tên phim</th>
+              <th>Thể loại</th>
+              <th>Thời lượng</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="movie-list">
+            <!-- Dữ liệu sẽ được JS thêm vào -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Quản lý rạp -->
+      <section id="cinemas">
+        <h2>Quản lý Rạp</h2>
+        <p>Chức năng này đang được phát triển 🚧</p>
+      </section>
+
+      <!-- Quản lý suất chiếu -->
+      <section id="showtimes">
+        <h2>Quản lý Suất Chiếu</h2>
+        <p>Chức năng này đang được phát triển 🚧</p>
+      </section>
+    </main>
+
+    <script src="phim-doanhnghiep.js"></script>
+  </body>
+</html>
