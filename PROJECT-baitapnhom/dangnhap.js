@@ -33,6 +33,13 @@ document
 
     showToast("Đăng ký thành công!", "success");
     document.getElementById("registerForm").reset();
+
+    // ---- Sau khi đăng ký xong thì tự động chuyển sang tab Đăng nhập ----
+    document.getElementById("register-tab").classList.remove("active");
+    document.getElementById("login-tab").classList.add("active");
+
+    document.getElementById("register-content").classList.remove("active");
+    document.getElementById("login-content").classList.add("active");
   });
 
 // Xử lý đăng nhập

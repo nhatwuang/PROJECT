@@ -57,14 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
 
-      const service = btn.parentElement.querySelector("h3").textContent;
+      const serviceName = btn.parentElement.querySelector("h3").textContent;
 
-      if (service.includes("phim")) window.location.href = "phim.html";
-      else if (service.includes("xe")) window.location.href = "giaodienxe.html";
-      else if (service.includes("khách sạn"))
-        window.location.href = "giaodienkhachsan.html";
-      else if (service.includes("sự kiện"))
-        window.location.href = "giaodiensukien.html";
+      if (serviceName.includes("người dùng")) {
+        window.location.href = "manage-users.html";
+      } else if (serviceName.includes("doanh nghiệp")) {
+        window.location.href = "manage-business.html";
+      } else if (serviceName.includes("Báo cáo")) {
+        window.location.href = "report.html";
+      }
     });
   });
 });
