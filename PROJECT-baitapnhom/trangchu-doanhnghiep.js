@@ -50,6 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 });
+
+// =============================
+// 🧭 Xử lý nhấn nút tính năng
+// =============================
 document.addEventListener("DOMContentLoaded", () => {
   const buttons = document.querySelectorAll(".service-item a");
 
@@ -57,14 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
 
-      const service = btn.parentElement.querySelector("h3").textContent;
+      const serviceName = btn.parentElement.querySelector("h3").textContent;
 
-      if (service.includes("phim")) window.location.href = "phim.html";
-      else if (service.includes("xe")) window.location.href = "giaodienxe.html";
-      else if (service.includes("khách sạn"))
-        window.location.href = "giaodienkhachsan.html";
-      else if (service.includes("sự kiện"))
-        window.location.href = "giaodiensukien.html";
+      // Chuyển hướng theo dịch vụ
+      if (serviceName.includes("Quản lý")) {
+        window.location.href = "phim-doanhnghiep.html";
+      } else if (serviceName.includes("Danh sách")) {
+        window.location.href = "phim.html";
+      } else if (serviceName.includes("Báo cáo")) {
+        window.location.href = "baocao.html";
+      }
     });
   });
 });

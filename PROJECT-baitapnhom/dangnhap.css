@@ -65,8 +65,8 @@ body::after {
   position: relative;
   z-index: 1; /* đè lên nền */
   background-color: #f9fafa; /* nền sáng nhẹ */
-  width: 550px;
-  height: 450px;
+  width: 450px;
+  min-height: 350px;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -208,4 +208,29 @@ button:hover {
     opacity: 0;
     transform: translateY(-10px);
   }
+}
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  appearance: none; /* ẩn mũi tên mặc định */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select:focus {
+  outline: none;
+  border-color: #333; /* hiệu ứng viền xanh khi focus */
+  box-shadow: 0 0 5px rgba(24, 119, 242, 0.4);
+}
+
+/* Tùy chọn mũi tên tùy chỉnh (nếu muốn) */
+select::-ms-expand {
+  display: none;
 }
