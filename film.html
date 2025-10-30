@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookNow - Phim</title>
+    <link rel="stylesheet" href="css/film.css" />
+  </head>
+
+  <body>
+    <!-- Thanh điều hướng -->
+    <header>
+      <div class="logo">🎟️ BookNow - Khách hàng</div>
+      <nav>
+        <ul>
+          <li><a href="customer.html">Trang chủ</a></li>
+          <li><a href="film.html" class="active">Phim</a></li>
+          <li><a href="vehicle.html">Phương tiện</a></li>
+          <li><a href="hotel.html">Khách sạn</a></li>
+        </ul>
+      </nav>
+      <div class="auth-btns">
+        <!-- Ban đầu hiển thị đăng nhập / đăng ký -->
+        <button class="login-btn">Đăng nhập</button>
+        <button class="signup-btn">Đăng ký</button>
+      </div>
+    </header>
+    <!-- Banner -->
+    <section class="banner">
+      <div class="banner-text">
+        <h1>🎬 Đặt vé xem phim nhanh chóng cùng BookNow</h1>
+        <p>Tìm rạp, chọn phim yêu thích và đặt vé chỉ với vài cú nhấp chuột.</p>
+      </div>
+    </section>
+
+ <!-- Đặt vé nhanh -->
+<section class="quick-booking">
+  <h2>ĐẶT VÉ NHANH</h2>
+  <form class="booking-form">
+    <select>
+      <option selected disabled>1. Chọn Rạp</option>
+      <option>CGV Huế</option>
+      <option>Lotte Cinema</option>
+      <option>BHD Star</option>
+    </select>
+
+    <input type="date" id="chon-ngay" name="chon-ngay" />
+
+    <select>
+      <option selected disabled>3. Chọn Giờ Chiếu</option>
+      <option>09:30</option>
+      <option>11:45</option>
+      <option>13:00</option>
+      <option>15:30</option>
+      <option>18:00</option>
+      <option>21:15</option>
+    </select>
+
+    <button type="submit" class="btn-book">ĐẶT NGAY</button>
+  </form>
+</section>
+
+
+     
+    <!-- Chân trang -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-about">
+          <h2>🎟️ BookNow</h2>
+          <p>
+            BookNow giúp bạn đặt vé phim, xe khách, khách sạn và sự kiện chỉ với
+            vài cú nhấp chuột.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <h3>Dịch vụ</h3>
+          <ul>
+            <li><a href="phim.html">Đặt vé xem phim</a></li>
+            <li><a href="phuongtien.html">Đặt vé phương tiện</a></li>
+            <li><a href="khachsan.html">Đặt phòng khách sạn</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h3>Liên hệ</h3>
+          <p>📍 81/2 Bà Triệu, P.Xuân phú, TP.Huế</p>
+          <p>📞 0338397090</p>
+          <p>✉️ contact@booknow.vn</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 BookNow. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="js/film.js"></script>
+  </body>
+</html>
