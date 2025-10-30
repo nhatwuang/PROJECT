@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng nhập / Đăng ký - Đặt vé online</title>
-    <link rel="stylesheet" href="vidu/css/dangnhap.css" />
+    <link rel="stylesheet" href="css/dangnhap.css" />
   </head>
   <body>
     <div class="container">
@@ -26,7 +26,10 @@
           />
           <button type="submit">Đăng nhập</button>
         </form>
-        <p class="note">Chưa có tài khoản? Nhấn vào "Đăng ký"</p>
+        <div class="register-btn-wrap">
+          <p>Chưa có tài khoản?</p>
+          <button class="register-btn" id="show-register">Đăng ký</button>
+        </div>
       </div>
 
       <!-- Form Đăng ký -->
@@ -58,13 +61,16 @@
 
           <button type="submit">Tạo tài khoản</button>
         </form>
-        <p class="note">Đã có tài khoản? Nhấn vào "Đăng nhập"</p>
+        <div class="register-btn-wrap">
+          <p>Chưa có tài khoản?</p>
+            <button type="button" id="show-register" class="register-btn">Đăng nhập</button>
+        </div>
       </div>
     </div>
 
     <!-- Khung thông báo toast -->
     <div id="notification"></div>
 
-    <script src="vidu/js/dangnhap.js"></script>
+    <script src="js/dangnhap.js"></script>
   </body>
 </html>

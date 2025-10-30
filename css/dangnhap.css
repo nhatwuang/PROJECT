@@ -234,3 +234,38 @@ select:focus {
 select::-ms-expand {
   display: none;
 }
+
+#show-register {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 20px; /* bỏ padding để nút sát chữ hơn */
+}
+.register-btn-wrap {
+  display: inline-flex;       /* hiển thị 2 phần sát nhau, không chiếm cả dòng */
+  align-items: center;        /* căn giữa theo chiều dọc */
+  gap: 0;                   /* khoảng cách cực nhỏ giữa 2 phần */
+  font-size: 16px;
+  white-space: nowrap;        /* tránh xuống dòng */
+}
+
+.register-btn-wrap p {
+  margin: 0;                  /* loại bỏ margin mặc định */
+  display: inline;            /* đảm bảo nằm trên cùng 1 hàng */
+}
+
+.register-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0;
+  font-size: inherit;
+}
+
+.register-btn:hover {
+  color: #02101f;
+}

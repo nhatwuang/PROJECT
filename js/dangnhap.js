@@ -16,13 +16,10 @@ document
     // 🔹 Kiểm tra xác nhận mật khẩu
     if (password !== rePassword) {
       showToast("Mật khẩu nhập lại không khớp!", "error");
-      return; // Dừng lại, không lưu dữ liệu
+      return;
     }
 
-    // 🔹 Tạo đối tượng user mới
-    let user = { name, email, password, role };
-
-    // 🔹 Lấy danh sách user cũ trong localStorage (nếu chưa có thì tạo mảng rỗng)
+    // 🔹 Lấy danh sách user cũ
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
     // 🔹 Kiểm tra xem email đã tồn tại chưa
@@ -31,86 +28,74 @@ document
       return;
     }
 
-    // 🔹 Thêm user mới vào danh sách
+    // 🔹 Tạo user mới và lưu lại
+    let user = { name, email, password, role };
     users.push(user);
-
-    // 🔹 Lưu danh sách user mới vào localStorage (dạng JSON)
     localStorage.setItem("users", JSON.stringify(users));
 
-    // ✅ Thông báo thành công
+    // ✅ Lưu thông tin đăng nhập ngay sau khi đăng ký
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    localStorage.setItem("username", name); // dùng để hiển thị trong header
+
+    // ✅ Thông báo
     showToast("Đăng ký thành công!", "success");
 
-    // 🔹 Xóa nội dung form sau khi đăng ký
-    document.getElementById("registerForm").reset();
-
-    // 🔹 Tự động chuyển sang tab "Đăng nhập"
-    document.getElementById("register-tab").classList.remove("active");
-    document.getElementById("login-tab").classList.add("active");
-
-    document.getElementById("register-content").classList.remove("active");
-    document.getElementById("login-content").classList.add("active");
+    // 🔹 Chuyển hướng sang trang phù hợp
+    setTimeout(() => {
+      if (role === "customer") {
+        window.location.href = "customer.html";
+      } else if (role === "business") {
+        window.location.href = "business.html";
+      } else {
+        window.location.href = "admin.html";
+      }
+    }, 1000);
   });
 
 // ===============================
 // 📌 XỬ LÝ ĐĂNG NHẬP NGƯỜI DÙNG
 // ===============================
 document.getElementById("loginForm").addEventListener("submit", function (e) {
-  e.preventDefault(); // ❌ Ngăn reload trang khi bấm nút "Đăng nhập"
+  e.preventDefault();
 
-  // 🔹 Lấy dữ liệu từ form đăng nhập
   let email = document.getElementById("loginEmail").value;
   let password = document.getElementById("loginPassword").value;
 
-  // 🔹 Lấy danh sách user từ localStorage
   let users = JSON.parse(localStorage.getItem("users")) || [];
-
-  // 🔹 Tìm người dùng có email & password trùng khớp
   let user = users.find((u) => u.email === email && u.password === password);
 
-  // 🔹 Nếu không tìm thấy user hợp lệ
   if (!user) {
     showToast("Sai email hoặc mật khẩu!", "error");
     return;
   }
 
-  // ✅ Nếu đúng → lưu thông tin người dùng hiện tại vào localStorage
+  // ✅ Lưu người dùng hiện tại
   localStorage.setItem("currentUser", JSON.stringify(user));
+  localStorage.setItem("username", user.name);
 
-  // ✅ Hiển thị thông báo đăng nhập thành công
   showToast("Đăng nhập thành công!", "success");
 
-  // 🔹 Chuyển hướng sang trang phù hợp với vai trò
   setTimeout(() => {
     if (user.role === "customer") {
-      window.location.href = "trangchu.html"; // Khách hàng → Trang chủ
+      window.location.href = "customer.html";
     } else if (user.role === "business") {
-      window.location.href = "trangchu-doanhnghiep.html"; // Doanh nghiệp
-    } else if (user.role === "admin") {
-      window.location.href = "admin.html"; // Quản trị viên
+      window.location.href = "business.html";
+    } else {
+      window.location.href = "admin.html";
     }
-  }, 1000); // ⏱ Đợi 1 giây rồi chuyển trang
+  }, 1000);
 });
 
 // ===============================
-// 📌 HÀM HIỂN THỊ THÔNG BÁO (TOAST)
+// 📌 HÀM HIỂN THỊ THÔNG BÁO
 // ===============================
 function showToast(message, type) {
-  // 🔹 Lấy phần tử cha chứa thông báo
   let notification = document.getElementById("notification");
-
-  // 🔹 Tạo thẻ div mới để hiển thị thông báo
   let toast = document.createElement("div");
-
-  // 🔹 Gán class theo loại (success hoặc error)
   toast.className = `toast ${type}`;
-
-  // 🔹 Ghi nội dung thông báo
   toast.innerText = message;
-
-  // 🔹 Thêm thông báo vào trang
   notification.appendChild(toast);
 
-  // 🔹 Sau 3 giây thì xóa thông báo
   setTimeout(() => {
     toast.remove();
   }, 3000);
@@ -119,20 +104,34 @@ function showToast(message, type) {
 // ===============================
 // 📌 CHUYỂN GIỮA TAB ĐĂNG NHẬP / ĐĂNG KÝ
 // ===============================
-document.getElementById("login-tab").addEventListener("click", function () {
-  // Khi bấm "Đăng nhập" → bật tab đăng nhập, tắt tab đăng ký
-  document.getElementById("login-tab").classList.add("active");
-  document.getElementById("register-tab").classList.remove("active");
+const loginTab = document.getElementById("login-tab");
+const registerTab = document.getElementById("register-tab");
+const loginContent = document.getElementById("login-content");
+const registerContent = document.getElementById("register-content");
 
-  document.getElementById("login-content").classList.add("active");
-  document.getElementById("register-content").classList.remove("active");
-});
+const showRegisterBtn = document.querySelector("#login-content #show-register");
+const showLoginBtn = document.querySelector("#register-content .register-btn");
 
-document.getElementById("register-tab").addEventListener("click", function () {
-  // Khi bấm "Đăng ký" → bật tab đăng ký, tắt tab đăng nhập
-  document.getElementById("register-tab").classList.add("active");
-  document.getElementById("login-tab").classList.remove("active");
+function showRegisterForm() {
+  loginContent.classList.remove("active");
+  loginContent.style.display = "none";
+  registerContent.classList.add("active");
+  registerContent.style.display = "block";
+  loginTab.classList.remove("active");
+  registerTab.classList.add("active");
+}
 
-  document.getElementById("register-content").classList.add("active");
-  document.getElementById("login-content").classList.remove("active");
-});
+function showLoginForm() {
+  registerContent.classList.remove("active");
+  registerContent.style.display = "none";
+  loginContent.classList.add("active");
+  loginContent.style.display = "block";
+  registerTab.classList.remove("active");
+  loginTab.classList.add("active");
+}
+
+showRegisterBtn.addEventListener("click", showRegisterForm);
+showLoginBtn.addEventListener("click", showLoginForm);
+loginTab.addEventListener("click", showLoginForm);
+registerTab.addEventListener("click", showRegisterForm);
+registerContent.style.display = "none";
