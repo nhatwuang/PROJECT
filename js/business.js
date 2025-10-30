@@ -1,9 +1,10 @@
 // ==============================================
 // 🔹 Hiệu ứng khi cuộn xuống phần "Dịch vụ"
 // ==============================================
-
 window.addEventListener("scroll", () => {
   const services = document.querySelector(".services");
+  if (!services) return; // kiểm tra tránh lỗi nếu không có phần này
+
   const position = services.getBoundingClientRect().top;
   const screenHeight = window.innerHeight;
 
@@ -13,37 +14,37 @@ window.addEventListener("scroll", () => {
 });
 
 // ==============================================
-// 🔹 Xử lý đăng nhập / đăng ký / đăng xuất ở header
+// 🔹 Xử lý hiển thị đăng nhập / đăng xuất ở header
 // ==============================================
-
 document.addEventListener("DOMContentLoaded", () => {
   const authBtns = document.querySelector(".auth-btns");
-  const username = localStorage.getItem("username");
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-  // Nếu ĐÃ đăng nhập
-  if (username) {
+  if (currentUser && currentUser.name) {
+    // ✅ Nếu đã đăng nhập
     authBtns.innerHTML = `
-      <span class="welcome">Xin chào, <b>${username}</b></span>
+      <span class="welcome">Xin chào, <b>${currentUser.name}</b></span>
       <button class="logout-btn">Đăng xuất</button>
     `;
 
-    // Sự kiện Đăng xuất
+    // Sự kiện đăng xuất
     document.querySelector(".logout-btn").addEventListener("click", () => {
-      localStorage.removeItem("username");
+      localStorage.removeItem("currentUser");
       location.reload();
     });
-  } 
-  // Nếu CHƯA đăng nhập
-  else {
+  } else {
+    // ❌ Nếu chưa đăng nhập
     authBtns.innerHTML = `
       <button class="login-btn">Đăng nhập</button>
       <button class="signup-btn">Đăng ký</button>
     `;
 
+    // Khi bấm “Đăng nhập” → chuyển sang trang đăng nhập
     document.querySelector(".login-btn").addEventListener("click", () => {
       window.location.href = "dangnhap.html";
     });
 
+    // Khi bấm “Đăng ký” → cũng chuyển sang trang đăng nhập (tab Đăng ký)
     document.querySelector(".signup-btn").addEventListener("click", () => {
       window.location.href = "dangnhap.html";
     });
@@ -53,45 +54,24 @@ document.addEventListener("DOMContentLoaded", () => {
 // ==============================================
 // 🔹 Gắn sự kiện cho các nút trong phần dịch vụ
 // ==============================================
-
 document.addEventListener("DOMContentLoaded", () => {
   const buttons = document.querySelectorAll(".service-item a");
+  if (!buttons.length) return;
 
   buttons.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
 
-      const service = btn.parentElement.querySelector("h3").textContent;
+      const serviceName = btn.parentElement.querySelector("h3").textContent;
 
-      if (service.includes("phim")) window.location.href = "phim.html";
-      else if (service.includes("xe")) window.location.href = "xe.html";
-      else if (service.includes("khách sạn")) window.location.href = "khachsan.html";
-      else if (service.includes("sự kiện")) window.location.href = "sukien.html";
+      // Chuyển hướng theo tên dịch vụ
+      if (serviceName.includes("Quản lý")) {
+        window.location.href = "phim-doanhnghiep.html";
+      } else if (serviceName.includes("Danh sách")) {
+        window.location.href = "phim.html";
+      } else if (serviceName.includes("Báo cáo")) {
+        window.location.href = "baocao.html";
+      }
     });
   });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const track = document.querySelector(".film-track");
-  const leftBtn = document.querySelector(".arrow.left");
-  const rightBtn = document.querySelector(".arrow.right");
-
-  let index = 0;
-  const cardWidth = 322; // 310 + 12 gap
-  const totalCards = document.querySelectorAll(".film-card").length;
-  const visibleCards = 4;
-
-  rightBtn.addEventListener("click", () => {
-    if (index < totalCards - visibleCards) index++;
-    updateSlider();
-  });
-
-  leftBtn.addEventListener("click", () => {
-    if (index > 0) index--;
-    updateSlider();
-  });
-
-  function updateSlider() {
-    track.style.transform = `translateX(-${index * cardWidth}px)`;
-  }
 });
