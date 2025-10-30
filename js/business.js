@@ -323,11 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// =============================
-// 🔹 PHIM (ĐÃ CÓ SẴN, GIỮ NGUYÊN)
-// =============================
-// ... phần code phim của bạn ở trên ...
-
 // ======================================================================
 // 🔹 PHƯƠNG TIỆN
 // ======================================================================
@@ -406,7 +401,7 @@ function hienThiPhuongTien(pt, index) {
   if (placeholder) placeholder.remove();
 
   const item = document.createElement("div");
-  item.classList.add("vehicle-card");
+  item.classList.add("movie-card");
   item.innerHTML = `
     <button class="delete-btn" title="Xoá phương tiện">×</button>
     <img src="${pt.anh || 'images/default-vehicle.jpg'}" alt="${pt.loai}" class="vehicle-img">
@@ -528,7 +523,7 @@ function hienThiKhachSan(ks, index) {
   if (placeholder) placeholder.remove();
 
   const item = document.createElement("div");
-  item.classList.add("hotel-card");
+  item.classList.add("movie-card");
   item.innerHTML = `
     <button class="delete-btn" title="Xoá khách sạn">×</button>
     <img src="${ks.anh || 'images/default-hotel.jpg'}" alt="${ks.ten}" class="hotel-img">
@@ -559,7 +554,7 @@ function hienThiKhachSan(ks, index) {
 
 // === POPUP KHÁCH SẠN ===
 function showHotelPopup(ks) {
-  const popup = document.getElementById("popupHotelTen").closest(".popup");
+  const popup = document.getElementById("popupHotelImage").closest(".popup");
   if (!popup) return;
   document.getElementById("popupHotelImage").src = ks.anh || "images/default-hotel.jpg";
   document.getElementById("popupHotelTen").textContent = ks.ten;

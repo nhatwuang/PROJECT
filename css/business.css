@@ -70,6 +70,42 @@ nav ul li a.active {
   opacity: 0.9;
 }
 
+/* Banner */
+.banner {
+  width: 100%;
+  height: 100vh;
+  background: url("../images/anhnen-doanhnghiep.jpg") center center / cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.banner-text {
+  position: relative;
+  z-index: 1;
+}
+
+.banner h1 {
+  color: #ffcc00;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.banner p {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
 /* Container */
 .container {
   padding: 80px 60px;
@@ -81,7 +117,7 @@ nav ul li a.active {
 }
 
 /* ===== BỐ CỤC QUẢN LÝ DỊCH VỤ (CỘT TRÁI - CỘT PHẢI) ===== */
-.service-layout {
+.service-layout-left {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -189,41 +225,6 @@ nav ul li a.active {
   transform: translateY(-2px);
 }
 
-/* Banner */
-.banner {
-  width: 100%;
-  height: 100vh;
-  background: url("../images/anhnen-doanhnghiep.jpg") center center / cover no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  position: relative;
-}
-
-.banner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-}
-
-.banner-text {
-  position: relative;
-  z-index: 1;
-}
-
-.banner h1 {
-  color: #ffcc00;
-  font-size: 48px;
-  font-weight: 700;
-}
-
-.banner p {
-  font-size: 20px;
-  margin-top: 10px;
-}
 
 /* ===== Bố cục 2 form nằm ngang gọn đẹp ===== */
 .service-layout {
@@ -396,6 +397,11 @@ nav ul li a.active {
   max-height: 676px;
   overflow-y: auto;
   padding-right: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  padding: 10px;
 }
 
 .placeholder {
@@ -421,6 +427,7 @@ nav ul li a.active {
   }
 }
 
+/* Xem trước ảnh/video */
 .preview img,
 .preview video {
   width: 100%;
@@ -430,37 +437,47 @@ nav ul li a.active {
   margin-top: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
-/* ===== CARD PHIM ===== */
+
+/* ===== Thẻ movie card (container từng phim) ===== */
 .movie-card {
-  background: #fff;
-  border-radius: 14px;
-  overflow: hidden;
-  width: 300px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-  text-align: center;
-  border: 1px solid #e4e7ff;
   position: relative;
+  width: 600px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .movie-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.movie-poster {
+/* Poster */
+.movie-poster,
+.vehicle-img,
+.hotel-img {
+  display: block;
   width: 100%;
-  height: 340px;
+  height: 100%;
   object-fit: cover;
-  border-bottom: 3px solid #00c897;
+  object-position: center;
+  border-bottom: 1px solid #eee;
 }
 
-.movie-info {
-  padding: 12px 14px;
-  background: #f7f9ff;
+/* Thông tin phim */
+.movie-info,
+.vehicle-info,
+.hotel-info {
+  padding: 10px;
+  text-align: left;
 }
 
+/* Tiêu đề */
 .movie-title {
   font-weight: 700;
   color: #001b80;
@@ -468,6 +485,7 @@ nav ul li a.active {
   margin-bottom: 6px;
 }
 
+/* Mô tả */
 .movie-info p {
   margin: 3px 0;
   color: #333;
@@ -475,13 +493,19 @@ nav ul li a.active {
   text-align: left;
 }
 
-/* Bố cục danh sách phim */
-.added-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  padding: 10px;
+/* Responsive */
+@media (max-width: 600px) {
+  .movie-card {
+    width: calc(50% - 16px);
+  }
+  .movie-poster {
+    height: 180px;
+  }
+}
+@media (min-width: 900px) {
+  .movie-card {
+    width: 220px;
+  }
 }
 
 /* ===== Nút xoá ===== */
@@ -498,14 +522,25 @@ nav ul li a.active {
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
+  z-index: 5;
 }
 .delete-btn:hover {
   background: #e60000;
 }
 
+/* ===== Class ẩn dùng chung ===== */
+.hidden {
+  display: none !important;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 /* ===== POPUP XEM CHI TIẾT ===== */
-#moviePopup {
-  display: none;
+#moviePopup,
+#vehiclePopup,
+#hotelPopup {
+  display: none; /* Ẩn mặc định */
   position: fixed;
   top: 0;
   left: 0;
@@ -525,6 +560,7 @@ nav ul li a.active {
   text-align: center;
   position: relative;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .popup-content img {
@@ -535,7 +571,8 @@ nav ul li a.active {
   margin-bottom: 15px;
 }
 
-.popup-content h2 {
+.popup-content h2,
+.popup-content h3 {
   color: #001b80;
   margin-bottom: 10px;
 }
@@ -555,10 +592,27 @@ nav ul li a.active {
   cursor: pointer;
   font-weight: bold;
 }
+
 .close-btn:hover {
   color: #e60000;
 }
 
+/* ===== Hiệu ứng ẩn/hiện chung ===== */
+.hidden {
+  display: none !important;
+}
+
+/* ===== Hiệu ứng mở popup ===== */
+@keyframes fadeIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 
 
