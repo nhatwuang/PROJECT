@@ -114,7 +114,7 @@ a.login-btn:active {
 .banner {
   width: 100%;
   height: 480px;
-  background: url("../images/anhnen0.jpg") top center/cover no-repeat;
+  background: url("../images/anhnen.jpg") center center/cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,6 +135,7 @@ a.login-btn:active {
 }
 
 .banner h1 {
+  color:#ffcc00;
   font-size: 48px;
   font-weight: 700;
 }
@@ -148,7 +149,7 @@ a.login-btn:active {
 .services {
   padding: 60px 100px;
   text-align: center;
-  background-color: #f0f3fa;
+  background-color: #43e9cb;
 }
 
 .services h2 {
@@ -226,7 +227,7 @@ a.login-btn:active {
 .services-films {
   padding: 60px 100px;
   text-align: left;
-  background-color: #f0f3fa;
+  background-color: #38dbe0;
   position: relative;
 }
 
@@ -346,7 +347,7 @@ a.login-btn:active {
 .service-vehicles {
   padding: 60px 100px;
   text-align: left;
-  background-color: #f0f3fa;
+  background-color: #10b8fb;
 }
 
 .service-vehicles h2 {
@@ -424,8 +425,8 @@ a.login-btn:active {
 /* 🏨 Dịch vụ khách sạn */
 .service-hotels {
   padding: 60px 100px;
-  text-align: center;
-  background-color: #f0f3fa;
+  text-align: left;
+  background-color: #557fe1;
 }
 
 .service-hotels h2 {
