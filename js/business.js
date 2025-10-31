@@ -13,35 +13,41 @@ window.addEventListener("scroll", () => {
   }
 });
 
+/// ==============================================
+// 🔹 Xử lý đăng nhập / đăng ký / đăng xuất ở header
 // ==============================================
-// 🔹 Xử lý hiển thị đăng nhập / đăng xuất ở header
-// ==============================================
+
 document.addEventListener("DOMContentLoaded", () => {
   const authBtns = document.querySelector(".auth-btns");
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const username = localStorage.getItem("username");
 
-  if (authBtns) {
-    if (currentUser && currentUser.name) {
-      authBtns.innerHTML = `
-        <span class="welcome">Xin chào, <b>${currentUser.name}</b></span>
-        <button class="logout-btn">Đăng xuất</button>
-      `;
-      document.querySelector(".logout-btn").addEventListener("click", () => {
-        localStorage.removeItem("currentUser");
-        location.reload();
-      });
-    } else {
-      authBtns.innerHTML = `
-        <button class="login-btn">Đăng nhập</button>
-        <button class="signup-btn">Đăng ký</button>
-      `;
-      document.querySelector(".login-btn").addEventListener("click", () => {
-        window.location.href = "dangnhap.html";
-      });
-      document.querySelector(".signup-btn").addEventListener("click", () => {
-        window.location.href = "dangnhap.html";
-      });
-    }
+  // Nếu ĐÃ đăng nhập
+  if (username) {
+    authBtns.innerHTML = `
+      <span class="welcome">Xin chào, <b>${username}</b></span>
+      <button class="logout-btn">Đăng xuất</button>
+    `;
+
+    // Sự kiện Đăng xuất
+    document.querySelector(".logout-btn").addEventListener("click", () => {
+      localStorage.removeItem("username");
+      location.reload();
+    });
+  }
+  // Nếu CHƯA đăng nhập
+  else {
+    authBtns.innerHTML = `
+      <button class="login-btn">Đăng nhập</button>
+      <button class="signup-btn">Đăng ký</button>
+    `;
+
+    document.querySelector(".login-btn").addEventListener("click", () => {
+      window.location.href = "dangnhap.html";
+    });
+
+    document.querySelector(".signup-btn").addEventListener("click", () => {
+      window.location.href = "dangnhap.html";
+    });
   }
 });
 
@@ -175,7 +181,9 @@ function hienThiPhim(phim, index) {
   item.classList.add("movie-card");
   item.innerHTML = `
     <button class="delete-btn" title="Xoá phim">×</button>
-    <img src="${phim.anh || "images/default-poster.jpg"}" alt="${phim.ten}" class="movie-poster">
+    <img src="${phim.anh || "images/default-poster.jpg"}" alt="${
+    phim.ten
+  }" class="movie-poster">
     <div class="movie-info">
       <h3 class="movie-title">${phim.ten}</h3>
       <p>🎬 ${phim.moTa}</p>
@@ -212,16 +220,20 @@ function showPopup(phim) {
   const popup = document.getElementById("moviePopup");
   if (!popup) return;
 
-  document.getElementById("popupImage").src = phim.anh || "images/default-poster.jpg";
+  document.getElementById("popupImage").src =
+    phim.anh || "images/default-poster.jpg";
   document.getElementById("popupTitle").textContent = phim.ten;
   document.getElementById("popupDesc").textContent = "🎬 " + phim.moTa;
   document.getElementById("popupGia").textContent = "💸 " + phim.gia + " VNĐ";
-  document.getElementById("popupSuat").textContent = "⏰ " + (phim.suat || "Không có");
-  document.getElementById("popupRap").textContent = "📍 " + (phim.rap || "Không có");
+  document.getElementById("popupSuat").textContent =
+    "⏰ " + (phim.suat || "Không có");
+  document.getElementById("popupRap").textContent =
+    "📍 " + (phim.rap || "Không có");
 
   popup.style.display = "flex";
 
-  popup.querySelector(".close-btn").onclick = () => (popup.style.display = "none");
+  popup.querySelector(".close-btn").onclick = () =>
+    (popup.style.display = "none");
   popup.onclick = (e) => {
     if (e.target === popup) popup.style.display = "none";
   };
@@ -235,24 +247,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const sections = {
     phim: ["form-phim", "list-phim"],
     phuongtien: ["form-phuongtien", "list-phuongtien"],
-    khachsan: ["form-khachsan", "list-khachsan"]
+    khachsan: ["form-khachsan", "list-khachsan"],
   };
 
   // === Xử lý chuyển tab ===
-  tabButtons.forEach(btn => {
+  tabButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       // Bỏ active ở tất cả
-      tabButtons.forEach(b => b.classList.remove("active"));
+      tabButtons.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
 
       // Ẩn toàn bộ form/danh sách
-      Object.values(sections).flat().forEach(id => {
-        document.getElementById(id).classList.add("hidden");
-      });
+      Object.values(sections)
+        .flat()
+        .forEach((id) => {
+          document.getElementById(id).classList.add("hidden");
+        });
 
       // Hiện đúng loại dịch vụ
       const tab = btn.dataset.tab;
-      sections[tab].forEach(id => {
+      sections[tab].forEach((id) => {
         document.getElementById(id).classList.remove("hidden");
       });
     });
@@ -373,7 +387,7 @@ if (formPT) {
       diemDen,
       gioKhoiHanh,
       gia,
-      anh: base64AnhPT || ""
+      anh: base64AnhPT || "",
     };
 
     let dsPT = JSON.parse(localStorage.getItem("danhSachPhuongTien")) || [];
@@ -404,7 +418,9 @@ function hienThiPhuongTien(pt, index) {
   item.classList.add("movie-card");
   item.innerHTML = `
     <button class="delete-btn" title="Xoá phương tiện">×</button>
-    <img src="${pt.anh || 'images/default-vehicle.jpg'}" alt="${pt.loai}" class="vehicle-img">
+    <img src="${pt.anh || "images/default-vehicle.jpg"}" alt="${
+    pt.loai
+  }" class="vehicle-img">
     <div class="vehicle-info">
       <h3>${pt.loai}</h3>
       <p>🚏 ${pt.diemDon} → ${pt.diemDen}</p>
@@ -435,13 +451,17 @@ function showVehiclePopup(pt) {
   const popup = document.getElementById("popupVehicleImage").closest(".popup");
   if (!popup) return;
 
-  document.getElementById("popupVehicleImage").src = pt.anh || "images/default-vehicle.jpg";
+  document.getElementById("popupVehicleImage").src =
+    pt.anh || "images/default-vehicle.jpg";
   document.getElementById("popupVehicleLoai").textContent = pt.loai;
-  document.getElementById("popupVehicleRoute").textContent = `🚏 ${pt.diemDon} → ${pt.diemDen}`;
+  document.getElementById(
+    "popupVehicleRoute"
+  ).textContent = `🚏 ${pt.diemDon} → ${pt.diemDen}`;
   document.getElementById("popupVehicleGia").textContent = `💸 ${pt.gia} VNĐ`;
 
   popup.style.display = "flex";
-  popup.querySelector(".close-btn").onclick = () => (popup.style.display = "none");
+  popup.querySelector(".close-btn").onclick = () =>
+    (popup.style.display = "none");
   popup.onclick = (e) => {
     if (e.target === popup) popup.style.display = "none";
   };
@@ -495,7 +515,7 @@ if (formKS) {
       moTa,
       soPhong,
       gia,
-      anh: base64AnhKS || ""
+      anh: base64AnhKS || "",
     };
 
     let dsKS = JSON.parse(localStorage.getItem("danhSachKhachSan")) || [];
@@ -505,6 +525,7 @@ if (formKS) {
     hienThiKhachSan(khachSan, dsKS.length - 1);
     e.target.reset();
     previewKS.innerHTML = "";
+    base64AnhKS = "";
     alert("✅ Đã thêm khách sạn thành công!");
   });
 }
@@ -526,7 +547,9 @@ function hienThiKhachSan(ks, index) {
   item.classList.add("movie-card");
   item.innerHTML = `
     <button class="delete-btn" title="Xoá khách sạn">×</button>
-    <img src="${ks.anh || 'images/default-hotel.jpg'}" alt="${ks.ten}" class="hotel-img">
+    <img src="${ks.anh || "images/default-hotel.jpg"}" alt="${
+    ks.ten
+  }" class="hotel-img">
     <div class="hotel-info">
       <h3>${ks.ten}</h3>
       <p>🛏️ ${ks.moTa}</p>
@@ -556,14 +579,18 @@ function hienThiKhachSan(ks, index) {
 function showHotelPopup(ks) {
   const popup = document.getElementById("popupHotelImage").closest(".popup");
   if (!popup) return;
-  document.getElementById("popupHotelImage").src = ks.anh || "images/default-hotel.jpg";
+  document.getElementById("popupHotelImage").src =
+    ks.anh || "images/default-hotel.jpg";
   document.getElementById("popupHotelTen").textContent = ks.ten;
   document.getElementById("popupHotelMoTa").textContent = "🛏️ " + ks.moTa;
-  document.getElementById("popupHotelSoPhong").textContent = "🏠 Số phòng: " + ks.soPhong;
-  document.getElementById("popupHotelGia").textContent = "💸 " + ks.gia + " VNĐ/đêm";
+  document.getElementById("popupHotelSoPhong").textContent =
+    "🏠 Số phòng: " + ks.soPhong;
+  document.getElementById("popupHotelGia").textContent =
+    "💸 " + ks.gia + " VNĐ/đêm";
 
   popup.style.display = "flex";
-  popup.querySelector(".close-btn").onclick = () => (popup.style.display = "none");
+  popup.querySelector(".close-btn").onclick = () =>
+    (popup.style.display = "none");
   popup.onclick = (e) => {
     if (e.target === popup) popup.style.display = "none";
   };

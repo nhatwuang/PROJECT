@@ -38,17 +38,11 @@ document
     localStorage.setItem("username", name); // dùng để hiển thị trong header
 
     // ✅ Thông báo
-    showToast("Đăng ký thành công!", "success");
+    showToast("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.", "success");
 
     // 🔹 Chuyển hướng sang trang phù hợp
     setTimeout(() => {
-      if (role === "customer") {
-        window.location.href = "customer.html";
-      } else if (role === "business") {
-        window.location.href = "business.html";
-      } else {
-        window.location.href = "admin.html";
-      }
+      window.location.href = "dangnhap.html";
     }, 1000);
   });
 

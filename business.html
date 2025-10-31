@@ -26,166 +26,178 @@
     <section class="banner">
       <div class="banner-text">
         <h1>Xin chào, Doanh nghiệp!</h1>
-        <p>Bạn có thể quản lý dịch vụ, vé và theo dõi doanh thu ngay tại đây.</p>
+        <p>
+          Bạn có thể quản lý dịch vụ, vé và theo dõi doanh thu ngay tại đây.
+        </p>
       </div>
     </section>
 
-  <section id="services" class="container">
-  <h2>Quản lý dịch vụ</h2>
+    <section id="services" class="container">
+      <h2>Quản lý dịch vụ</h2>
 
-  <div class="service-layout-left">
-    <!-- Cột trái -->
-    <div class="service-tabs-vertical">
-      <button class="tab-btn active" data-tab="phim">🎬 Phim</button>
-      <button class="tab-btn" data-tab="phuongtien">🚗 Phương tiện</button>
-      <button class="tab-btn" data-tab="khachsan">🏨 Khách sạn</button>
-    </div>
-
-    <!-- Cột phải -->
-    <div class="service-content">
-      <div class="forms-wrapper">
-
-        <!-- ===== PHIM ===== -->
-        <div class="service-form" id="form-phim">
-          <h3>Thêm dịch vụ phim</h3>
-          <form id="addPhimForm">
-            <label>Tên phim:</label>
-            <input type="text" id="tenPhim" required />
-
-            <label>Thể loại:</label>
-            <textarea id="moTaPhim" rows="3" required></textarea>
-
-            <label>Ảnh/Video đính kèm:</label>
-            <input type="file" id="anhPhim" accept="image/*,video/*" />
-            <div id="previewPhim" class="preview"></div>
-
-            <label>Thời lượng (phút):</label>
-            <input type="number" id="thoiLuongPhim" required />
-
-            <label>Suất chiếu:</label>
-            <input type="text" id="suatChieuPhim" />
-
-            <label>Rạp chiếu:</label>
-            <input type="text" id="rapPhim" />
-
-            <label>Giá vé (VNĐ):</label>
-            <input type="number" id="giaVePhim" required />
-
-            <button type="submit" class="add-btn">➕ Thêm phim</button>
-          </form>
+      <div class="service-layout-left">
+        <!-- Cột trái -->
+        <div class="service-tabs-vertical">
+          <button class="tab-btn active" data-tab="phim">🎬 Phim</button>
+          <button class="tab-btn" data-tab="phuongtien">🚗 Phương tiện</button>
+          <button class="tab-btn" data-tab="khachsan">🏨 Khách sạn</button>
         </div>
 
-        <!-- Danh sách phim -->
-        <div class="service-form" id="list-phim">
-          <h3>Danh sách phim</h3>
-          <div class="added-list" id="addedPhimList"></div>
-        </div>
+        <!-- Cột phải -->
+        <div class="service-content">
+          <div class="forms-wrapper">
+            <!-- ===== PHIM ===== -->
+            <div class="service-form" id="form-phim">
+              <h3>Thêm dịch vụ phim</h3>
+              <form id="addPhimForm">
+                <label>Tên phim:</label>
+                <input type="text" id="tenPhim" required />
 
-        <!-- Popup phim -->
-        <div id="moviePopup" class="popup">
-          <div class="popup-content">
-            <span class="close-btn">&times;</span>
-            <img id="popupImage" src="" alt="Poster phim" />
-            <h2 id="popupTitle"></h2>
-            <p id="popupDesc"></p>
-            <p id="popupGia"></p>
-            <p id="popupSuat"></p>
-            <p id="popupRap"></p>
+                <label>Thể loại:</label>
+                <textarea id="moTaPhim" rows="3" required></textarea>
+
+                <label>Ảnh/Video đính kèm:</label>
+                <input type="file" id="anhPhim" accept="image/*,video/*" />
+                <div id="previewPhim" class="preview"></div>
+
+                <label>Thời lượng (phút):</label>
+                <input type="number" id="thoiLuongPhim" required />
+
+                <label>Suất chiếu:</label>
+                <input type="text" id="suatChieuPhim" />
+
+                <label>Rạp chiếu:</label>
+                <input type="text" id="rapPhim" />
+
+                <label>Giá vé (VNĐ):</label>
+                <input type="number" id="giaVePhim" required />
+
+                <button type="submit" class="add-btn">➕ Thêm phim</button>
+              </form>
+            </div>
+
+            <!-- Danh sách phim -->
+            <div class="service-form" id="list-phim">
+              <h3>Danh sách phim</h3>
+              <div class="added-list" id="addedPhimList"></div>
+            </div>
+
+            <!-- Popup phim -->
+            <div id="moviePopup" class="popup">
+              <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <img id="popupImage" src="" alt="Poster phim" />
+                <h2 id="popupTitle"></h2>
+                <p id="popupDesc"></p>
+                <p id="popupGia"></p>
+                <p id="popupSuat"></p>
+                <p id="popupRap"></p>
+              </div>
+            </div>
+
+            <!-- ===== PHƯƠNG TIỆN ===== -->
+            <div class="service-form hidden" id="form-phuongtien">
+              <h3>Thêm dịch vụ phương tiện</h3>
+              <form id="addPhuongTienForm">
+                <label>Loại phương tiện:</label>
+                <input type="text" id="loaiPhuongTien" required />
+
+                <label>Địa điểm đón:</label>
+                <input type="text" id="diemDon" required />
+
+                <label>Địa điểm đến:</label>
+                <input type="text" id="diemDen" required />
+
+                <label>Thời gian khởi hành:</label>
+                <input type="datetime-local" id="gioKhoiHanh" required />
+
+                <label>Giá vé (VNĐ):</label>
+                <input type="number" id="giaVePhuongTien" required />
+
+                <label>Ảnh/Video đính kèm:</label>
+                <input
+                  type="file"
+                  id="anhPhuongTien"
+                  accept="image/*,video/*"
+                />
+                <div id="previewPhuongTien" class="preview"></div>
+
+                <button type="submit" class="add-btn">
+                  ➕ Thêm phương tiện
+                </button>
+              </form>
+            </div>
+
+            <!-- Danh sách phương tiện -->
+            <div class="service-form hidden" id="list-phuongtien">
+              <h3>Danh sách phương tiện</h3>
+              <div class="added-list" id="addedPhuongTienList"></div>
+            </div>
+
+            <!-- POPUP PHƯƠNG TIỆN -->
+            <div id="vehiclePopup" class="popup">
+              <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <img
+                  id="popupVehicleImage"
+                  src="images/default-vehicle.jpg"
+                  alt="Phương tiện"
+                />
+                <h3 id="popupVehicleLoai"></h3>
+                <p id="popupVehicleRoute"></p>
+                <p id="popupVehicleGia"></p>
+              </div>
+            </div>
+
+            <!-- ===== KHÁCH SẠN ===== -->
+            <div class="service-form hidden" id="form-khachsan">
+              <h3>Thêm dịch vụ khách sạn</h3>
+              <form id="addKhachSanForm">
+                <label>Tên khách sạn:</label>
+                <input type="text" id="tenKhachSan" required />
+
+                <label>Mô tả:</label>
+                <textarea id="moTaKhachSan" rows="3" required></textarea>
+
+                <label>Số phòng:</label>
+                <input type="number" id="soPhong" required />
+
+                <label>Giá phòng (VNĐ/đêm):</label>
+                <input type="number" id="giaPhong" required />
+
+                <label>Ảnh/Video đính kèm:</label>
+                <input type="file" id="anhKhachSan" accept="image/*,video/*" />
+                <div id="previewKhachSan" class="preview"></div>
+
+                <button type="submit" class="add-btn">➕ Thêm khách sạn</button>
+              </form>
+            </div>
+
+            <!-- Danh sách khách sạn -->
+            <div class="service-form hidden" id="list-khachsan">
+              <h3>Danh sách khách sạn</h3>
+              <div class="added-list" id="addedKhachSanList"></div>
+            </div>
+
+            <!-- Popup khách sạn -->
+            <div id="hotelPopup" class="popup">
+              <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <img
+                  id="popupHotelImage"
+                  src="images/default-hotel.jpg"
+                  alt="Khách sạn"
+                />
+                <h2 id="popupHotelTen"></h2>
+                <p id="popupHotelMoTa"></p>
+                <p id="popupHotelSoPhong"></p>
+                <p id="popupHotelGia"></p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- ===== PHƯƠNG TIỆN ===== -->
-        <div class="service-form hidden" id="form-phuongtien">
-          <h3>Thêm dịch vụ phương tiện</h3>
-          <form id="addPhuongTienForm">
-            <label>Loại phương tiện:</label>
-            <input type="text" id="loaiPhuongTien" required />
-
-            <label>Địa điểm đón:</label>
-            <input type="text" id="diemDon" required />
-
-            <label>Địa điểm đến:</label>
-            <input type="text" id="diemDen" required />
-
-            <label>Thời gian khởi hành:</label>
-            <input type="datetime-local" id="gioKhoiHanh" required />
-
-            <label>Giá vé (VNĐ):</label>
-            <input type="number" id="giaVePhuongTien" required />
-
-            <label>Ảnh/Video đính kèm:</label>
-            <input type="file" id="anhPhuongTien" accept="image/*,video/*" />
-            <div id="previewPhuongTien" class="preview"></div>
-
-            <button type="submit" class="add-btn">➕ Thêm phương tiện</button>
-          </form>
-        </div>
-
-        <!-- Danh sách phương tiện -->
-        <div class="service-form hidden" id="list-phuongtien">
-          <h3>Danh sách phương tiện</h3>
-          <div class="added-list" id="addedPhuongTienList"></div>
-        </div>
-
-      <!-- POPUP PHƯƠNG TIỆN -->
-      <div id="vehiclePopup" class="popup">
-        <div class="popup-content">
-          <span class="close-btn">&times;</span>
-          <img id="popupVehicleImage" src="images/default-vehicle.jpg" alt="Phương tiện" />
-          <h3 id="popupVehicleLoai"></h3>
-          <p id="popupVehicleRoute"></p>
-          <p id="popupVehicleGia"></p>
-        </div>
       </div>
-
-
-        <!-- ===== KHÁCH SẠN ===== -->
-        <div class="service-form hidden" id="form-khachsan">
-          <h3>Thêm dịch vụ khách sạn</h3>
-          <form id="addKhachSanForm">
-            <label>Tên khách sạn:</label>
-            <input type="text" id="tenKhachSan" required />
-
-            <label>Mô tả:</label>
-            <textarea id="moTaKhachSan" rows="3" required></textarea>
-
-            <label>Số phòng:</label>
-            <input type="number" id="soPhong" required />
-
-            <label>Giá phòng (VNĐ/đêm):</label>
-            <input type="number" id="giaPhong" required />
-
-            <label>Ảnh/Video đính kèm:</label>
-            <input type="file" id="anhKhachSan" accept="image/*,video/*" />
-            <div id="previewKhachSan" class="preview"></div>
-
-            <button type="submit" class="add-btn">➕ Thêm khách sạn</button>
-          </form>
-        </div>
-
-        <!-- Danh sách khách sạn -->
-        <div class="service-form hidden" id="list-khachsan">
-          <h3>Danh sách khách sạn</h3>
-          <div class="added-list" id="addedKhachSanList"></div>
-        </div>
-
-        <!-- Popup khách sạn -->
-        <div id="hotelPopup" class="popup">
-          <div class="popup-content">
-            <span class="close-btn">&times;</span>
-            <img id="popupHotelImage" src="images/default-hotel.jpg" alt="Khách sạn" />
-            <h2 id="popupHotelTen"></h2>
-            <p id="popupHotelMoTa"></p>
-            <p id="popupHotelSoPhong"></p>
-            <p id="popupHotelGia"></p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
+    </section>
 
     <!-- ================= Footer ================= -->
     <footer class="footer-business">
@@ -193,8 +205,9 @@
         <div class="footer-about">
           <h2>BookNow Business</h2>
           <p>
-            Nền tảng kết nối doanh nghiệp và khách hàng nhanh chóng, hỗ trợ đặt vé, quảng bá sự kiện,
-            và quản lý dịch vụ dễ dàng trên cùng một hệ thống.
+            Nền tảng kết nối doanh nghiệp và khách hàng nhanh chóng, hỗ trợ đặt
+            vé, quảng bá sự kiện, và quản lý dịch vụ dễ dàng trên cùng một hệ
+            thống.
           </p>
         </div>
 

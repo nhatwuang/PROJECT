@@ -114,7 +114,7 @@ a.login-btn:active {
 .banner {
   width: 100%;
   height: 480px;
-  background: url("../images/anhnen.jpg") center center/cover no-repeat;
+  background: url("../images/anhnen0.jpg") center center/cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,7 +135,7 @@ a.login-btn:active {
 }
 
 .banner h1 {
-  color:#ffcc00;
+  color: #ffcc00;
   font-size: 48px;
   font-weight: 700;
 }
@@ -191,7 +191,6 @@ a.login-btn:active {
   border-radius: 10px;
 }
 
-
 .service-item h3 {
   margin-top: 15px;
   color: #001b80;
@@ -243,22 +242,21 @@ a.login-btn:active {
   width: 100%;
   position: relative;
 }
-
-.film-track {
+.film-list {
   display: flex;
-  gap: 12px;
-  transition: transform 0.5s ease;
+  gap: 20px;
+  transition: transform 0.3s ease;
 }
 
 .film-card {
-  background:  #f5f7ff;
+  background: #f5f7ff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   min-width: 300px;
   max-width: 350px;
   height: 520px;
   padding: 20px;
-  text-align: left;
+  text-align: center;
   transition: all 0.3s ease;
   margin: 5px;
 }
@@ -304,43 +302,6 @@ a.login-btn:active {
 
 .buy-btn:hover {
   background: #0056b3;
-}
-
-/* 🎯 Nút mũi tên chuyển phim (cố định & giữa khung) */
-.arrow {
-  position: absolute;
-  top: 50%; /* Căn giữa theo chiều dọc */
-  transform: translateY(-50%); /* Đưa tâm nút vào đúng giữa */
-  background: #ff3b3b;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 28px;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* Không hiệu ứng di chuyển */
-  transition: none !important;
-}
-
-.arrow.left {
-  left: 25px; /* cách mép trái một khoảng */
-}
-
-.arrow.right {
-  right: 25px; /* cách mép phải một khoảng */
-}
-
-/* Khi hover giữ nguyên vị trí và màu */
-.arrow:hover {
-  background: #ff3b3b !important;
-  transform: translateY(-50%) !important;
-  box-shadow: none !important;
 }
 
 /* 🚗 PHƯƠNG TIỆN NỔI BẬT */
@@ -500,7 +461,134 @@ a.login-btn:active {
   background: #02906e;
 }
 
+/* Thông báo */
+#notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
 
+.toast {
+  margin-bottom: 10px;
+  padding: 12px 18px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+}
+
+.toast.success {
+  background-color: #28a745; /* xanh lá */
+}
+
+.toast.error {
+  background-color: #dc3545; /* đỏ */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* =============================== */
+/* 📌 POPUP XÁC NHẬN ĐẶT VÉ CÓ ẢNH */
+/* =============================== */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup.show {
+  display: flex;
+}
+
+.popup-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px 30px;
+  width: 450px;
+  text-align: left;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease;
+}
+
+.popup-content h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #001b80;
+}
+
+/* --- Khu vực chi tiết gồm ảnh và thông tin --- */
+.popup-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.popup-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.popup-text p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.close-btn {
+  display: block;
+  margin: 15px auto 0;
+  padding: 10px 25px;
+  background: #001b80;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: #0a32c2;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 /* Footer */
 footer {
