@@ -10,13 +10,13 @@
   <body>
     <!-- Thanh điều hướng -->
     <header>
-      <div class="logo">🎟️ BookNow - Khách hàng</div>
+      <div class="logo">BookNow</div>
       <nav>
         <ul>
-          <li><a href="customer.html" class="active">Trang chủ</a></li>
-          <li><a href="film.html">Phim</a></li>
-          <li><a href="vehicle.html">Phương tiện</a></li>
-          <li><a href="hotel.html">Khách sạn</a></li>
+          <li><a href="#trangchu" class="active">Trang chủ</a></li>
+          <li><a href="#datve">Đặt vé</a></li>
+          <li><a href="#danhsachve">Danh sách vé</a></li>
+          <li><a href="#lienhe">Liên hệ</a></li>
         </ul>
       </nav>
       <div class="auth-btns">
@@ -26,80 +26,65 @@
       </div>
     </header>
     <!-- Banner -->
-    <section class="banner">
-      <div class="banner-text">
-        <h1>Đặt vé nhanh chóng, tiện lợi</h1>
-        <p>BookNow giúp bạn trải nghiệm dễ dàng chỉ trong vài cú nhấp!</p>
+    <section class="banner" id="trangchu">
+      <div class="banner-inner">
+        <h2>Tìm kiếm vé xe trực tuyến tại Việt Nam</h2>
+
+        <div class="search-box">
+          <div class="input-block">
+            <img src="images/go.png" class="icon" />
+            <span>TỪ</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="input-block">
+            <img src="images/to.png" class="icon" />
+            <span>ĐẾN</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="input-block">
+            <img src="images/date.png" class="icon" />
+            <span>NGÀY ĐI</span>
+          </div>
+
+          <button class="search-btn">TÌM KIẾM XE</button>
+        </div>
       </div>
     </section>
 
     <!-- Dịch vụ -->
-    <section class="services">
+    <section class="services" id="datve">
       <h2>Dịch vụ nổi bật</h2>
       <div class="service-list">
         <div class="service-item">
-          <img src="images/phim.jpg" alt="Phim" />
+          <img src="images/xekhach.jpg" alt="Phim" />
           <h3>Đặt vé xem phim</h3>
           <p>Chọn rạp, suất chiếu và chỗ ngồi yêu thích chỉ trong vài giây.</p>
           <a href="film.html">Đặt ngay</a>
         </div>
 
         <div class="service-item">
-          <img src="images/xe.jpg" alt="phương tiện" />
+          <img src="images/tau.jpg" alt="phương tiện" />
           <h3>Đặt vé phương tiện</h3>
           <p>Tìm chuyến, chọn ghế và thanh toán dễ dàng trên mọi thiết bị.</p>
           <a href="vehicle.html">Đặt ngay</a>
         </div>
 
         <div class="service-item">
-          <img src="images/khachsan.jpg" alt="Khách sạn" />
+          <img src="images/maybay.jpg" alt="Khách sạn" />
           <h3>Đặt phòng khách sạn</h3>
           <p>Chọn phòng phù hợp, an toàn và bảo mật cao.</p>
           <a href="hotel.html">Đặt ngay</a>
         </div>
       </div>
     </section>
-    <!-- Dịch vụ - Phim -->
-    <section class="services-films">
-      <h2>Phim nổi bật</h2>
-      <!-- Danh sách phim sẽ được chèn vào đây -->
-      <div class="film-list" id="filmList">
-        <!-- JS sẽ chèn các film-card vào đây -->
-      </div>
-    </section>
-
-    <!-- Phương tiện -->
-    <section class="service-vehicles">
-      <h2>Gợi ý di chuyển</h2>
-      <div class="vehicle-list">
-        <div class="vehicle-item">
-          <img src="images/maybay.jpg" alt="Máy bay" />
-          <h3>Đặt vé máy bay</h3>
-          <p>Nhanh chóng, tiện lợi, an toàn.</p>
-          <a href="vehicle.html">Đặt ngay</a>
-        </div>
-
-        <div class="vehicle-item">
-          <img src="images/tau.jpg" alt="Tàu" />
-          <h3>Đặt vé tàu</h3>
-          <p>Tìm chuyến, chọn ghế và thanh toán dễ dàng.</p>
-          <a href="vehicle.html">Đặt ngay</a>
-        </div>
-
-        <div class="vehicle-item">
-          <img src="images/xekhach.jpg" alt="Xe khách" />
-          <h3>Đặt vé xe khách</h3>
-          <p>Chi phí rẻ, thuận tiện cho mọi người.</p>
-          <a href="vehicle.html">Đặt ngay</a>
-        </div>
-      </div>
-    </section>
-    <!-- Khách sạn -->
-    <section class="service-hotels">
-      <h2>Gợi ý khách sạn</h2>
-      <div class="hotel-list">
-        <!-- JS sẽ chèn các hotel-card vào đây -->
-      </div>
+    <!-- Danh sách vé-->
+    <section class="services-tickets" id="danhsachve">
+      <h2>Danh sách vé</h2>
+      <div class="tickets-list" id="ticketsList"></div>
     </section>
 
     <!-- Chân trang -->
@@ -116,9 +101,8 @@
         <div class="footer-links">
           <h3>Dịch vụ</h3>
           <ul>
-            <li><a href="film.html">Đặt vé xem phim</a></li>
-            <li><a href="vehicle.html">Đặt vé phương tiện</a></li>
-            <li><a href="hotel.html">Đặt phòng khách sạn</a></li>
+            <li><a href="film.html">Đặt vé </a></li>
+            <li><a href="vehicle.html">Danh sách vé</a></li>
           </ul>
         </div>
 
@@ -134,16 +118,7 @@
         <p>© 2025 BookNow. All rights reserved.</p>
       </div>
     </footer>
-    <!-- ===============================
-    📌 POPUP THÔNG TIN ĐẶT VÉ
-    ================================ -->
-    <div id="booking-popup" class="popup hidden">
-      <div class="popup-content">
-        <h2>🎟️ Xác nhận đặt vé thành công!</h2>
-        <div id="popup-info"></div>
-        <button id="close-popup">Đóng</button>
-      </div>
-    </div>
+
     <!-- Script -->
     <script src="js/customer.js"></script>
   </body>

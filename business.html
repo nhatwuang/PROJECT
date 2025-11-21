@@ -13,6 +13,7 @@
         <ul>
           <li><a href="#home" class="active">Trang chủ</a></li>
           <li><a href="#services">Quản lý dịch vụ</a></li>
+          <li><a href="#danhsachve">Danh sách chuyến đi</a></li>
           <li><a href="#tickets">Vé đã đặt</a></li>
           <li><a href="#revenue">Doanh thu</a></li>
         </ul>
@@ -102,14 +103,22 @@
                 <label>Loại phương tiện:</label>
                 <input type="text" id="loaiPhuongTien" required />
 
-                <label>Địa điểm đón:</label>
+                <label>Loại phương tiện:</label>
+                <select id="loaiPhuongTien" required>
+                  <option value="">Chọn loại phương tiện</option>
+                  <option value="Máy bay">Máy bay</option>
+                  <option value="Tàu hỏa">Tàu hỏa</option>
+                  <option value="Xe khách">Xe khách</option>
+                </select>
+
+                <label>Điểm đi:</label>
                 <input type="text" id="diemDon" required />
 
-                <label>Địa điểm đến:</label>
+                <label>Điểm đến:</label>
                 <input type="text" id="diemDen" required />
 
-                <label>Thời gian khởi hành:</label>
-                <input type="datetime-local" id="gioKhoiHanh" required />
+                <label>Số ghế:</label>
+                <input type="number" id="soGhe" required />
 
                 <label>Giá vé (VNĐ):</label>
                 <input type="number" id="giaVePhuongTien" required />
@@ -145,6 +154,7 @@
                 />
                 <h3 id="popupVehicleLoai"></h3>
                 <p id="popupVehicleRoute"></p>
+                <p id="popupVehicleSeats"></p>
                 <p id="popupVehicleGia"></p>
               </div>
             </div>
@@ -197,6 +207,24 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ================= Danh sách chuyến đi ================= -->
+    <section class="container" id="danhsachve">
+      <h2>Danh sách chuyến đi đã thêm</h2>
+      <div class="trips-list" id="tripsList"></div>
+    </section>
+
+    <!-- ================= Vé đã đặt ================= -->
+    <section id="tickets" class="container">
+      <h2>Vé đã đặt</h2>
+      <div id="bookedTicketsList"></div>
+    </section>
+
+    <!-- ================= Doanh thu ================= -->
+    <section id="revenue" class="container">
+      <h2>Doanh thu</h2>
+      <p id="totalRevenue">0 VNĐ</p>
     </section>
 
     <!-- ================= Footer ================= -->

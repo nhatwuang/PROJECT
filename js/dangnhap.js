@@ -4,15 +4,13 @@
 document
   .getElementById("registerForm")
   .addEventListener("submit", function (e) {
-    e.preventDefault(); // ❌ Ngăn trang web load lại khi bấm nút "Đăng ký"
-
+    e.preventDefault();
     // 🔹 Lấy dữ liệu từ các ô nhập
     let name = document.getElementById("regName").value;
     let email = document.getElementById("regEmail").value;
     let password = document.getElementById("regPassword").value;
     let rePassword = document.getElementById("regRePassword").value;
-    let role = document.getElementById("regRole").value; // Vai trò: customer, business, admin
-
+    let role = document.getElementById("regRole").value;
     // 🔹 Kiểm tra xác nhận mật khẩu
     if (password !== rePassword) {
       showToast("Mật khẩu nhập lại không khớp!", "error");
@@ -104,7 +102,7 @@ const loginContent = document.getElementById("login-content");
 const registerContent = document.getElementById("register-content");
 
 const showRegisterBtn = document.querySelector("#login-content #show-register");
-const showLoginBtn = document.querySelector("#register-content .register-btn");
+const showLoginBtn = document.querySelector("#register-content #show-login");
 
 function showRegisterForm() {
   loginContent.classList.remove("active");
