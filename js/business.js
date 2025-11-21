@@ -373,10 +373,10 @@ if (formPT) {
     const loai = document.getElementById("loaiPhuongTien").value.trim();
     const diemDon = document.getElementById("diemDon").value.trim();
     const diemDen = document.getElementById("diemDen").value.trim();
-    const gioKhoiHanh = document.getElementById("gioKhoiHanh").value;
+    const soGhe = document.getElementById("soGhe").value.trim();
     const gia = document.getElementById("giaVePhuongTien").value.trim();
 
-    if (!loai || !diemDon || !diemDen || !gioKhoiHanh || !gia) {
+    if (!loai || !diemDon || !diemDen || !soGhe || !gia) {
       alert("⚠️ Vui lòng nhập đầy đủ thông tin!");
       return;
     }
@@ -385,7 +385,7 @@ if (formPT) {
       loai,
       diemDon,
       diemDen,
-      gioKhoiHanh,
+      soGhe,
       gia,
       anh: base64AnhPT || "",
     };
@@ -424,7 +424,7 @@ function hienThiPhuongTien(pt, index) {
     <div class="vehicle-info">
       <h3>${pt.loai}</h3>
       <p>🚏 ${pt.diemDon} → ${pt.diemDen}</p>
-      <p>🕒 ${pt.gioKhoiHanh}</p>
+      <p>🪑 Số ghế: ${pt.soGhe}</p>
       <p>💸 ${pt.gia} VNĐ</p>
     </div>
   `;
@@ -444,154 +444,4 @@ function hienThiPhuongTien(pt, index) {
   item.addEventListener("click", () => showVehiclePopup(pt));
 
   list.appendChild(item);
-}
-
-// === POPUP PHƯƠNG TIỆN ===
-function showVehiclePopup(pt) {
-  const popup = document.getElementById("popupVehicleImage").closest(".popup");
-  if (!popup) return;
-
-  document.getElementById("popupVehicleImage").src =
-    pt.anh || "images/default-vehicle.jpg";
-  document.getElementById("popupVehicleLoai").textContent = pt.loai;
-  document.getElementById(
-    "popupVehicleRoute"
-  ).textContent = `🚏 ${pt.diemDon} → ${pt.diemDen}`;
-  document.getElementById("popupVehicleGia").textContent = `💸 ${pt.gia} VNĐ`;
-
-  popup.style.display = "flex";
-  popup.querySelector(".close-btn").onclick = () =>
-    (popup.style.display = "none");
-  popup.onclick = (e) => {
-    if (e.target === popup) popup.style.display = "none";
-  };
-}
-
-// ======================================================================
-// 🔹 KHÁCH SẠN
-// ======================================================================
-
-// === ẢNH XEM TRƯỚC ===
-const inputAnhKS = document.getElementById("anhKhachSan");
-const previewKS = document.getElementById("previewKhachSan");
-let base64AnhKS = "";
-
-if (inputAnhKS) {
-  inputAnhKS.addEventListener("change", function () {
-    const file = this.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      base64AnhKS = e.target.result;
-      if (file.type.startsWith("video/")) {
-        previewKS.innerHTML = `<video controls src="${base64AnhKS}"></video>`;
-      } else {
-        previewKS.innerHTML = `<img src="${base64AnhKS}" alt="Preview">`;
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// === THÊM KHÁCH SẠN ===
-const formKS = document.getElementById("addKhachSanForm");
-if (formKS) {
-  formKS.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const ten = document.getElementById("tenKhachSan").value.trim();
-    const moTa = document.getElementById("moTaKhachSan").value.trim();
-    const soPhong = document.getElementById("soPhong").value.trim();
-    const gia = document.getElementById("giaPhong").value.trim();
-
-    if (!ten || !moTa || !soPhong || !gia) {
-      alert("⚠️ Vui lòng nhập đầy đủ thông tin!");
-      return;
-    }
-
-    const khachSan = {
-      ten,
-      moTa,
-      soPhong,
-      gia,
-      anh: base64AnhKS || "",
-    };
-
-    let dsKS = JSON.parse(localStorage.getItem("danhSachKhachSan")) || [];
-    dsKS.push(khachSan);
-    localStorage.setItem("danhSachKhachSan", JSON.stringify(dsKS));
-
-    hienThiKhachSan(khachSan, dsKS.length - 1);
-    e.target.reset();
-    previewKS.innerHTML = "";
-    base64AnhKS = "";
-    alert("✅ Đã thêm khách sạn thành công!");
-  });
-}
-
-// === HIỂN THỊ DANH SÁCH ===
-document.addEventListener("DOMContentLoaded", () => {
-  const dsKS = JSON.parse(localStorage.getItem("danhSachKhachSan")) || [];
-  dsKS.forEach((ks, index) => hienThiKhachSan(ks, index));
-});
-
-function hienThiKhachSan(ks, index) {
-  const list = document.getElementById("addedKhachSanList");
-  if (!list) return;
-
-  const placeholder = list.querySelector(".placeholder");
-  if (placeholder) placeholder.remove();
-
-  const item = document.createElement("div");
-  item.classList.add("movie-card");
-  item.innerHTML = `
-    <button class="delete-btn" title="Xoá khách sạn">×</button>
-    <img src="${ks.anh || "images/default-hotel.jpg"}" alt="${
-    ks.ten
-  }" class="hotel-img">
-    <div class="hotel-info">
-      <h3>${ks.ten}</h3>
-      <p>🛏️ ${ks.moTa}</p>
-      <p>🏠 Số phòng: ${ks.soPhong}</p>
-      <p>💸 ${ks.gia} VNĐ/đêm</p>
-    </div>
-  `;
-
-  // Xoá khách sạn
-  item.querySelector(".delete-btn").addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (confirm(`Xoá khách sạn "${ks.ten}"?`)) {
-      let dsKS = JSON.parse(localStorage.getItem("danhSachKhachSan")) || [];
-      dsKS.splice(index, 1);
-      localStorage.setItem("danhSachKhachSan", JSON.stringify(dsKS));
-      item.remove();
-    }
-  });
-
-  // Xem chi tiết popup
-  item.addEventListener("click", () => showHotelPopup(ks));
-
-  list.appendChild(item);
-}
-
-// === POPUP KHÁCH SẠN ===
-function showHotelPopup(ks) {
-  const popup = document.getElementById("popupHotelImage").closest(".popup");
-  if (!popup) return;
-  document.getElementById("popupHotelImage").src =
-    ks.anh || "images/default-hotel.jpg";
-  document.getElementById("popupHotelTen").textContent = ks.ten;
-  document.getElementById("popupHotelMoTa").textContent = "🛏️ " + ks.moTa;
-  document.getElementById("popupHotelSoPhong").textContent =
-    "🏠 Số phòng: " + ks.soPhong;
-  document.getElementById("popupHotelGia").textContent =
-    "💸 " + ks.gia + " VNĐ/đêm";
-
-  popup.style.display = "flex";
-  popup.querySelector(".close-btn").onclick = () =>
-    (popup.style.display = "none");
-  popup.onclick = (e) => {
-    if (e.target === popup) popup.style.display = "none";
-  };
 }

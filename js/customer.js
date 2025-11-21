@@ -170,4 +170,33 @@ document.addEventListener("DOMContentLoaded", () => {
       )
       .join("");
   }
+
+  // Hiển thị chuyến đi (phương tiện) trong danh sách vé
+  const ticketsList = document.getElementById("ticketsList");
+  if (ticketsList && danhSachPhuongTien.length > 0) {
+    ticketsList.innerHTML = danhSachPhuongTien
+      .map(
+        (pt, i) => `
+        <div class="ticket-card" data-index="${i}">
+          <h3>${pt.loai}</h3>
+          <p>${pt.diemDon} → ${pt.diemDen}</p>
+          <p>Số ghế: ${pt.soGhe}</p>
+          <p>Giá: ${pt.gia} VNĐ</p>
+          <button class="book-btn">🎟️ Đặt vé</button>
+        </div>`
+      )
+      .join("");
+
+    // Thêm sự kiện đặt vé
+    document.querySelectorAll(".book-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const index = e.target.closest(".ticket-card").dataset.index;
+        const ticket = danhSachPhuongTien[index];
+        let booked = JSON.parse(localStorage.getItem("bookedTickets")) || [];
+        booked.push(ticket);
+        localStorage.setItem("bookedTickets", JSON.stringify(booked));
+        alert("✅ Đặt vé thành công!");
+      });
+    });
+  }
 });
