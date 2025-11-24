@@ -2,13 +2,14 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BookNow - Doanh nghiệp</title>
     <link rel="stylesheet" href="css/business.css" />
   </head>
   <body>
     <!-- ================= Header ================= -->
     <header>
-      <div class="logo">🏢 BookNow - Doanh nghiệp</div>
+      <a href="#" class="logo">BookNow</a>
       <nav>
         <ul>
           <li><a href="#home" class="active">Trang chủ</a></li>
@@ -24,7 +25,7 @@
     </header>
 
     <!-- ================= Banner ================= -->
-    <section class="banner">
+    <section class="banner" id="home">
       <div class="banner-text">
         <h1>Xin chào, Doanh nghiệp!</h1>
         <p>
@@ -33,178 +34,65 @@
       </div>
     </section>
 
-    <section id="services" class="container">
-      <h2>Quản lý dịch vụ</h2>
-
-      <div class="service-layout-left">
-        <!-- Cột trái -->
-        <div class="service-tabs-vertical">
-          <button class="tab-btn active" data-tab="phim">🎬 Phim</button>
-          <button class="tab-btn" data-tab="phuongtien">🚗 Phương tiện</button>
-          <button class="tab-btn" data-tab="khachsan">🏨 Khách sạn</button>
+    <!-- THêm chuyến đi-->
+    <section class="container">
+      <div class="admin-card" id="services">
+        <div class="card-header">
+          <h2><i class="fas fa-bus"></i> Thêm Chuyến Xe Mới</h2>
+          <p>Nhập thông tin chi tiết để đăng chuyến đi</p>
         </div>
 
-        <!-- Cột phải -->
-        <div class="service-content">
-          <div class="forms-wrapper">
-            <!-- ===== PHIM ===== -->
-            <div class="service-form" id="form-phim">
-              <h3>Thêm dịch vụ phim</h3>
-              <form id="addPhimForm">
-                <label>Tên phim:</label>
-                <input type="text" id="tenPhim" required />
+        <div class="card-body">
+          <form id="addPhuongTienForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Điểm đi</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <input type="text" id="diemDon" required />
+                </div>
+              </div>
 
-                <label>Thể loại:</label>
-                <textarea id="moTaPhim" rows="3" required></textarea>
-
-                <label>Ảnh/Video đính kèm:</label>
-                <input type="file" id="anhPhim" accept="image/*,video/*" />
-                <div id="previewPhim" class="preview"></div>
-
-                <label>Thời lượng (phút):</label>
-                <input type="number" id="thoiLuongPhim" required />
-
-                <label>Suất chiếu:</label>
-                <input type="text" id="suatChieuPhim" />
-
-                <label>Rạp chiếu:</label>
-                <input type="text" id="rapPhim" />
-
-                <label>Giá vé (VNĐ):</label>
-                <input type="number" id="giaVePhim" required />
-
-                <button type="submit" class="add-btn">➕ Thêm phim</button>
-              </form>
-            </div>
-
-            <!-- Danh sách phim -->
-            <div class="service-form" id="list-phim">
-              <h3>Danh sách phim</h3>
-              <div class="added-list" id="addedPhimList"></div>
-            </div>
-
-            <!-- Popup phim -->
-            <div id="moviePopup" class="popup">
-              <div class="popup-content">
-                <span class="close-btn">&times;</span>
-                <img id="popupImage" src="" alt="Poster phim" />
-                <h2 id="popupTitle"></h2>
-                <p id="popupDesc"></p>
-                <p id="popupGia"></p>
-                <p id="popupSuat"></p>
-                <p id="popupRap"></p>
+              <div class="form-group">
+                <label>Điểm đến</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-location-arrow"></i>
+                  <input type="text" id="diemDen" required />
+                </div>
               </div>
             </div>
 
-            <!-- ===== PHƯƠNG TIỆN ===== -->
-            <div class="service-form hidden" id="form-phuongtien">
-              <h3>Thêm dịch vụ phương tiện</h3>
-              <form id="addPhuongTienForm">
-                <label>Loại phương tiện:</label>
-                <input type="text" id="loaiPhuongTien" required />
+            <div class="form-row">
+              <div class="form-group">
+                <label>Số ghế trống</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-chair"></i>
+                  <input type="number" id="soGhe" required />
+                </div>
+              </div>
 
-                <label>Loại phương tiện:</label>
-                <select id="loaiPhuongTien" required>
-                  <option value="">Chọn loại phương tiện</option>
-                  <option value="Máy bay">Máy bay</option>
-                  <option value="Tàu hỏa">Tàu hỏa</option>
-                  <option value="Xe khách">Xe khách</option>
-                </select>
-
-                <label>Điểm đi:</label>
-                <input type="text" id="diemDon" required />
-
-                <label>Điểm đến:</label>
-                <input type="text" id="diemDen" required />
-
-                <label>Số ghế:</label>
-                <input type="number" id="soGhe" required />
-
-                <label>Giá vé (VNĐ):</label>
-                <input type="number" id="giaVePhuongTien" required />
-
-                <label>Ảnh/Video đính kèm:</label>
-                <input
-                  type="file"
-                  id="anhPhuongTien"
-                  accept="image/*,video/*"
-                />
-                <div id="previewPhuongTien" class="preview"></div>
-
-                <button type="submit" class="add-btn">
-                  ➕ Thêm phương tiện
-                </button>
-              </form>
-            </div>
-
-            <!-- Danh sách phương tiện -->
-            <div class="service-form hidden" id="list-phuongtien">
-              <h3>Danh sách phương tiện</h3>
-              <div class="added-list" id="addedPhuongTienList"></div>
-            </div>
-
-            <!-- POPUP PHƯƠNG TIỆN -->
-            <div id="vehiclePopup" class="popup">
-              <div class="popup-content">
-                <span class="close-btn">&times;</span>
-                <img
-                  id="popupVehicleImage"
-                  src="images/default-vehicle.jpg"
-                  alt="Phương tiện"
-                />
-                <h3 id="popupVehicleLoai"></h3>
-                <p id="popupVehicleRoute"></p>
-                <p id="popupVehicleSeats"></p>
-                <p id="popupVehicleGia"></p>
+              <div class="form-group">
+                <label>Giá vé (VNĐ)</label>
+                <div class="input-wrapper">
+                  <i class="fas fa-tag"></i>
+                  <input type="number" id="giaVePhuongTien" required />
+                </div>
               </div>
             </div>
 
-            <!-- ===== KHÁCH SẠN ===== -->
-            <div class="service-form hidden" id="form-khachsan">
-              <h3>Thêm dịch vụ khách sạn</h3>
-              <form id="addKhachSanForm">
-                <label>Tên khách sạn:</label>
-                <input type="text" id="tenKhachSan" required />
-
-                <label>Mô tả:</label>
-                <textarea id="moTaKhachSan" rows="3" required></textarea>
-
-                <label>Số phòng:</label>
-                <input type="number" id="soPhong" required />
-
-                <label>Giá phòng (VNĐ/đêm):</label>
-                <input type="number" id="giaPhong" required />
-
-                <label>Ảnh/Video đính kèm:</label>
-                <input type="file" id="anhKhachSan" accept="image/*,video/*" />
-                <div id="previewKhachSan" class="preview"></div>
-
-                <button type="submit" class="add-btn">➕ Thêm khách sạn</button>
-              </form>
-            </div>
-
-            <!-- Danh sách khách sạn -->
-            <div class="service-form hidden" id="list-khachsan">
-              <h3>Danh sách khách sạn</h3>
-              <div class="added-list" id="addedKhachSanList"></div>
-            </div>
-
-            <!-- Popup khách sạn -->
-            <div id="hotelPopup" class="popup">
-              <div class="popup-content">
-                <span class="close-btn">&times;</span>
-                <img
-                  id="popupHotelImage"
-                  src="images/default-hotel.jpg"
-                  alt="Khách sạn"
-                />
-                <h2 id="popupHotelTen"></h2>
-                <p id="popupHotelMoTa"></p>
-                <p id="popupHotelSoPhong"></p>
-                <p id="popupHotelGia"></p>
+            <div class="form-group">
+              <label>Ảnh xe (Tùy chọn)</label>
+              <div class="file-upload-wrapper">
+                <input type="file" id="anhPhuongTien" accept="image/*" />
+                <div class="upload-icon">
+                  <i class="fas fa-cloud-upload-alt"></i> Chọn ảnh
+                </div>
               </div>
+              <div id="previewPhuongTien" class="preview"></div>
             </div>
-          </div>
+
+            <button type="submit" class="add-btn">Đăng chuyến xe ngay</button>
+          </form>
         </div>
       </div>
     </section>
@@ -216,15 +104,15 @@
     </section>
 
     <!-- ================= Vé đã đặt ================= -->
-    <section id="tickets" class="container">
+    <section class="container">
       <h2>Vé đã đặt</h2>
-      <div id="bookedTicketsList"></div>
+      <div class="ticket-list" id="tickets"></div>
     </section>
 
     <!-- ================= Doanh thu ================= -->
-    <section id="revenue" class="container">
+    <section class="container" id="revenue">
       <h2>Doanh thu</h2>
-      <p id="totalRevenue">0 VNĐ</p>
+      <p id="totalRevenue"></p>
     </section>
 
     <!-- ================= Footer ================= -->
@@ -261,6 +149,17 @@
       </div>
     </footer>
 
+    <div id="vehiclePopup" class="popup">
+      <div class="popup-content">
+        <span class="close-btn">&times;</span>
+        <img id="popupVehicleImage" src="" alt="Hình ảnh phương tiện" />
+
+        <h2 id="popupVehicleLoai"></h2>
+        <p id="popupVehicleRoute"></p>
+        <p id="popupVehicleSeats"></p>
+        <p id="popupVehicleGia"></p>
+      </div>
+    </div>
     <script src="js/business.js"></script>
   </body>
 </html>

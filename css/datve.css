@@ -1,0 +1,46 @@
+/* CSS riêng cho trang đặt vé */
+.booking-content {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.booking-details p {
+  font-size: 1.1em;
+  margin: 10px 0;
+  padding: 8px;
+  border-bottom: 1px dashed #ddd;
+}
+.booking-details strong {
+  color: #ffb300;
+  display: inline-block;
+  min-width: 100px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.confirm-button {
+  background-color: #28a745; /* Màu xanh lá cây */
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+}

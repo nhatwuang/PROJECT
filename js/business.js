@@ -1,8 +1,9 @@
 // ==============================================
 // 🔹 Hiệu ứng khi cuộn xuống phần "Dịch vụ"
 // ==============================================
+
 window.addEventListener("scroll", () => {
-  const services = document.querySelector(".services");
+  const services = document.querySelector(".services"); // [FIX] Thêm dòng này để không bị lỗi nếu trang không có mục services
   if (!services) return;
 
   const position = services.getBoundingClientRect().top;
@@ -13,435 +14,333 @@ window.addEventListener("scroll", () => {
   }
 });
 
-/// ==============================================
-// 🔹 Xử lý đăng nhập / đăng ký / đăng xuất ở header
+// ==============================================
+// 🔹 Xử lý đăng nhập / đăng ký / đăng xuất & Tải trang
 // ==============================================
 
 document.addEventListener("DOMContentLoaded", () => {
+  // --- 1. Xử lý Auth ---
   const authBtns = document.querySelector(".auth-btns");
   const username = localStorage.getItem("username");
 
-  // Nếu ĐÃ đăng nhập
-  if (username) {
-    authBtns.innerHTML = `
-      <span class="welcome">Xin chào, <b>${username}</b></span>
-      <button class="logout-btn">Đăng xuất</button>
-    `;
-
-    // Sự kiện Đăng xuất
-    document.querySelector(".logout-btn").addEventListener("click", () => {
-      localStorage.removeItem("username");
-      location.reload();
-    });
-  }
-  // Nếu CHƯA đăng nhập
-  else {
-    authBtns.innerHTML = `
-      <button class="login-btn">Đăng nhập</button>
-      <button class="signup-btn">Đăng ký</button>
-    `;
-
-    document.querySelector(".login-btn").addEventListener("click", () => {
-      window.location.href = "dangnhap.html";
-    });
-
-    document.querySelector(".signup-btn").addEventListener("click", () => {
-      window.location.href = "dangnhap.html";
-    });
-  }
-});
-
-// ==============================================
-// 🔹 Cuộn mượt khi bấm link trong header/footer
-// ==============================================
-document.addEventListener("DOMContentLoaded", () => {
-  const navLinks = document.querySelectorAll("header nav a, .footer-links a");
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const targetId = link.getAttribute("href");
-      if (targetId.startsWith("#")) {
-        e.preventDefault();
-        document.querySelector(targetId).scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-        navLinks.forEach((l) => l.classList.remove("active"));
-        link.classList.add("active");
-      }
-    });
-  });
-});
-
-// ==============================================
-// 🔹 Xử lý hiển thị các tab dịch vụ
-// ==============================================
-document.addEventListener("DOMContentLoaded", () => {
-  const tabButtons = document.querySelectorAll(".tab-btn");
-  const forms = document.querySelectorAll(".service-form");
-
-  tabButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      tabButtons.forEach((b) => b.classList.remove("active"));
-      forms.forEach((f) => f.classList.add("hidden"));
-      btn.classList.add("active");
-      const targetForm = document.getElementById(`form-${btn.dataset.tab}`);
-      if (targetForm) targetForm.classList.remove("hidden");
-    });
-  });
-});
-
-// =============================
-// 🔹 Xử lý ảnh xem trước
-// =============================
-const inputAnh = document.getElementById("anhPhim");
-const preview = document.getElementById("previewPhim");
-let base64Anh = "";
-
-if (inputAnh) {
-  inputAnh.addEventListener("change", function () {
-    const file = this.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      base64Anh = e.target.result;
-      if (file.type.startsWith("video/")) {
-        preview.innerHTML = `<video controls src="${base64Anh}"></video>`;
-      } else {
-        preview.innerHTML = `<img src="${base64Anh}" alt="Preview">`;
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// =============================
-// 🔹 Thêm phim + lưu vào localStorage
-// =============================
-const form = document.getElementById("addPhimForm");
-if (form) {
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const ten = document.getElementById("tenPhim").value.trim();
-    const moTa = document.getElementById("moTaPhim").value.trim();
-    const gia = document.getElementById("giaVePhim").value.trim();
-    const suat = document.getElementById("suatChieuPhim").value.trim();
-    const rap = document.getElementById("rapPhim").value.trim();
-    const fileInput = document.getElementById("anhPhim");
-
-    if (!ten || !moTa || !gia) {
-      alert("⚠️ Vui lòng nhập đầy đủ thông tin!");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function () {
-      const anh = reader.result || "";
-      const phim = { ten, moTa, gia, suat, rap, anh };
-      let dsPhim = JSON.parse(localStorage.getItem("danhSachPhim")) || [];
-      dsPhim.push(phim);
-      localStorage.setItem("danhSachPhim", JSON.stringify(dsPhim));
-
-      hienThiPhim(phim, dsPhim.length - 1);
-      e.target.reset(); // ✅ Xoá trắng input
-      preview.innerHTML = ""; // ✅ Xoá ảnh xem trước
-      alert("✅ Đã thêm phim thành công!");
-    };
-
-    if (fileInput.files[0]) {
-      reader.readAsDataURL(fileInput.files[0]);
-    } else {
-      const phim = { ten, moTa, gia, suat, rap, anh: "" };
-      let dsPhim = JSON.parse(localStorage.getItem("danhSachPhim")) || [];
-      dsPhim.push(phim);
-      localStorage.setItem("danhSachPhim", JSON.stringify(dsPhim));
-      hienThiPhim(phim, dsPhim.length - 1);
-      e.target.reset();
-      preview.innerHTML = "";
-      alert("✅ Đã thêm phim thành công!");
-    }
-  });
-}
-
-// ===== HIỂN THỊ DANH SÁCH PHIM =====
-document.addEventListener("DOMContentLoaded", () => {
-  const dsPhim = JSON.parse(localStorage.getItem("danhSachPhim")) || [];
-  dsPhim.forEach((phim, index) => hienThiPhim(phim, index));
-});
-
-function hienThiPhim(phim, index) {
-  const list = document.getElementById("addedPhimList");
-  if (!list) return;
-
-  const placeholder = list.querySelector(".placeholder");
-  if (placeholder) placeholder.remove();
-
-  const item = document.createElement("div");
-  item.classList.add("movie-card");
-  item.innerHTML = `
-    <button class="delete-btn" title="Xoá phim">×</button>
-    <img src="${phim.anh || "images/default-poster.jpg"}" alt="${
-    phim.ten
-  }" class="movie-poster">
-    <div class="movie-info">
-      <h3 class="movie-title">${phim.ten}</h3>
-      <p>🎬 ${phim.moTa}</p>
-      <p>💸 ${phim.gia} VNĐ</p>
-      <p>⏰ ${phim.suat || "Không có"}</p>
-      <p>📍 ${phim.rap || "Không có"}</p>
-    </div>
-  `;
-
-  // Xoá phim
-  item.querySelector(".delete-btn").addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (confirm(`Bạn có chắc muốn xoá "${phim.ten}" không?`)) {
-      let dsPhim = JSON.parse(localStorage.getItem("danhSachPhim")) || [];
-      dsPhim.splice(index, 1);
-      localStorage.setItem("danhSachPhim", JSON.stringify(dsPhim));
-      item.remove();
-
-      // Nếu xoá hết -> hiển thị placeholder
-      if (dsPhim.length === 0) {
-        list.innerHTML = `<p class="placeholder" style="font-style: italic; color: #888;">Chưa có dịch vụ nào được thêm.</p>`;
-      }
-    }
-  });
-
-  // Xem chi tiết popup
-  item.addEventListener("click", () => showPopup(phim));
-
-  list.appendChild(item);
-}
-
-// ===== POPUP XEM CHI TIẾT =====
-function showPopup(phim) {
-  const popup = document.getElementById("moviePopup");
-  if (!popup) return;
-
-  document.getElementById("popupImage").src =
-    phim.anh || "images/default-poster.jpg";
-  document.getElementById("popupTitle").textContent = phim.ten;
-  document.getElementById("popupDesc").textContent = "🎬 " + phim.moTa;
-  document.getElementById("popupGia").textContent = "💸 " + phim.gia + " VNĐ";
-  document.getElementById("popupSuat").textContent =
-    "⏰ " + (phim.suat || "Không có");
-  document.getElementById("popupRap").textContent =
-    "📍 " + (phim.rap || "Không có");
-
-  popup.style.display = "flex";
-
-  popup.querySelector(".close-btn").onclick = () =>
-    (popup.style.display = "none");
-  popup.onclick = (e) => {
-    if (e.target === popup) popup.style.display = "none";
-  };
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  // === Các phần tử nút tab ===
-  const tabButtons = document.querySelectorAll(".tab-btn");
-
-  // === Các form & danh sách ===
-  const sections = {
-    phim: ["form-phim", "list-phim"],
-    phuongtien: ["form-phuongtien", "list-phuongtien"],
-    khachsan: ["form-khachsan", "list-khachsan"],
-  };
-
-  // === Xử lý chuyển tab ===
-  tabButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      // Bỏ active ở tất cả
-      tabButtons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      // Ẩn toàn bộ form/danh sách
-      Object.values(sections)
-        .flat()
-        .forEach((id) => {
-          document.getElementById(id).classList.add("hidden");
-        });
-
-      // Hiện đúng loại dịch vụ
-      const tab = btn.dataset.tab;
-      sections[tab].forEach((id) => {
-        document.getElementById(id).classList.remove("hidden");
+  if (authBtns) {
+    // [FIX] Kiểm tra tồn tại
+    if (username) {
+      authBtns.innerHTML = `
+          <span class="welcome">Xin chào, <b>${username}</b></span>
+          <button class="login-btn">Đăng xuất</button>
+        `;
+      document.querySelector(".login-btn").addEventListener("click", () => {
+        localStorage.removeItem("username");
+        location.reload();
       });
+    } else {
+      authBtns.innerHTML = `
+          <button class="login-btn">Đăng nhập</button>
+          <button class="signup-btn">Đăng ký</button>
+        `;
+      document.querySelector(".login-btn").addEventListener("click", () => {
+        window.location.href = "dangnhap.html";
+      });
+      document.querySelector(".signup-btn").addEventListener("click", () => {
+        window.location.href = "dangnhap.html";
+      });
+    }
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Hiển thị Form & Danh sách (Bỏ ẩn class 'hidden' trong HTML)
+  const formSection = document.getElementById("form-phuongtien");
+  const listSection = document.getElementById("list-phuongtien");
+  if (formSection) formSection.classList.remove("hidden");
+  if (listSection) listSection.classList.remove("hidden"); // 2. Tải dữ liệu ban đầu
+
+  loadServices(); // Load danh sách xe đã thêm
+  loadBookedTickets(); // Load danh sách vé khách đặt
+  calculateRevenue(); // Tính doanh thu // 3. Bắt sự kiện Submit form thêm xe
+
+  const form = document.getElementById("addPhuongTienForm");
+  if (form) {
+    form.addEventListener("submit", handleAddVehicle);
+  } // 4. Bắt sự kiện xem trước ảnh
+
+  const imgInput = document.getElementById("anhPhuongTien");
+  if (imgInput) {
+    imgInput.addEventListener("change", function () {
+      const previewDiv = document.getElementById("previewPhuongTien");
+      previewImage(this, previewDiv);
+    });
+  } // 5. Xử lý nút đóng Popup
+
+  document.querySelectorAll(".close-btn").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      this.closest(".popup").style.display = "none";
     });
   });
-
-  // ===================================================
-  // ==================== PHIM ==========================
-  // ===================================================
-  const addPhimForm = document.getElementById("addPhimForm");
-  const addedPhimList = document.getElementById("addedPhimList");
-
-  addPhimForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const tenPhim = document.getElementById("tenPhim").value;
-    const moTaPhim = document.getElementById("moTaPhim").value;
-    const giaVePhim = document.getElementById("giaVePhim").value;
-
-    const div = document.createElement("div");
-    div.classList.add("added-item");
-    div.textContent = `${tenPhim} - ${giaVePhim} VNĐ`;
-    addedPhimList.appendChild(div);
-
-    addPhimForm.reset();
-  });
-
-  // ===================================================
-  // ================== PHƯƠNG TIỆN ====================
-  // ===================================================
-  const addPhuongTienForm = document.getElementById("addPhuongTienForm");
-  const addedPhuongTienList = document.getElementById("addedPhuongTienList");
-
-  addPhuongTienForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const loai = document.getElementById("loaiPhuongTien").value;
-    const diemDon = document.getElementById("diemDon").value;
-    const diemDen = document.getElementById("diemDen").value;
-    const gia = document.getElementById("giaVePhuongTien").value;
-
-    const div = document.createElement("div");
-    div.classList.add("added-item");
-    div.textContent = `${loai} | ${diemDon} → ${diemDen} | ${gia} VNĐ`;
-    addedPhuongTienList.appendChild(div);
-
-    addPhuongTienForm.reset();
-  });
-
-  // ===================================================
-  // ==================== KHÁCH SẠN ====================
-  // ===================================================
-  const addKhachSanForm = document.getElementById("addKhachSanForm");
-  const addedKhachSanList = document.getElementById("addedKhachSanList");
-
-  addKhachSanForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const ten = document.getElementById("tenKhachSan").value;
-    const soPhong = document.getElementById("soPhong").value;
-    const gia = document.getElementById("giaPhong").value;
-
-    const div = document.createElement("div");
-    div.classList.add("added-item");
-    div.textContent = `${ten} - ${soPhong} phòng - ${gia} VNĐ/đêm`;
-    addedKhachSanList.appendChild(div);
-
-    addKhachSanForm.reset();
-  });
 });
 
-// ======================================================================
-// 🔹 PHƯƠNG TIỆN
-// ======================================================================
+// ============================================================
+// 1. CHỨC NĂNG THÊM CHUYẾN XE (LƯU VÀO KHO CHUNG)
+// ============================================================
 
-// === ẢNH XEM TRƯỚC ===
-const inputAnhPT = document.getElementById("anhPhuongTien");
-const previewPT = document.getElementById("previewPhuongTien");
-let base64AnhPT = "";
+async function handleAddVehicle(e) {
+  e.preventDefault(); // Chặn load lại trang // Lấy giá trị từ form // [FIX] Sửa logic lấy loại phương tiện cho chính xác
 
-if (inputAnhPT) {
-  inputAnhPT.addEventListener("change", function () {
-    const file = this.files[0];
-    if (!file) return;
+  const typeSelect = document.getElementById("loaiPhuongTien"); // Nếu không tìm thấy select (do bạn dùng template cũ), mặc định là Xe Khách
+  const vehicleType = typeSelect ? typeSelect.value : "Xe Khách";
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      base64AnhPT = e.target.result;
-      if (file.type.startsWith("video/")) {
-        previewPT.innerHTML = `<video controls src="${base64AnhPT}"></video>`;
-      } else {
-        previewPT.innerHTML = `<img src="${base64AnhPT}" alt="Preview">`;
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-}
+  const fromInput = document.getElementById("diemDon");
+  const toInput = document.getElementById("diemDen");
+  const seatsInput = document.getElementById("soGhe");
+  const priceInput = document.getElementById("giaVePhuongTien");
+  const imageInput = document.getElementById("anhPhuongTien"); // Xử lý ảnh sang Base64
 
-// === THÊM PHƯƠNG TIỆN ===
-const formPT = document.getElementById("addPhuongTienForm");
-if (formPT) {
-  formPT.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const loai = document.getElementById("loaiPhuongTien").value.trim();
-    const diemDon = document.getElementById("diemDon").value.trim();
-    const diemDen = document.getElementById("diemDen").value.trim();
-    const soGhe = document.getElementById("soGhe").value.trim();
-    const gia = document.getElementById("giaVePhuongTien").value.trim();
-
-    if (!loai || !diemDon || !diemDen || !soGhe || !gia) {
-      alert("⚠️ Vui lòng nhập đầy đủ thông tin!");
+  let imageSrc = "images/default-vehicle.jpg"; // Ảnh mặc định
+  if (imageInput.files && imageInput.files[0]) {
+    const file = imageInput.files[0]; // Kiểm tra dung lượng < 2MB để tránh lỗi LocalStorage
+    if (file.size > 2 * 1024 * 1024) {
+      alert("⚠️ Ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB");
       return;
     }
-
-    const phuongTien = {
-      loai,
-      diemDon,
-      diemDen,
-      soGhe,
-      gia,
-      anh: base64AnhPT || "",
-    };
-
-    let dsPT = JSON.parse(localStorage.getItem("danhSachPhuongTien")) || [];
-    dsPT.push(phuongTien);
-    localStorage.setItem("danhSachPhuongTien", JSON.stringify(dsPT));
-
-    hienThiPhuongTien(phuongTien, dsPT.length - 1);
-    e.target.reset();
-    previewPT.innerHTML = "";
-    alert("✅ Đã thêm phương tiện thành công!");
-  });
-}
-
-// === HIỂN THỊ DANH SÁCH ===
-document.addEventListener("DOMContentLoaded", () => {
-  const dsPT = JSON.parse(localStorage.getItem("danhSachPhuongTien")) || [];
-  dsPT.forEach((pt, index) => hienThiPhuongTien(pt, index));
-});
-
-function hienThiPhuongTien(pt, index) {
-  const list = document.getElementById("addedPhuongTienList");
-  if (!list) return;
-
-  const placeholder = list.querySelector(".placeholder");
-  if (placeholder) placeholder.remove();
-
-  const item = document.createElement("div");
-  item.classList.add("movie-card");
-  item.innerHTML = `
-    <button class="delete-btn" title="Xoá phương tiện">×</button>
-    <img src="${pt.anh || "images/default-vehicle.jpg"}" alt="${
-    pt.loai
-  }" class="vehicle-img">
-    <div class="vehicle-info">
-      <h3>${pt.loai}</h3>
-      <p>🚏 ${pt.diemDon} → ${pt.diemDen}</p>
-      <p>🪑 Số ghế: ${pt.soGhe}</p>
-      <p>💸 ${pt.gia} VNĐ</p>
-    </div>
-  `;
-
-  // Xoá phương tiện
-  item.querySelector(".delete-btn").addEventListener("click", (e) => {
-    e.stopPropagation();
-    if (confirm(`Xoá phương tiện "${pt.loai}"?`)) {
-      let dsPT = JSON.parse(localStorage.getItem("danhSachPhuongTien")) || [];
-      dsPT.splice(index, 1);
-      localStorage.setItem("danhSachPhuongTien", JSON.stringify(dsPT));
-      item.remove();
+    try {
+      imageSrc = await toBase64(file);
+    } catch (err) {
+      console.error(err);
     }
-  });
+  } // Tạo đối tượng chuyến xe
 
-  // Xem chi tiết popup
-  item.addEventListener("click", () => showVehiclePopup(pt));
+  const newRoute = {
+    id: Date.now(),
+    from: fromInput.value.trim(),
+    to: toInput.value.trim(),
+    date: new Date().toISOString().split("T")[0], // Mặc định ngày hiện tại
+    time: "08:00",
+    price: parseInt(priceInput.value).toLocaleString("vi-VN") + " VNĐ",
+    rawPrice: parseInt(priceInput.value),
+    vehicle: vehicleType,
+    type: "Limousine VIP",
+    seatsAvailable: seatsInput.value,
+    image: imageSrc,
+  }; // Lưu vào LocalStorage
 
-  list.appendChild(item);
+  let currentRoutes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
+  currentRoutes.push(newRoute);
+
+  try {
+    localStorage.setItem("repo_tuyen_xe", JSON.stringify(currentRoutes));
+    alert("✅ Đã đăng chuyến xe thành công!");
+
+    e.target.reset(); // Reset form // [FIX] Xóa ảnh preview sau khi thêm
+    const previewDiv = document.getElementById("previewPhuongTien");
+    if (previewDiv) previewDiv.innerHTML = "";
+
+    loadServices();
+  } catch (err) {
+    alert("⚠️ Bộ nhớ đầy! Hãy xóa bớt chuyến cũ.");
+  }
 }
+
+// ============================================================
+// 2. HIỂN THỊ DANH SÁCH XE ĐÃ THÊM (ĐÃ LÀM SẠCH)
+// ============================================================
+
+function loadServices() {
+  const routes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
+  renderList("addedPhuongTienList", routes, true);
+  renderList("tripsList", routes, false);
+}
+
+function renderList(elementId, data, showDelete) {
+  const container = document.getElementById(elementId);
+  if (!container) return;
+
+  container.innerHTML = "";
+  if (data.length === 0) {
+    container.innerHTML = "<p class='placeholder'>Chưa có dữ liệu.</p>";
+    return;
+  }
+
+  data.forEach((item, index) => {
+    const card = document.createElement("div");
+    card.className = "service-item fade-in";
+    card.innerHTML = `
+        <div class="service-info">
+            <img src="${item.image}" alt="Xe">
+            <div class="service-text">
+                <strong>${item.from} ➝ ${item.to}</strong>
+                <span>${item.vehicle} • ${item.price} • ${
+      item.seatsAvailable
+    } ghế</span>
+            </div>
+        </div>
+        <div class="service-actions">
+            <button class="btn-view" onclick="viewVehicleDetails(${index})">Xem</button>
+            ${
+      showDelete
+        ? `<button class="delete-btn" onclick="deleteService(${index})">Xóa</button>`
+        : ""
+    }
+        </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ============================================================
+// 3. HIỂN THỊ VÉ ĐÃ ĐẶT (ĐÃ LÀM SẠCH)
+// ============================================================
+
+function loadBookedTickets() {
+  const container = document.getElementById("bookedTicketsList");
+  if (!container) return;
+
+  const orders = JSON.parse(localStorage.getItem("bookedTickets") || "[]");
+  container.innerHTML = "";
+
+  if (orders.length === 0) {
+    container.innerHTML = "<p class='placeholder'>Chưa có vé nào được đặt.</p>";
+    return;
+  }
+
+  orders.forEach((order) => {
+    const item = document.createElement("div");
+    item.className = "service-item booked-item"; // Thêm class booked-item để style riêng
+
+    item.innerHTML = `
+        <div class="service-info">
+            <div class="service-text">
+                <strong>Khách: ${order.customer.name}</strong> 
+                <span class="sub-text">(${order.customer.phone})</span><br>
+                <span class="route-text">Chuyến: ${order.route.from} ➝ ${
+      order.route.to
+    }</span><br>
+                <span class="date-text">Ngày đi: ${order.route.date}</span>
+            </div>
+        </div>
+        <div class="service-price">
+            <strong>${order.route.price}</strong><br>
+            <span>${new Date(order.bookingTime).toLocaleDateString(
+      "vi-VN"
+    )}</span>
+        </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+// Hàm xóa chuyến xe
+window.deleteService = function (index) {
+  if (confirm("Bạn chắc chắn muốn xóa chuyến này?")) {
+    let routes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
+    routes.splice(index, 1);
+    localStorage.setItem("repo_tuyen_xe", JSON.stringify(routes));
+    loadServices();
+  }
+};
+
+// [FIX] Hàm xem chi tiết (Popup) - Đã thêm mới để nút "Xem" hoạt động
+window.viewVehicleDetails = function (index) {
+  let routes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
+  const item = routes[index];
+
+  document.getElementById("popupVehicleImage").src = item.image;
+  document.getElementById("popupVehicleLoai").innerText = item.vehicle; // Sửa thành hiển thị loại xe
+  document.getElementById(
+    "popupVehicleRoute"
+  ).innerText = `Lộ trình: ${item.from} - ${item.to}`;
+  document.getElementById(
+    "popupVehicleSeats"
+  ).innerText = `Số ghế: ${item.seatsAvailable}`;
+  document.getElementById(
+    "popupVehicleGia"
+  ).innerText = `Giá vé: ${item.price}`;
+
+  document.getElementById("vehiclePopup").style.display = "flex";
+};
+
+// ============================================================
+// 3. QUẢN LÝ ĐƠN HÀNG & DOANH THU (TỪ TRANG CUSTOMER)
+// ============================================================
+
+function loadBookedTickets() {
+  const container = document.getElementById("bookedTicketsList");
+  if (!container) return;
+
+  const orders = JSON.parse(localStorage.getItem("bookedTickets") || "[]");
+  container.innerHTML = "";
+
+  if (orders.length === 0) {
+    container.innerHTML = "<p class='placeholder'>Chưa có vé nào được đặt.</p>";
+    return;
+  }
+
+  orders.forEach((order) => {
+    const item = document.createElement("div");
+    item.className = "service-item";
+    item.style.cssText =
+      "display:flex; justify-content:space-between; align-items:center; background:#f9f9f9; border-left:5px solid #00c897; padding:15px; margin-bottom:10px; border-radius:4px;";
+
+    item.innerHTML = `
+            <div>
+                <strong style="color:#333;">Khách: ${
+      order.customer.name
+    }</strong> - <span style="color:#555;">${order.customer.phone}</span><br>
+                <span style="font-size:14px; color:#001b80;">Chuyến: ${
+      order.route.from
+    } ➝ ${order.route.to}</span><br>
+                <span style="font-size:12px; color:#888;">Ngày đi: ${
+      order.route.date
+    }</span>
+            </div>
+            <div style="text-align:right;">
+                <strong style="color:#d35400; font-size:16px;">${
+      order.route.price
+    }</strong><br>
+                <span style="font-size:11px; color:#aaa;">${new Date(
+      order.bookingTime
+    ).toLocaleString("vi-VN")}</span>
+            </div>
+        `;
+    container.appendChild(item);
+  });
+}
+
+function calculateRevenue() {
+  const el = document.getElementById("totalRevenue");
+  if (!el) return;
+
+  const orders = JSON.parse(localStorage.getItem("bookedTickets") || "[]");
+
+  const total = orders.reduce((sum, order) => {
+    // Chuyển đổi chuỗi "750.000 VNĐ" thành số 750000
+    let price = parseInt(
+      order.route.price.toString().replace(/\./g, "").replace(/\D/g, "")
+    );
+    return sum + (isNaN(price) ? 0 : price);
+  }, 0);
+
+  el.innerText = total.toLocaleString("vi-VN") + " VNĐ";
+}
+
+// ============================================================
+// 4. CÁC HÀM HỖ TRỢ (HELPER)
+// ============================================================
+
+function previewImage(input, previewDiv) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewDiv.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-width:100%; height:auto; border-radius:8px; margin-top:10px;">`;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });

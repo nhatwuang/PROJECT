@@ -25,61 +25,42 @@
         <button class="signup-btn">Đăng ký</button>
       </div>
     </header>
-    <!-- Banner -->
-    <section class="banner" id="trangchu">
-      <div class="banner-inner">
-        <h2>Tìm kiếm vé xe trực tuyến tại Việt Nam</h2>
 
-        <div class="search-box">
-          <div class="input-block">
-            <img src="images/go.png" class="icon" />
-            <span>TỪ</span>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="input-block">
-            <img src="images/to.png" class="icon" />
-            <span>ĐẾN</span>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="input-block">
-            <img src="images/date.png" class="icon" />
-            <span>NGÀY ĐI</span>
-          </div>
-
-          <button class="search-btn">TÌM KIẾM XE</button>
+    <!-- Thanh tìm kiếm -->
+    <div class="search-container" id="trangchu">
+      <h2>Tìm chuyến đi của bạn</h2>
+      <form id="search-form" class="search-bar">
+        <div class="input-group">
+          <i class="fas fa-bus-alt"></i>
+          <input type="text" id="departure" placeholder="TỪ" required />
         </div>
-      </div>
-    </section>
+
+        <div class="input-group">
+          <i class="fas fa-bus-alt"></i>
+          <input type="text" id="destination" placeholder="ĐẾN" required />
+        </div>
+
+        <div class="input-group">
+          <i class="far fa-calendar-alt"></i>
+          <input type="date" id="travel-date" placeholder="NGÀY ĐI" />
+        </div>
+
+        <button type="submit" class="search-button">TÌM KIẾM CHUYẾN ĐI</button>
+      </form>
+    </div>
+
+    <div class="results-container">
+      <h2>Kết Quả Tìm Kiếm</h2>
+      <ul id="results-list"></ul>
+      <p id="no-results" style="display: none; color: #555">
+        Không tìm thấy chuyến xe phù hợp. Vui lòng thử lại.
+      </p>
+    </div>
 
     <!-- Dịch vụ -->
     <section class="services" id="datve">
-      <h2>Dịch vụ nổi bật</h2>
-      <div class="service-list">
-        <div class="service-item">
-          <img src="images/xekhach.jpg" alt="Phim" />
-          <h3>Đặt vé xem phim</h3>
-          <p>Chọn rạp, suất chiếu và chỗ ngồi yêu thích chỉ trong vài giây.</p>
-          <a href="film.html">Đặt ngay</a>
-        </div>
-
-        <div class="service-item">
-          <img src="images/tau.jpg" alt="phương tiện" />
-          <h3>Đặt vé phương tiện</h3>
-          <p>Tìm chuyến, chọn ghế và thanh toán dễ dàng trên mọi thiết bị.</p>
-          <a href="vehicle.html">Đặt ngay</a>
-        </div>
-
-        <div class="service-item">
-          <img src="images/maybay.jpg" alt="Khách sạn" />
-          <h3>Đặt phòng khách sạn</h3>
-          <p>Chọn phòng phù hợp, an toàn và bảo mật cao.</p>
-          <a href="hotel.html">Đặt ngay</a>
-        </div>
-      </div>
+      <h2 class="section-title">Các tuyến đường phổ biến</h2>
+      <div class="service-list" id="popular-routes-container"></div>
     </section>
     <!-- Danh sách vé-->
     <section class="services-tickets" id="danhsachve">
@@ -106,7 +87,7 @@
           </ul>
         </div>
 
-        <div class="footer-contact">
+        <div class="footer-contact" id="lienhe">
           <h3>Liên hệ</h3>
           <p>📍 81/2 Bà Triệu, P.Xuân phú, TP.Huế</p>
           <p>📞 0338397090</p>

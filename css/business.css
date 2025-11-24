@@ -1,4 +1,6 @@
-/* Reset */
+/* ============================================================
+   1. CẤU HÌNH CHUNG (RESET & GLOBAL)
+   ============================================================ */
 * {
   margin: 0;
   padding: 0;
@@ -7,13 +9,25 @@
 }
 
 body {
-  background-color: #090562;
+  background-color: #f4f7f6; /* Màu nền xám nhẹ toàn trang */
   color: #333;
 }
 
-/* Header */
+/* Container chung cho các section */
+.container {
+  display: flex;
+  flex-direction: column; /* Xếp dọc các khối */
+  justify-content: center;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   2. HEADER & NAVIGATION
+   ============================================================ */
 header {
-  background-color: #001b80;
+  background-color: #000000;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -24,41 +38,51 @@ header {
   top: 0;
   z-index: 10;
   flex-wrap: wrap;
+  border-bottom: 2px solid #ffcc00;
 }
+
 .logo {
   font-size: 28px;
   font-weight: 700;
+  margin-left: 60px;
+  color: #ffcc00;
+  text-decoration: none;
 }
+
 nav ul {
   display: flex;
   list-style: none;
   gap: 30px;
 }
+
 nav ul li a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
   transition: 0.3s;
 }
+
 nav ul li a:hover,
 nav ul li a.active {
   color: #00c897;
 }
 
+/* Nút Auth (Đăng nhập/Đăng ký/Đăng xuất) */
 .auth-btns {
   display: flex;
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  white-space: nowrap; /* ✅ giữ chữ trên 1 dòng */
+  white-space: nowrap;
 }
 
-.auth-btns button {
+.login-btn,
+.signup-btn {
   display: inline-block;
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #1877f2, #0ba842);
-  color: #fff;
+  background: linear-gradient(180deg, #ffcc00, #ffffff);
+  color: #000000;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -70,16 +94,16 @@ nav ul li a.active {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.auth-btns button:hover {
-  background-color: #0056b3;
+.login-btn:hover,
+.signup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0.95;
 }
 
-.auth-btns .welcome {
-  color: #f9f8f8;
-  font-weight: 600;
-}
-
-/* Banner */
+/* ============================================================
+   3. BANNER (PHẦN ĐẦU TRANG)
+   ============================================================ */
 .banner {
   width: 100%;
   height: 100vh;
@@ -97,7 +121,7 @@ nav ul li a.active {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5); /* Lớp phủ tối màu */
 }
 
 .banner-text {
@@ -109,528 +133,419 @@ nav ul li a.active {
   color: #ffcc00;
   font-size: 48px;
   font-weight: 700;
+  margin-bottom: 15px;
 }
 
 .banner p {
   font-size: 20px;
-  margin-top: 10px;
 }
 
-/* Container */
-.container {
-  padding: 80px 60px;
-  background: #f7f9ff;
-  margin: 60px auto;
-  border-radius: 12px;
-  width: 85%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* ============================================================
+   4. FORM NHẬP LIỆU (CARD "THÊM CHUYẾN XE")
+   ============================================================ */
+.admin-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 800px; /* Độ rộng tối đa của form */
+  margin: 0 auto; /* Căn giữa */
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid #eee;
 }
 
-/* ===== BỐ CỤC QUẢN LÝ DỊCH VỤ (CỘT TRÁI - CỘT PHẢI) ===== */
-.service-layout-left {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 40px;
-  margin-top: 30px;
+.card-header {
+  background: linear-gradient(135deg, #008447, #005f33); /* Xanh thương hiệu */
+  color: white;
+  padding: 30px;
+  text-align: center;
 }
 
-/* --- Cột trái: Nút chọn dịch vụ --- */
-.service-tabs-vertical {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 220px;
-}
-
-.service-tabs-vertical .tab-btn {
-  background: #e6ecff;
-  border: none;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  color: #001b80;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: left;
-}
-
-.service-tabs-vertical .tab-btn:hover {
-  background: #4c63e0;
-  color: #fff;
-}
-
-.service-tabs-vertical .tab-btn.active {
-  background: #001b80;
-  color: #fff;
-}
-
-/* --- Cột phải: Khu vực form --- */
-.service-content {
-  flex: 1;
+.card-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
-.service-form {
-  width: 500px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 30px 40px;
-  animation: fadeIn 0.4s ease;
+.card-body {
+  padding: 40px;
 }
 
-.service-form.hidden {
-  display: none;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.service-form h3 {
-  color: #001b80;
-  text-align: center;
+/* Bố cục Form */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Chia 2 cột */
+  gap: 25px;
   margin-bottom: 20px;
 }
 
-.service-form label {
+.form-group label {
   display: block;
+  margin-bottom: 8px;
   font-weight: 600;
-  margin: 10px 0 5px;
+  color: #333;
+  font-size: 14px;
 }
 
-.service-form input,
-.service-form textarea {
+/* Input Wrapper (Input có icon) */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 15px;
+  color: #008447;
+  font-size: 16px;
+}
+
+.input-wrapper input {
   width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 14px 15px 14px 45px; /* Padding trái lớn để tránh icon */
+  border: 2px solid #f0f0f0;
+  border-radius: 10px;
   font-size: 15px;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+  color: #333;
 }
 
-.add-btn {
+.input-wrapper input:focus {
+  border-color: #008447;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 132, 71, 0.1);
+  outline: none;
+}
+
+/* Upload Ảnh */
+.file-upload-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
   width: 100%;
-  margin-top: 20px;
-  background: #00c897;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
+  height: 100px;
+  background: #f0fdf4;
+  border: 2px dashed #008447;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: bold;
   transition: 0.3s;
 }
 
-.add-btn:hover {
-  background: #02906e;
-  transform: translateY(-2px);
+.file-upload-wrapper:hover {
+  background: #dcfce7;
 }
 
-/* ===== Bố cục 2 form nằm ngang gọn đẹp ===== */
-.service-layout {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 25px;
-  flex-wrap: wrap;
-  margin-top: 25px;
-}
-
-/* Style form đồng bộ, gọn gàng */
-.service-layout .service-form {
-  flex: 1;
-  min-width: 340px;
-  max-width: 420px;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  padding: 25px 30px;
-  transition: all 0.3s ease;
-  border: 1px solid #e5e9ff;
-}
-
-.service-layout .service-form:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* Tiêu đề form */
-.service-layout .service-form h3 {
-  color: #001b80;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 20px;
-  font-weight: 700;
-  border-bottom: 2px solid #00c897;
-  padding-bottom: 8px;
-}
-
-/* Input và textarea */
-.service-layout input,
-.service-layout textarea {
+.file-upload-wrapper input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #cfd8ff;
-  border-radius: 8px;
-  font-size: 15px;
-  margin-bottom: 10px;
-  background: #f9faff;
-  transition: border 0.2s ease;
-}
-
-.service-layout input:focus,
-.service-layout textarea:focus {
-  outline: none;
-  border-color: #00c897;
-  background: #fff;
-}
-
-/* Nút thêm dịch vụ */
-.service-layout .add-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #00c897, #007a64);
-  color: #fff;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 15px;
+  height: 100%;
+  opacity: 0;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.service-layout .add-btn:hover {
-  background: linear-gradient(135deg, #00a87c, #006d55);
-  transform: translateY(-2px);
+.upload-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #008447;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 }
 
-/* ===== Danh sách dịch vụ đã thêm ===== */
-.added-list {
-  max-height: 400px;
-  overflow-y: auto;
-  padding-right: 5px;
-}
-
-/* Từng mục dịch vụ */
-.service-item {
-  background: #f7f9ff;
-  border: 1px solid #dee4ff;
+.preview img {
+  max-width: 100%;
+  max-height: 200px;
   border-radius: 10px;
-  padding: 12px 15px;
-  margin-bottom: 12px;
-  font-size: 14.5px;
-  line-height: 1.6;
-  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+}
+
+/* Nút Đăng Chuyến */
+.add-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #008447, #005f33);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 20px;
+  text-transform: uppercase;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.add-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 132, 71, 0.3);
+}
+
+/* ============================================================
+   5. CÁC SECTION DANH SÁCH (Thẻ bao ngoài)
+   ============================================================ */
+/* Style chung cho các khối: Danh sách chuyến đi, Vé đã đặt, Doanh thu */
+#danhsachve,
+#tickets,
+#revenue {
+  background-color: #fff;
+  width: 100%;
+  max-width: 1000px; /* Giới hạn chiều rộng */
+  margin: 30px auto; /* Canh giữa */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  display: block;
+}
+
+/* Tiêu đề của các Section này */
+#danhsachve h2,
+#tickets h2,
+#revenue h2 {
+  font-size: 22px;
+  color: #001b80;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f4f4f4;
+  text-align: left;
+}
+
+/* Riêng phần Doanh thu căn giữa */
+#revenue {
+  text-align: center;
+}
+#totalRevenue {
+  font-size: 40px;
+  font-weight: 800;
+  color: #d35400;
+  margin-top: 10px;
+}
+
+/* ============================================================
+   6. ITEM DANH SÁCH (Giao diện từng chuyến xe/vé)
+   ============================================================ */
+/* Container chứa list */
+.added-list,
+.trips-list,
+#bookedTicketsList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+/* Thẻ Item con */
+.service-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s;
+  position: relative;
 }
 
 .service-item:hover {
-  background: #eef3ff;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 27, 128, 0.1);
+  transform: translateX(5px);
+  border-color: #008447;
 }
 
-.service-item strong {
-  color: #001b80;
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.placeholder {
-  text-align: center;
-  color: #aaa;
-  font-style: italic;
-  margin-top: 20px;
-}
-
-/* Thanh cuộn mềm mại */
-.added-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.added-list::-webkit-scrollbar-thumb {
-  background: #b7c4ff;
-  border-radius: 6px;
-}
-
-.added-list::-webkit-scrollbar-thumb:hover {
-  background: #8398ff;
-}
-
-/* ======= Cấu trúc 2 form song song ======= */
-.forms-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
-  margin-top: 1px;
-  flex-wrap: wrap;
-}
-
-.forms-wrapper .service-form {
-  flex: 1;
-  min-width: 360px;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  padding: 25px 30px;
-  border: 1px solid #e5e9ff;
-  transition: all 0.3s ease;
-}
-
-.forms-wrapper .service-form:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.forms-wrapper .service-form h3 {
-  color: #001b80;
-  text-align: center;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #00c897;
-  padding-bottom: 8px;
-  font-weight: 700;
-}
-
-/* ====== Danh sách phim ====== */
-.added-list {
-  max-height: 676px;
-  overflow-y: auto;
-  padding-right: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  padding: 10px;
-}
-
-.placeholder {
-  text-align: center;
-  color: #aaa;
-  font-style: italic;
-  margin-top: 20px;
-}
-
-/* Hiệu ứng xuất hiện mượt cho item mới */
-.fade-in {
-  animation: fadeInItem 0.5s ease forwards;
-}
-
-@keyframes fadeInItem {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Xem trước ảnh/video */
-.preview img,
-.preview video {
-  width: 100%;
-  max-width: 250px;
-  height: auto;
-  border-radius: 8px;
-  margin-top: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* ===== Thẻ movie card (container từng phim) ===== */
-.movie-card {
-  position: relative;
-  width: 600px;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.movie-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Poster */
-.movie-poster,
-.vehicle-img,
-.hotel-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  border-bottom: 1px solid #eee;
-}
-
-/* Thông tin phim */
-.movie-info,
-.vehicle-info,
-.hotel-info {
-  padding: 10px;
-  text-align: left;
-}
-
-/* Tiêu đề */
-.movie-title {
-  font-weight: 700;
-  color: #001b80;
-  font-size: 16px;
-  margin-bottom: 6px;
-}
-
-/* Mô tả */
-.movie-info p {
-  margin: 3px 0;
-  color: #333;
-  font-size: 14px;
-  text-align: left;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .movie-card {
-    width: calc(50% - 16px);
-  }
-  .movie-poster {
-    height: 180px;
-  }
-}
-@media (min-width: 900px) {
-  .movie-card {
-    width: 220px;
-  }
-}
-/* ===== Nút xoá ===== */
-.delete-btn {
+/* Thanh màu xanh bên trái */
+.service-item::before {
+  content: "";
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #ff4b4b;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  font-weight: bold;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #008447;
+  border-radius: 4px 0 0 4px;
+}
+
+/* Nội dung bên trong thẻ Item */
+.service-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.service-info img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.service-text {
+  text-align: left;
+}
+
+.service-text strong {
+  font-size: 16px;
+  color: #001b80;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.service-text span {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Các nút hành động (Xem, Xóa) */
+.service-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.service-actions button {
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
-  z-index: 5;
-}
-.delete-btn:hover {
-  background: #e60000;
+  border: none;
+  transition: opacity 0.2s;
 }
 
-/* ===== Class ẩn dùng chung ===== */
-.hidden {
-  display: none !important;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.btn-view {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+.delete-btn {
+  background: #ffebee;
+  color: #d32f2f;
+}
+.service-actions button:hover {
+  opacity: 0.8;
 }
 
-/* ===== POPUP XEM CHI TIẾT ===== */
-#moviePopup,
-#vehiclePopup,
-#hotelPopup {
-  display: none; /* Ẩn mặc định */
-  position: fixed;
+/* ============================================================
+   7. POPUP CHI TIẾT
+   ============================================================ */
+/* Lớp phủ nền mờ (Overlay) */
+.popup {
+  display: none; /* Ẩn mặc định, JS sẽ đổi thành flex khi bật */
+  position: fixed; /* Cố định trên màn hình */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.6); /* Màu đen mờ 60% */
+  z-index: 1000; /* Nằm trên cùng */
+  justify-content: center; /* Căn giữa ngang */
+  align-items: center; /* Căn giữa dọc */
+  backdrop-filter: blur(3px); /* Hiệu ứng làm mờ nền phía sau (tùy chọn) */
 }
 
+/* Hộp nội dung chính */
 .popup-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 500px;
+  background-color: #fff;
+  width: 90%;
+  max-width: 500px; /* Giới hạn chiều rộng */
+  padding: 30px;
+  border-radius: 15px;
+  position: relative; /* Để căn chỉnh nút đóng */
   text-align: center;
-  position: relative;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  animation: popupSlideIn 0.3s ease-out; /* Hiệu ứng xuất hiện */
 }
 
-.popup-content img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
+/* Hiệu ứng chuyển động */
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.popup-content h2,
-.popup-content h3 {
-  color: #001b80;
-  margin-bottom: 10px;
-}
-
-.popup-content p {
-  margin: 5px 0;
-  font-size: 15px;
-  color: #333;
-}
-
+/* Nút đóng (X) */
 .close-btn {
   position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 22px;
-  color: #444;
+  top: 15px;
+  right: 20px;
+  font-size: 30px;
+  color: #999;
   cursor: pointer;
-  font-weight: bold;
+  transition: color 0.2s;
+  line-height: 1;
 }
 
 .close-btn:hover {
-  color: #e60000;
+  color: #d32f2f; /* Chuyển đỏ khi di chuột */
 }
 
-/* ===== Hiệu ứng ẩn/hiện chung ===== */
-.hidden {
-  display: none !important;
+/* Ảnh phương tiện trong Popup */
+.popup-content img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover; /* Cắt ảnh đẹp, không bị méo */
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* ===== Hiệu ứng mở popup ===== */
-@keyframes fadeIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+/* Các dòng thông tin */
+.popup-content h2 {
+  font-size: 24px;
+  color: #001b80;
+  margin-bottom: 10px;
+  border: none; /* Bỏ viền trái nếu có style chung h2 */
+  padding: 0;
 }
 
-/* ===== Footer Doanh nghiệp ===== */
+.popup-content p {
+  font-size: 16px;
+  color: #555;
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+/* Style riêng cho giá tiền (để nổi bật) */
+#popupVehicleGia {
+  color: #d35400;
+  font-weight: 800;
+  font-size: 22px;
+  margin-top: 15px;
+  background: #fff8e1;
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+/* ============================================================
+   8. FOOTER
+   ============================================================ */
 .footer-business {
   background: linear-gradient(135deg, #1c1c2b, #27273a);
   color: #fff;
   padding: 50px 0 25px;
   font-family: "Poppins", sans-serif;
+  margin-top: 60px;
 }
 
-.footer-business .footer-container {
+.footer-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 50px;
@@ -659,7 +574,6 @@ nav ul li a.active {
 
 .footer-business ul li {
   margin: 8px 0;
-  text-align: left;
 }
 
 .footer-business ul li a {
@@ -672,33 +586,43 @@ nav ul li a.active {
   color: #a679ff;
 }
 
-.footer-social .social-icons {
-  display: flex;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.footer-social .social-icons a {
-  background: #3a3a54;
-  color: white;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background 0.3s;
-}
-
-.footer-social .social-icons a:hover {
-  background: #a679ff;
-}
-
-.footer-business .footer-bottom {
+.footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
   padding-top: 15px;
   margin-top: 30px;
   font-size: 13px;
   color: #aaa;
+}
+
+/* ============================================================
+   9. RESPONSIVE (Mobile)
+   ============================================================ */
+@media (max-width: 768px) {
+  header {
+    padding: 15px 20px;
+  }
+
+  .logo {
+    margin-left: 0;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr; /* Chuyển form thành 1 cột */
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .service-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .service-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }

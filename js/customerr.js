@@ -1,6 +1,8 @@
 // ==========================================================
 // 1. CẤU HÌNH & DỮ LIỆU CƠ BẢN
 // ==========================================================
+
+// Danh sách tỉnh thành Việt Nam (Dùng cho gợi ý tìm kiếm)
 const vietnamProvinces = [
   "An Giang",
   "Bà Rịa - Vũng Tàu",
@@ -67,6 +69,7 @@ const vietnamProvinces = [
   "Yên Bái",
 ];
 
+// Dữ liệu mẫu dự phòng (Chỉ dùng khi Business chưa nhập gì)
 const backupRoutes = [
   {
     from: "Hà Nội",
@@ -91,18 +94,24 @@ const backupRoutes = [
 ];
 
 // ==========================================================
-// 2. HÀM KHỞI TẠO DỮ LIỆU
+// 2. HÀM KHỞI TẠO DỮ LIỆU (QUAN TRỌNG NHẤT - ĐÃ SỬA)
 // ==========================================================
+
 function initializeLocalStorage() {
+  // BƯỚC 1: Kiểm tra xem Doanh nghiệp đã nhập dữ liệu chưa (key: repo_tuyen_xe)
   const businessRoutes = JSON.parse(
     localStorage.getItem("repo_tuyen_xe") || "[]"
   );
+
   if (businessRoutes.length > 0) {
     console.log(
       `🔥 Đã tải ${businessRoutes.length} chuyến đi từ Doanh nghiệp.`
     );
+    // Lưu vào 'routes' để hàm tìm kiếm sử dụng
     localStorage.setItem("routes", JSON.stringify(businessRoutes));
   } else {
+    // BƯỚC 2: Nếu chưa có dữ liệu doanh nghiệp, dùng dữ liệu mẫu dự phòng
+    // Kiểm tra xem 'routes' đã có chưa, nếu chưa thì mới nạp backup
     if (!localStorage.getItem("routes")) {
       console.log("⚠️ Chưa có dữ liệu doanh nghiệp, sử dụng dữ liệu mẫu.");
       localStorage.setItem("routes", JSON.stringify(backupRoutes));
@@ -111,19 +120,22 @@ function initializeLocalStorage() {
 }
 
 // ==========================================================
-// 3. GIAO DIỆN & TÌM KIẾM
+// 3. CÁC HÀM GIAO DIỆN & TÌM KIẾM
 // ==========================================================
+
 function hideResultsContainer() {
   const resultsContainer = document.querySelector(".results-container");
   if (resultsContainer) resultsContainer.style.display = "none";
 }
+
 function showResultsContainer() {
   const resultsContainer = document.querySelector(".results-container");
   if (resultsContainer) resultsContainer.style.display = "block";
 }
 
+// Hàm Tìm kiếm
 function searchRoutes(event) {
-  if (event && event.preventDefault) event.preventDefault();
+  event.preventDefault();
   hideResultsContainer();
 
   const departure = document
@@ -136,13 +148,16 @@ function searchRoutes(event) {
     .toLowerCase();
   const travelDate = document.getElementById("travel-date").value;
 
+  // Lấy dữ liệu (lúc này 'routes' đã chứa dữ liệu từ Business hoặc Backup)
   const storedRoutes = localStorage.getItem("routes");
   const allRoutes = storedRoutes ? JSON.parse(storedRoutes) : [];
 
   const searchResults = allRoutes.filter((route) => {
     const matchFrom = route.from.toLowerCase().includes(departure);
     const matchTo = route.to.toLowerCase().includes(destination);
+    // Nếu không chọn ngày (travelDate rỗng) -> Bỏ qua check ngày
     const matchDate = !travelDate || route.date === travelDate;
+
     return matchFrom && matchTo && matchDate;
   });
 
@@ -150,6 +165,7 @@ function searchRoutes(event) {
   displayResults(searchResults);
 }
 
+// Hàm Hiển thị kết quả
 function displayResults(results) {
   const resultsList = document.getElementById("results-list");
   const noResultsMessage = document.getElementById("no-results");
@@ -164,10 +180,12 @@ function displayResults(results) {
       const li = document.createElement("li");
       li.className = "route-item";
 
+      // Xử lý hiển thị ảnh (ưu tiên ảnh doanh nghiệp up lên)
       const imageHTML = route.image
         ? `<img src="${route.image}" style="width:80px; height:60px; object-fit:cover; border-radius:5px; margin-right:15px;">`
         : "";
 
+      // Hiển thị loại xe (nếu có)
       const vehicleType = route.vehicle || "Xe Khách";
       const seatType = route.type || "Tiêu chuẩn";
 
@@ -192,8 +210,8 @@ function displayResults(results) {
       resultsList.appendChild(li);
     });
 
+    // Gắn sự kiện đặt vé
     document.querySelectorAll(".book-button").forEach((button) => {
-      button.removeEventListener("click", handleBooking);
       button.addEventListener("click", handleBooking);
     });
   } else {
@@ -201,6 +219,7 @@ function displayResults(results) {
   }
 }
 
+// Hàm Xử lý Đặt Vé
 function handleBooking(event) {
   const button = event.currentTarget;
   const bookingDetails = {
@@ -215,8 +234,9 @@ function handleBooking(event) {
 }
 
 // ==========================================================
-// 4. HỖ TRỢ: AUTOCOMPLETE, TICKETS, TOAST
+// 4. CÁC HÀM HỖ TRỢ KHÁC (AUTOCOMPLETE, BOOKED LIST, ETC.)
 // ==========================================================
+
 function setupAutocomplete(inputElement) {
   if (!inputElement) return;
   const suggestionList = document.createElement("ul");
@@ -301,7 +321,6 @@ function displayBookedTickets() {
     });
 
     document.querySelectorAll(".cancel-button").forEach((button) => {
-      button.removeEventListener("click", handleCancelTicket);
       button.addEventListener("click", handleCancelTicket);
     });
   } else {
@@ -336,56 +355,10 @@ function showToast(message, type = "success") {
 }
 
 // ==========================================================
-// HIỂN THỊ CÁC TUYẾN ĐƯỜNG PHỔ BIẾN
+// 5. MAIN RUN (CHẠY KHI TRANG TẢI XONG)
 // ==========================================================
-function displayPopularRoutes() {
-  const container = document.getElementById("popular-routes-container");
-  if (!container) return;
 
-  const routes = JSON.parse(localStorage.getItem("routes") || "[]");
-  const topRoutes = routes.slice(0, 4);
-  container.innerHTML = routes
-    .slice(0, 6) // chỉ hiện 6 tuyến nổi bật
-    .map(
-      (item) => `
-        <div class="service-item fade-in">
-          <img class="service-img" src="${item.image}" alt="Xe">
-          <div class="service-text">
-            <strong>${item.from} ➜ ${item.to}</strong>
-            <p>${item.vehicle} • ${item.seatsAvailable} ghế</p>
-            <p>Giá: <b>${item.price}</b></p>
-          </div>
-        </div>
-      `
-    )
-    .join("");
-
-  // gắn sự kiện cho các item (nếu gọi trực tiếp)
-  container.querySelectorAll(".view-route-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const from = btn.dataset.from;
-      const to = btn.dataset.to;
-      const departureInput = document.getElementById("departure");
-      const destinationInput = document.getElementById("destination");
-      if (departureInput && destinationInput) {
-        departureInput.value = from;
-        destinationInput.value = to;
-      }
-      const searchForm = document.getElementById("search-form");
-      if (searchForm) {
-        searchForm.dispatchEvent(
-          new Event("submit", { bubbles: true, cancelable: true })
-        );
-      } else {
-        searchRoutes(); // fallback
-      }
-    });
-  });
-}
-
-// ==========================================================
-// MAIN RUN (CHẠY KHI TRANG TẢI XONG)
-// ==========================================================
+// Hiệu ứng cuộn
 window.addEventListener("scroll", () => {
   const services = document.querySelector(".services");
   if (!services) return;
@@ -424,8 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 2. Khởi tạo dữ liệu & Hiển thị
-  initializeLocalStorage();
-  displayPopularRoutes(); // <-- gọi để hiển thị ngay
+  initializeLocalStorage(); // [QUAN TRỌNG] Hàm này sẽ nạp dữ liệu từ Business
   hideResultsContainer();
   displayBookedTickets();
 
@@ -437,44 +409,17 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAutocomplete(document.getElementById("destination"));
   }
 
-  // 4. Nút Dịch vụ: nếu có element .service-item chứa <a>, giữ hành vi cũ. Nếu không, thêm click theo data-attr
-  const serviceAnchors = document.querySelectorAll(".service-item a");
-  if (serviceAnchors.length > 0) {
-    serviceAnchors.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const h3 = btn.parentElement.querySelector("h3");
-        if (!h3) return;
-        const service = h3.textContent;
-        if (service.includes("khách")) window.location.href = "bus.html";
-        else if (service.includes("tàu")) window.location.href = "train.html";
-        else if (service.includes("máy bay"))
-          window.location.href = "plane.html";
-      });
+  // 4. Nút Dịch vụ (Service Items)
+  const serviceButtons = document.querySelectorAll(".service-item a");
+  serviceButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const h3 = btn.parentElement.querySelector("h3");
+      if (!h3) return;
+      const service = h3.textContent;
+      if (service.includes("khách")) window.location.href = "bus.html";
+      else if (service.includes("tàu")) window.location.href = "train.html";
+      else if (service.includes("máy bay")) window.location.href = "plane.html";
     });
-  } else {
-    // gắn event cho các service-item (mới)
-    document.querySelectorAll(".service-item").forEach((item) => {
-      item.addEventListener("click", (e) => {
-        // tránh chạm vào button bên trong gây double action
-        if (e.target && e.target.classList.contains("view-route-btn")) return;
-        const from = item.dataset.from;
-        const to = item.dataset.to;
-        const departureInput = document.getElementById("departure");
-        const destinationInput = document.getElementById("destination");
-        if (departureInput && destinationInput) {
-          departureInput.value = from || "";
-          destinationInput.value = to || "";
-        }
-        const searchForm = document.getElementById("search-form");
-        if (searchForm) {
-          searchForm.dispatchEvent(
-            new Event("submit", { bubbles: true, cancelable: true })
-          );
-        } else {
-          searchRoutes();
-        }
-      });
-    });
-  }
+  });
 });

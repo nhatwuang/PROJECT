@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang Đặt Vé</title>
+    <link rel="stylesheet" href="css/datve.css" />
+  </head>
+  <body>
+    <div class="booking-content">
+      <h2>✅ Xác Nhận Đặt Vé</h2>
+      <div class="booking-details" id="route-details"></div>
+
+      <hr />
+
+      <h3>Thông Tin Khách Hàng</h3>
+      <form id="customer-form">
+        <div class="form-group">
+          <label for="name">Họ và Tên:</label>
+          <input type="text" id="name" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Số Điện Thoại:</label>
+          <input type="tel" id="phone" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" required />
+        </div>
+        <button type="submit" class="confirm-button">HOÀN TẤT ĐẶT VÉ</button>
+      </form>
+    </div>
+
+    <script src="js/datve.js"></script>
+  </body>
+</html>
