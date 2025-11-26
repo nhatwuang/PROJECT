@@ -3,7 +3,7 @@
 // ==============================================
 
 window.addEventListener("scroll", () => {
-  const services = document.querySelector(".services"); // [FIX] Thêm dòng này để không bị lỗi nếu trang không có mục services
+  const services = document.querySelector(".services");
   if (!services) return;
 
   const position = services.getBoundingClientRect().top;
@@ -19,12 +19,10 @@ window.addEventListener("scroll", () => {
 // ==============================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1. Xử lý Auth ---
   const authBtns = document.querySelector(".auth-btns");
   const username = localStorage.getItem("username");
 
   if (authBtns) {
-    // [FIX] Kiểm tra tồn tại
     if (username) {
       authBtns.innerHTML = `
           <span class="welcome">Xin chào, <b>${username}</b></span>
@@ -81,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ============================================================
-// 1. CHỨC NĂNG THÊM CHUYẾN XE (LƯU VÀO KHO CHUNG)
+// 1. CHỨC NĂNG THÊM CHUYẾN XE
 // ============================================================
 
 async function handleAddVehicle(e) {
@@ -99,7 +97,7 @@ async function handleAddVehicle(e) {
   if (imageInput.files && imageInput.files[0]) {
     const file = imageInput.files[0];
     if (file.size > 2 * 1024 * 1024) {
-      alert("⚠️ Ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB");
+      showToast("Ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB", "error");
       return;
     }
     try {
@@ -120,14 +118,14 @@ async function handleAddVehicle(e) {
     vehicle: vehicleType,
     seatsAvailable: seatsInput.value,
     image: imageSrc,
-  }; // Lưu vào LocalStorage
+  };
 
   let currentRoutes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
   currentRoutes.push(newRoute);
 
   try {
     localStorage.setItem("repo_tuyen_xe", JSON.stringify(currentRoutes));
-    alert("✅ Đã đăng chuyến xe thành công!");
+    showToast("Đã thêm chuyến xe thành công!", "success");
 
     e.target.reset();
     const previewDiv = document.getElementById("previewPhuongTien");
@@ -135,7 +133,7 @@ async function handleAddVehicle(e) {
 
     loadServices();
   } catch (err) {
-    alert("⚠️ Bộ nhớ đầy! Hãy xóa bớt chuyến cũ.");
+    showToast("Bộ nhớ đầy", "error");
   }
 }
 
@@ -147,60 +145,9 @@ function loadServices() {
   const routes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
   renderList("addedPhuongTienList", routes, true);
   renderList("tripsList", routes, false);
-}
-
-function renderList(elementId, data, showDelete) {
-  const container = document.getElementById(elementId);
-  if (!container) return;
-
-  container.innerHTML = "";
-  if (data.length === 0) {
-    container.innerHTML = "<p class='placeholder'>Chưa có dữ liệu.</p>";
-    return;
-  }
-
-  data.forEach((item, index) => {
-    const card = document.createElement("div");
-    card.className = "service-item fade-in";
-    card.innerHTML = `
-        <div class="service-info">
-            <img src="${item.image}" alt="Xe">
-            <div class="service-text">
-                <strong>${item.from} ➝ ${item.to}</strong>
-                <span>${item.vehicle} • ${item.price} • ${
-      item.seatsAvailable
-    } ghế</span>
-            </div>
-        </div>
-        <div class="service-actions">
-            <button class="btn-view" onclick="viewVehicleDetails(${index})">Xem</button>
-            ${
-      showDelete
-        ? `<button class="delete-btn" onclick="deleteService(${index})">Xóa</button>`
-        : ""
-    }
-        </div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// ============================================================
-// 3. HIỂN THỊ VÉ ĐÃ ĐẶT (ĐÃ LÀM SẠCH)
-// ============================================================
-// ==========================================================
-// 1. Load danh sách dịch vụ / chuyến xe
-// ==========================================================
-function loadServices() {
-  const routes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
-  renderList("addedPhuongTienList", routes, true);
-  renderList("tripsList", routes, false);
   loadBookedTickets();
 }
 
-// ==========================================================
-// 2. Render list (dùng chung cho nhiều list)
-// ==========================================================
 function renderList(elementId, data, showDelete) {
   const container = document.getElementById(elementId);
   if (!container) return;
@@ -226,11 +173,6 @@ function renderList(elementId, data, showDelete) {
       </div>
       <div class="service-actions">
         <button class="btn-view" onclick="viewVehicleDetails(${index})">Xem</button>
-        ${
-          showDelete
-            ? `<button class="delete-btn" onclick="deleteService(${index})">Xóa</button>`
-            : ""
-        }
       </div>
     `;
     container.appendChild(card);
@@ -238,34 +180,7 @@ function renderList(elementId, data, showDelete) {
 }
 
 // ==========================================================
-// 3. Xem chi tiết dịch vụ
-// ==========================================================
-function viewVehicleDetails(index) {
-  const repo = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
-  const item = repo[index];
-  if (!item) return;
-  alert(`
-Chi tiết xe:
-- Tuyến: ${item.from} ➝ ${item.to}
-- Loại xe: ${item.vehicle || "Xe Khách"}
-- Giá: ${item.price || ""}
-- Số ghế: ${item.seatsAvailable || 0}
-  `);
-}
-
-// ==========================================================
-// 4. Xóa dịch vụ
-// ==========================================================
-function deleteService(index) {
-  const repo = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
-  if (!repo[index]) return;
-  repo.splice(index, 1);
-  localStorage.setItem("repo_tuyen_xe", JSON.stringify(repo));
-  loadServices();
-}
-
-// ==========================================================
-// 5. Hiển thị danh sách vé đã đặt
+// 3. Hiển thị danh sách vé đã đặt
 // ==========================================================
 
 function displayBookedTickets() {
@@ -310,15 +225,8 @@ function displayBookedTickets() {
   }
 }
 
-// ==========================================================
-// 7. Khởi chạy khi DOM load
-// ==========================================================
-document.addEventListener("DOMContentLoaded", () => {
-  loadServices();
-});
-
 // ============================================================
-// 3. QUẢN LÝ ĐƠN HÀNG & DOANH THU (TỪ TRANG CUSTOMER)
+// 4. QUẢN LÝ ĐƠN HÀNG & DOANH THU
 // ============================================================
 
 function loadBookedTickets() {
@@ -383,30 +291,31 @@ function viewVehicleDetails(index) {
   seats.textContent = `Số ghế: ${item.seatsAvailable || 0}`;
   gia.textContent = `Giá: ${item.price || ""}`;
 
-  // Hiển thị popup
   popup.style.display = "block";
 
-  // Đóng popup
   closeBtn.onclick = () => (popup.style.display = "none");
   window.onclick = (e) => {
     if (e.target === popup) popup.style.display = "none";
   };
 
-  // Nút đặt vé
   const bookBtn = document.getElementById("popupBookBtn");
   bookBtn.onclick = () => {
     localStorage.setItem("selectedRoute", JSON.stringify(item));
     window.location.href = "datve.html";
   };
 
-  // Nút xóa
   const deleteBtn = document.getElementById("popupDeleteBtn");
-  deleteBtn.onclick = () => {
-    repo.splice(index, 1);
-    localStorage.setItem("repo_tuyen_xe", JSON.stringify(repo));
-    loadServices();
-    popup.style.display = "none";
-  };
+  if (deleteBtn) {
+    deleteBtn.onclick = () => {
+      if (confirm("Bạn có chắc muốn xóa chuyến đi này không?")) {
+        repo.splice(index, 1);
+        localStorage.setItem("repo_tuyen_xe", JSON.stringify(repo));
+        loadServices();
+        popup.style.display = "none";
+        showToast("Đã xóa chuyến đi thành công!", "success");
+      }
+    };
+  }
 }
 
 function calculateRevenue() {
@@ -428,7 +337,7 @@ function calculateRevenue() {
 }
 
 // ============================================================
-// 4. CÁC HÀM HỖ TRỢ (HELPER)
+// 5. CÁC HÀM HỖ TRỢ
 // ============================================================
 
 function previewImage(input, previewDiv) {
@@ -439,6 +348,17 @@ function previewImage(input, previewDiv) {
     };
     reader.readAsDataURL(input.files[0]);
   }
+}
+function showToast(message, type) {
+  let notification = document.getElementById("notification");
+  let toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.innerText = message;
+  notification.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
 }
 
 const toBase64 = (file) =>

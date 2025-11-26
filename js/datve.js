@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const username = localStorage.getItem("username");
     if (!username) {
-      alert("Vui lòng đăng nhập để đặt vé.");
+      showToast("Vui lòng đăng nhập", "error");
       return;
     }
 
@@ -50,12 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     localStorage.removeItem("selectedRoute");
-
-    alert(
-      `Đặt vé thành công!\n\nChi tiết:\n- Tên: ${finalBooking.customer.name}\n- Tuyến: ${finalBooking.route.from} -> ${finalBooking.route.to}\n- Giá: ${finalBooking.route.price}\n\nCảm ơn bạn!`
-    );
-
-    window.location.href = "customer.html";
+    showToast("Đặt vé thành công", "success");
+    setTimeout(() => {
+      window.location.href = "customer.html";
+    }, 1200);
   });
 
   const stepButtons = document.querySelectorAll(".steps .step-btn");
@@ -86,3 +84,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+function showToast(message, type) {
+  let notification = document.getElementById("notification");
+  let toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.innerText = message;
+  notification.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
