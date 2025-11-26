@@ -254,3 +254,28 @@ body {
     padding: 12px 0;
   }
 }
+
+/* Thông báo */
+#notification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.toast {
+  margin-bottom: 10px;
+  padding: 12px 18px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+}
+
+.toast.success {
+  background-color: #28a745;
+}
+
+.toast.error {
+  background-color: #dc3545;
+}
