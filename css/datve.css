@@ -1,0 +1,256 @@
+body {
+  background: linear-gradient(180deg, #ffffff 0, #00aaff);
+  font-family: "Courier New", Courier, monospace;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 40px 400px 20px 400px;
+  font-family: sans-serif;
+}
+
+.step-btn {
+  padding: 10px 20px;
+  border-radius: 45px;
+  border: none;
+  background: #ffffff;
+  color: #00aaff;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.step-btn-main {
+  padding: 10px 20px;
+  border-radius: 45px;
+  border: none;
+  background: #00ffff;
+  color: #404040;
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: 600;
+}
+.step-btn-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0.95;
+}
+
+.step-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0.95;
+}
+
+.line {
+  flex: 1;
+  height: 3px;
+  background: #d1d1d1;
+}
+
+#qrPopup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 180px;
+  padding: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  text-align: center;
+}
+
+/* Style cho ô chọn */
+#paymentSelect {
+  width: 250px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 1px solid #bbb;
+  font-size: 15px;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#paymentSelect:hover {
+  border-color: #007bff;
+}
+
+#paymentSelect:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+/* Hiển thị kết quả */
+#result {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Popup QR ở góc dưới phải */
+#qrPopup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+  display: none;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#qrPopup img {
+  width: 100%;
+  height: 100%;
+}
+
+.confirm-button:hover {
+  background: #218838;
+}
+
+.confirm-button:active {
+  transform: scale(0.97);
+}
+
+/* Hiệu ứng popup */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.booking-content {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 40px 30px;
+  background: linear-gradient(180deg, #ffffff 0, #ffffff);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #000000;
+}
+
+.booking-content h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #007bff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.booking-details p {
+  font-size: 1.15em;
+  margin: 12px 0;
+  padding: 10px;
+  border-bottom: 2px solid #eee;
+  color: #444;
+}
+
+.booking-details strong {
+  color: #007bff;
+  display: inline-block;
+  min-width: 120px;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #555;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+.confirm-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 14px 0;
+  border-radius: 10px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 700;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 5px 10px rgba(0, 123, 255, 0.4);
+}
+
+.confirm-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 86, 179, 0.6);
+}
+
+.confirm-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+@media (max-width: 640px) {
+  .booking-content {
+    margin: 20px 15px;
+    padding: 30px 20px;
+  }
+
+  .booking-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  .confirm-button {
+    font-size: 1.1rem;
+    padding: 12px 0;
+  }
+}
