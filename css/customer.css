@@ -54,7 +54,7 @@ nav ul li a.active {
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  white-space: nowrap; /* ✅ giữ chữ trên 1 dòng */
+  white-space: nowrap;
 }
 
 .auth-btns button {
@@ -211,6 +211,27 @@ nav ul li a.active {
   height: 100%;
 }
 
+/* Nút Chọn chuyến (view-route-btn) */
+.view-route-btn {
+  background-color: #007bff; /* Màu xanh bootstrap */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  display: inline-block;
+  text-align: center;
+}
+.view-route-btn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 15px rgba(0, 86, 179, 0.5);
+}
+
 .search-button:hover {
   background-color: #e69500;
 }
@@ -239,7 +260,10 @@ nav ul li a.active {
 #results-list {
   list-style: none;
   padding: 0;
-
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -370,7 +394,6 @@ nav ul li a.active {
 
 .services h2 {
   font-size: 32px;
-
   color: rgb(0, 0, 0);
   margin-bottom: 40px;
   font-weight: 700;
@@ -382,7 +405,7 @@ nav ul li a.active {
 .service-list {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -391,7 +414,8 @@ nav ul li a.active {
   background: #fff;
   border-radius: 15px;
   overflow: hidden;
-  width: 300px;
+  width: 200px;
+  height: 200px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   cursor: pointer;
@@ -406,7 +430,7 @@ nav ul li a.active {
 /* Ảnh địa điểm */
 .route-card img {
   width: 100%;
-  height: 180px;
+  height: 150px;
   object-fit: cover;
 }
 
@@ -428,13 +452,13 @@ nav ul li a.active {
 }
 
 .route-content strong {
-  color: #ff5722; /* Màu cam giá tiền */
+  color: #ff5722;
   font-size: 18px;
 }
 
 /* Nút Tìm Ngay */
 .btn-quick-search {
-  background-color: #008447; /* Xanh lá */
+  background-color: #008447;
   color: white;
   border: none;
   padding: 10px 25px;
@@ -462,17 +486,22 @@ nav ul li a.active {
   font-size: 32px;
   color: rgb(0, 0, 0);
   margin-bottom: 40px;
+  margin-top: 60px;
   font-weight: 700;
 }
 
 .tickets-slider {
   overflow: hidden;
   width: 100%;
+  padding: 30px;
   position: relative;
 }
 .tickets-list {
   display: flex;
   gap: 20px;
+  max-height: 360px;
+  padding-right: 30px;
+  overflow-y: auto;
   transition: transform 0.3s ease;
 }
 
@@ -660,20 +689,20 @@ footer {
 /* Khung danh sách gợi ý */
 .suggestion-list {
   position: absolute;
-  top: 100%; /* Hiển thị ngay dưới input */
+  top: 100%;
   left: 0;
   width: 100%;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-height: 250px; /* Chiều cao tối đa, quá thì cuộn */
+  max-height: 250px;
   overflow-y: auto;
   z-index: 1000;
   list-style: none;
   padding: 0;
   margin: 0;
-  display: none; /* Mặc định ẩn */
+  display: none;
 }
 
 /* Từng mục gợi ý */
@@ -692,8 +721,8 @@ footer {
 }
 
 .suggestion-item:hover {
-  background-color: #f0f0f0; /* Màu nền khi di chuột vào */
-  color: #ffb300; /* Màu chữ khi hover */
+  background-color: #f0f0f0;
+  color: #ffb300;
 }
 
 /* Icon trong gợi ý (nếu muốn thêm) */
@@ -709,23 +738,20 @@ footer {
 /* Container chứa danh sách vé (Dạng lưới) */
 #ticketsList {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(320px, 1fr)
-  ); /* Tự động chia cột, tối thiểu 320px */
-  gap: 25px; /* Khoảng cách giữa các vé */
-  padding: 20px 0;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 35px;
+  margin-right: 30px;
 }
 
 /* Thẻ vé (Card) */
 .ticket-card {
   background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   border: 1px solid #e0e0e0;
   padding: 20px;
   display: flex;
-  flex-direction: column; /* Để đẩy nút hủy xuống dưới cùng */
+  flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -733,8 +759,8 @@ footer {
 
 /* Hiệu ứng khi di chuột vào vé */
 .ticket-card:hover {
-  transform: translateY(-5px); /* Nổi lên nhẹ */
-  box-shadow: 0 8px 20px rgba(0, 132, 71, 0.15); /* Bóng màu xanh nhẹ */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 132, 71, 0.15);
   border-color: #008447;
 }
 
@@ -743,7 +769,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #008447; /* Đường kẻ xanh thương hiệu */
+  border-bottom: 2px solid #008447;
   padding-bottom: 12px;
   margin-bottom: 15px;
 }
@@ -757,8 +783,8 @@ footer {
 
 /* Trạng thái "Đã xác nhận" */
 .status.booked {
-  background-color: #e8f5e9; /* Nền xanh nhạt */
-  color: #2e7d32; /* Chữ xanh đậm */
+  background-color: #e8f5e9;
+  color: #2e7d32;
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 12px;
@@ -822,7 +848,7 @@ footer {
 
 /* --- Thông báo khi chưa có vé --- */
 .no-tickets {
-  grid-column: 1 / -1; /* Chiếm toàn bộ chiều ngang */
+  grid-column: 1 / -1;
   text-align: center;
   padding: 50px 20px;
   background-color: #f9f9f9;
@@ -858,7 +884,7 @@ footer {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: calc(33.33% - 20px);
+  width: calc(25% - 20px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   display: flex;
@@ -873,7 +899,7 @@ footer {
 /* Hình ảnh xe */
 .service-img {
   width: 100%;
-  height: 150px;
+  height: 100%;
   object-fit: cover;
   display: block;
 }

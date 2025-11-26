@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BookNow - Doanh nghiệp</title>
     <link rel="stylesheet" href="css/business.css" />
+    <link rel="stylesheet" href="css/business_custom_scroll.css" />
   </head>
   <body>
     <!-- ================= Header ================= -->
@@ -12,14 +13,14 @@
       <a href="#" class="logo">BookNow</a>
       <nav>
         <ul>
-          <li><a href="#home" class="active">Trang chủ</a></li>
-          <li><a href="#services">Quản lý dịch vụ</a></li>
+          <li><a href="#dichvu">Quản lý dịch vụ</a></li>
           <li><a href="#danhsachve">Danh sách chuyến đi</a></li>
           <li><a href="#tickets">Vé đã đặt</a></li>
           <li><a href="#revenue">Doanh thu</a></li>
         </ul>
       </nav>
       <div class="auth-btns">
+        <span class="welcome-text">xin chào .doanh nghiệp</span>
         <a href="dangnhap.html" class="login-btn">Đăng xuất</a>
       </div>
     </header>
@@ -35,7 +36,7 @@
     </section>
 
     <!-- THêm chuyến đi-->
-    <section class="container">
+    <section class="container" id="dichvu">
       <div class="admin-card" id="services">
         <div class="card-header">
           <h2><i class="fas fa-bus"></i> Thêm Chuyến Xe Mới</h2>
@@ -104,9 +105,9 @@
     </section>
 
     <!-- ================= Vé đã đặt ================= -->
-    <section class="container">
+    <section class="container" id="tickets">
       <h2>Vé đã đặt</h2>
-      <div class="ticket-list" id="tickets"></div>
+      <div class="ticket-list" id="ticketsList"></div>
     </section>
 
     <!-- ================= Doanh thu ================= -->
@@ -122,22 +123,12 @@
           <h2>BookNow Business</h2>
           <p>
             Nền tảng kết nối doanh nghiệp và khách hàng nhanh chóng, hỗ trợ đặt
-            vé, quảng bá sự kiện, và quản lý dịch vụ dễ dàng trên cùng một hệ
-            thống.
+            vé, và quản lý dịch vụ dễ dàng trên cùng một hệ thống.
           </p>
         </div>
 
-        <div class="footer-links">
-          <h3>Dành cho Doanh nghiệp</h3>
-          <ul>
-            <li><a href="#services">Quản lý dịch vụ</a></li>
-            <li><a href="#tickets">Vé đã đặt</a></li>
-            <li><a href="#revenue">Quản lý doanh thu</a></li>
-          </ul>
-        </div>
-
         <div class="footer-contact">
-          <h3>Liên hệ hợp tác</h3>
+          <h3>Liên hệ</h3>
           <p>📍 81/2 Bà Triệu, P. Xuân Phú, TP. Huế</p>
           <p>📞 0338 397 090</p>
           <p>✉️ business@booknow.vn</p>
@@ -153,13 +144,16 @@
       <div class="popup-content">
         <span class="close-btn">&times;</span>
         <img id="popupVehicleImage" src="" alt="Hình ảnh phương tiện" />
-
         <h2 id="popupVehicleLoai"></h2>
         <p id="popupVehicleRoute"></p>
         <p id="popupVehicleSeats"></p>
         <p id="popupVehicleGia"></p>
+        <div class="popup-actions">
+          <button id="popupDeleteBtn">🗑 Xóa</button>
+        </div>
       </div>
     </div>
+
     <script src="js/business.js"></script>
   </body>
 </html>

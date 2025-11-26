@@ -267,11 +267,14 @@ function setupAutocomplete(inputElement) {
 }
 
 function displayBookedTickets() {
+  const username = localStorage.getItem("username");
+  if (!username) return;
   const ticketsListElement = document.getElementById("ticketsList");
   if (!ticketsListElement) return;
+
   ticketsListElement.innerHTML = "";
   const bookedTickets = JSON.parse(
-    localStorage.getItem("bookedTickets") || "[]"
+    localStorage.getItem(`bookedTickets_${username}`) || "[]"
   );
 
   if (bookedTickets.length > 0) {
@@ -311,10 +314,18 @@ function displayBookedTickets() {
 }
 
 function handleCancelTicket(event) {
+  const username = localStorage.getItem("username");
+  if (!username) return; // Nếu chưa đăng nhập thì không xử lý
+
   const index = parseInt(event.currentTarget.dataset.index);
-  let bookedTickets = JSON.parse(localStorage.getItem("bookedTickets") || "[]");
+  let bookedTickets = JSON.parse(
+    localStorage.getItem(`bookedTickets_${username}`) || "[]"
+  );
   bookedTickets.splice(index, 1);
-  localStorage.setItem("bookedTickets", JSON.stringify(bookedTickets));
+  localStorage.setItem(
+    `bookedTickets_${username}`,
+    JSON.stringify(bookedTickets)
+  );
   showToast("Đã hủy vé thành công!", "error");
   displayBookedTickets();
 }
@@ -343,26 +354,35 @@ function displayPopularRoutes() {
   if (!container) return;
 
   const routes = JSON.parse(localStorage.getItem("routes") || "[]");
-  const topRoutes = routes.slice(0, 4);
   container.innerHTML = routes
-    .slice(0, 6) // chỉ hiện 6 tuyến nổi bật
+    .slice(0, 4) // chỉ hiện 6 tuyến nổi bật
     .map(
-      (item) => `
-        <div class="service-item fade-in">
-          <img class="service-img" src="${item.image}" alt="Xe">
+      (item, index) => `
+        <div class="service-item fade-in" data-from="${item.from}" data-to="${
+        item.to
+      }">
+          <img class="service-img" src="${
+            item.image || "images/default-vehicle.jpg"
+          }" alt="Xe">
           <div class="service-text">
             <strong>${item.from} ➜ ${item.to}</strong>
-            <p>${item.vehicle} • ${item.seatsAvailable} ghế</p>
-            <p>Giá: <b>${item.price}</b></p>
+            <p>${item.vehicle || "Xe Khách"} • ${
+        item.seatsAvailable || 0
+      } ghế</p>
+            <p>Giá: <b>${item.price || ""}</b></p>
+            <button class="view-route-btn" data-from="${item.from}" data-to="${
+        item.to
+      }">Chọn chuyến</button>
           </div>
         </div>
       `
     )
     .join("");
 
-  // gắn sự kiện cho các item (nếu gọi trực tiếp)
+  // gắn sự kiện cho các nút chọn chuyến
   container.querySelectorAll(".view-route-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const from = btn.dataset.from;
       const to = btn.dataset.to;
       const departureInput = document.getElementById("departure");
@@ -371,13 +391,45 @@ function displayPopularRoutes() {
         departureInput.value = from;
         destinationInput.value = to;
       }
-      const searchForm = document.getElementById("search-form");
-      if (searchForm) {
-        searchForm.dispatchEvent(
-          new Event("submit", { bubbles: true, cancelable: true })
-        );
-      } else {
-        searchRoutes(); // fallback
+      // lọc routes chỉ hiện chuyến được chọn
+      const storedRoutes = localStorage.getItem("routes");
+      const allRoutes = storedRoutes ? JSON.parse(storedRoutes) : [];
+      const filteredRoutes = allRoutes.filter(
+        (route) => route.from === from && route.to === to
+      );
+      displayResults(filteredRoutes);
+      showResultsContainer();
+      // nhảy tới phần kết quả hiển thị chuyến đi đã chọn
+      const resultsContainer = document.querySelector(".search-container");
+      if (resultsContainer) {
+        resultsContainer.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+
+  // gắn sự kiện cho toàn bộ item service-item giống như nút chọn chuyến
+  container.querySelectorAll(".service-item").forEach((item) => {
+    item.addEventListener("click", () => {
+      const from = item.dataset.from;
+      const to = item.dataset.to;
+      const departureInput = document.getElementById("departure");
+      const destinationInput = document.getElementById("destination");
+      if (departureInput && destinationInput) {
+        departureInput.value = from;
+        destinationInput.value = to;
+      }
+      // lọc routes chỉ hiện chuyến được chọn
+      const storedRoutes = localStorage.getItem("routes");
+      const allRoutes = storedRoutes ? JSON.parse(storedRoutes) : [];
+      const filteredRoutes = allRoutes.filter(
+        (route) => route.from === from && route.to === to
+      );
+      displayResults(filteredRoutes);
+      showResultsContainer();
+      // nhảy tới phần kết quả hiển thị chuyến đi đã chọn
+      const resultsContainer = document.querySelector(".search-container");
+      if (resultsContainer) {
+        resultsContainer.scrollIntoView({ behavior: "smooth" });
       }
     });
   });
@@ -405,6 +457,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".logout-btn").addEventListener("click", () => {
         localStorage.removeItem("username");
         location.reload();
+        window.location.href = "dangnhap.html";
       });
     } else {
       authBtns.innerHTML = `<button class="login-btn">Đăng nhập</button><button class="signup-btn">Đăng ký</button>`;

@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".login-btn").addEventListener("click", () => {
         localStorage.removeItem("username");
         location.reload();
+        window.location.href = "dangnhap.html";
       });
     } else {
       authBtns.innerHTML = `
@@ -50,20 +51,19 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Hiển thị Form & Danh sách (Bỏ ẩn class 'hidden' trong HTML)
   const formSection = document.getElementById("form-phuongtien");
   const listSection = document.getElementById("list-phuongtien");
   if (formSection) formSection.classList.remove("hidden");
-  if (listSection) listSection.classList.remove("hidden"); // 2. Tải dữ liệu ban đầu
+  if (listSection) listSection.classList.remove("hidden");
 
-  loadServices(); // Load danh sách xe đã thêm
-  loadBookedTickets(); // Load danh sách vé khách đặt
-  calculateRevenue(); // Tính doanh thu // 3. Bắt sự kiện Submit form thêm xe
+  loadServices();
+  displayBookedTickets();
+  calculateRevenue();
 
   const form = document.getElementById("addPhuongTienForm");
   if (form) {
     form.addEventListener("submit", handleAddVehicle);
-  } // 4. Bắt sự kiện xem trước ảnh
+  }
 
   const imgInput = document.getElementById("anhPhuongTien");
   if (imgInput) {
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const previewDiv = document.getElementById("previewPhuongTien");
       previewImage(this, previewDiv);
     });
-  } // 5. Xử lý nút đóng Popup
+  }
 
   document.querySelectorAll(".close-btn").forEach((btn) => {
     btn.addEventListener("click", function () {
@@ -85,20 +85,19 @@ document.addEventListener("DOMContentLoaded", () => {
 // ============================================================
 
 async function handleAddVehicle(e) {
-  e.preventDefault(); // Chặn load lại trang // Lấy giá trị từ form // [FIX] Sửa logic lấy loại phương tiện cho chính xác
-
-  const typeSelect = document.getElementById("loaiPhuongTien"); // Nếu không tìm thấy select (do bạn dùng template cũ), mặc định là Xe Khách
+  e.preventDefault();
+  const typeSelect = document.getElementById("loaiPhuongTien");
   const vehicleType = typeSelect ? typeSelect.value : "Xe Khách";
 
   const fromInput = document.getElementById("diemDon");
   const toInput = document.getElementById("diemDen");
   const seatsInput = document.getElementById("soGhe");
   const priceInput = document.getElementById("giaVePhuongTien");
-  const imageInput = document.getElementById("anhPhuongTien"); // Xử lý ảnh sang Base64
+  const imageInput = document.getElementById("anhPhuongTien");
 
-  let imageSrc = "images/default-vehicle.jpg"; // Ảnh mặc định
+  let imageSrc = "images/default-vehicle.jpg";
   if (imageInput.files && imageInput.files[0]) {
-    const file = imageInput.files[0]; // Kiểm tra dung lượng < 2MB để tránh lỗi LocalStorage
+    const file = imageInput.files[0];
     if (file.size > 2 * 1024 * 1024) {
       alert("⚠️ Ảnh quá lớn! Vui lòng chọn ảnh dưới 2MB");
       return;
@@ -108,18 +107,17 @@ async function handleAddVehicle(e) {
     } catch (err) {
       console.error(err);
     }
-  } // Tạo đối tượng chuyến xe
+  }
 
   const newRoute = {
     id: Date.now(),
     from: fromInput.value.trim(),
     to: toInput.value.trim(),
-    date: new Date().toISOString().split("T")[0], // Mặc định ngày hiện tại
+    date: new Date().toISOString().split("T")[0],
     time: "08:00",
     price: parseInt(priceInput.value).toLocaleString("vi-VN") + " VNĐ",
     rawPrice: parseInt(priceInput.value),
     vehicle: vehicleType,
-    type: "Limousine VIP",
     seatsAvailable: seatsInput.value,
     image: imageSrc,
   }; // Lưu vào LocalStorage
@@ -131,7 +129,7 @@ async function handleAddVehicle(e) {
     localStorage.setItem("repo_tuyen_xe", JSON.stringify(currentRoutes));
     alert("✅ Đã đăng chuyến xe thành công!");
 
-    e.target.reset(); // Reset form // [FIX] Xóa ảnh preview sau khi thêm
+    e.target.reset();
     const previewDiv = document.getElementById("previewPhuongTien");
     if (previewDiv) previewDiv.innerHTML = "";
 
@@ -190,84 +188,149 @@ function renderList(elementId, data, showDelete) {
 // ============================================================
 // 3. HIỂN THỊ VÉ ĐÃ ĐẶT (ĐÃ LÀM SẠCH)
 // ============================================================
+// ==========================================================
+// 1. Load danh sách dịch vụ / chuyến xe
+// ==========================================================
+function loadServices() {
+  const routes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
+  renderList("addedPhuongTienList", routes, true);
+  renderList("tripsList", routes, false);
+  loadBookedTickets();
+}
 
-function loadBookedTickets() {
-  const container = document.getElementById("bookedTicketsList");
+// ==========================================================
+// 2. Render list (dùng chung cho nhiều list)
+// ==========================================================
+function renderList(elementId, data, showDelete) {
+  const container = document.getElementById(elementId);
   if (!container) return;
 
-  const orders = JSON.parse(localStorage.getItem("bookedTickets") || "[]");
   container.innerHTML = "";
-
-  if (orders.length === 0) {
-    container.innerHTML = "<p class='placeholder'>Chưa có vé nào được đặt.</p>";
+  if (data.length === 0) {
+    container.innerHTML = "<p class='placeholder'>Chưa có dữ liệu.</p>";
     return;
   }
 
-  orders.forEach((order) => {
-    const item = document.createElement("div");
-    item.className = "service-item booked-item"; // Thêm class booked-item để style riêng
-
-    item.innerHTML = `
-        <div class="service-info">
-            <div class="service-text">
-                <strong>Khách: ${order.customer.name}</strong> 
-                <span class="sub-text">(${order.customer.phone})</span><br>
-                <span class="route-text">Chuyến: ${order.route.from} ➝ ${
-      order.route.to
-    }</span><br>
-                <span class="date-text">Ngày đi: ${order.route.date}</span>
-            </div>
-        </div>
-        <div class="service-price">
-            <strong>${order.route.price}</strong><br>
-            <span>${new Date(order.bookingTime).toLocaleDateString(
-      "vi-VN"
-    )}</span>
-        </div>
-    `;
-    container.appendChild(item);
+  data.forEach((item, index) => {
+    const card = document.createElement("div");
+    card.className = "service-item fade-in";
+    card.innerHTML = `
+      <div class="service-info">
+        <img src="${item.image || "images/default-vehicle.jpg"}" alt="Xe">
+        <div class="service-text">
+          <strong>${item.from} ➝ ${item.to}</strong>
+          <span>${item.vehicle || "Xe Khách"} • ${item.price || ""} • ${
+      item.seatsAvailable || 0
+    } ghế</span>
+        </div>
+      </div>
+      <div class="service-actions">
+        <button class="btn-view" onclick="viewVehicleDetails(${index})">Xem</button>
+        ${
+          showDelete
+            ? `<button class="delete-btn" onclick="deleteService(${index})">Xóa</button>`
+            : ""
+        }
+      </div>
+    `;
+    container.appendChild(card);
   });
 }
 
-// Hàm xóa chuyến xe
-window.deleteService = function (index) {
-  if (confirm("Bạn chắc chắn muốn xóa chuyến này?")) {
-    let routes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
-    routes.splice(index, 1);
-    localStorage.setItem("repo_tuyen_xe", JSON.stringify(routes));
-    loadServices();
+// ==========================================================
+// 3. Xem chi tiết dịch vụ
+// ==========================================================
+function viewVehicleDetails(index) {
+  const repo = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
+  const item = repo[index];
+  if (!item) return;
+  alert(`
+Chi tiết xe:
+- Tuyến: ${item.from} ➝ ${item.to}
+- Loại xe: ${item.vehicle || "Xe Khách"}
+- Giá: ${item.price || ""}
+- Số ghế: ${item.seatsAvailable || 0}
+  `);
+}
+
+// ==========================================================
+// 4. Xóa dịch vụ
+// ==========================================================
+function deleteService(index) {
+  const repo = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
+  if (!repo[index]) return;
+  repo.splice(index, 1);
+  localStorage.setItem("repo_tuyen_xe", JSON.stringify(repo));
+  loadServices();
+}
+
+// ==========================================================
+// 5. Hiển thị danh sách vé đã đặt
+// ==========================================================
+
+function displayBookedTickets() {
+  const username = localStorage.getItem("username");
+  if (!username) return;
+  const ticketsListElement = document.getElementById("ticketsList");
+  if (!ticketsListElement) return;
+
+  ticketsListElement.innerHTML = "";
+  const bookedTickets = JSON.parse(
+    localStorage.getItem("bookedTickets_Khách hàng") || "[]"
+  );
+
+  if (bookedTickets.length > 0) {
+    bookedTickets.forEach((booking, index) => {
+      const ticketDiv = document.createElement("div");
+      ticketDiv.className = "ticket-card new-ticket-style";
+      ticketDiv.innerHTML = `
+          <div class="ticket-header">
+              <h3>Vé #${index + 1}</h3>
+              <span class="status booked">Đã Xác Nhận</span>
+          </div>
+          <div class="ticket-details">
+              <p><strong>Tuyến:</strong> ${booking.route.from} &rarr; ${
+        booking.route.to
+      }</p>
+              <p><strong>Ngày:</strong> ${booking.route.date}</p>
+              <p><strong>Giá:</strong> <span class="price-value">${
+                booking.route.price
+              }</span></p>
+              <hr>
+              <p><strong>Khách:</strong> ${booking.customer.name}</p>
+              <p><strong>SĐT:</strong> ${booking.customer.phone}</p>
+          </div>
+         
+      `;
+      ticketsListElement.appendChild(ticketDiv);
+    });
+  } else {
+    ticketsListElement.innerHTML =
+      '<p class="no-tickets">Bạn chưa có vé nào.</p>';
   }
-};
+}
 
-// [FIX] Hàm xem chi tiết (Popup) - Đã thêm mới để nút "Xem" hoạt động
-window.viewVehicleDetails = function (index) {
-  let routes = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
-  const item = routes[index];
-
-  document.getElementById("popupVehicleImage").src = item.image;
-  document.getElementById("popupVehicleLoai").innerText = item.vehicle; // Sửa thành hiển thị loại xe
-  document.getElementById(
-    "popupVehicleRoute"
-  ).innerText = `Lộ trình: ${item.from} - ${item.to}`;
-  document.getElementById(
-    "popupVehicleSeats"
-  ).innerText = `Số ghế: ${item.seatsAvailable}`;
-  document.getElementById(
-    "popupVehicleGia"
-  ).innerText = `Giá vé: ${item.price}`;
-
-  document.getElementById("vehiclePopup").style.display = "flex";
-};
+// ==========================================================
+// 7. Khởi chạy khi DOM load
+// ==========================================================
+document.addEventListener("DOMContentLoaded", () => {
+  loadServices();
+});
 
 // ============================================================
 // 3. QUẢN LÝ ĐƠN HÀNG & DOANH THU (TỪ TRANG CUSTOMER)
 // ============================================================
 
 function loadBookedTickets() {
+  const username = localStorage.getItem("username");
+  if (!username) return;
+
   const container = document.getElementById("bookedTicketsList");
   if (!container) return;
 
-  const orders = JSON.parse(localStorage.getItem("bookedTickets") || "[]");
+  const orders = JSON.parse(
+    localStorage.getItem(`bookedTickets_${username}`) || "[]"
+  );
   container.innerHTML = "";
 
   if (orders.length === 0) {
@@ -278,42 +341,83 @@ function loadBookedTickets() {
   orders.forEach((order) => {
     const item = document.createElement("div");
     item.className = "service-item";
-    item.style.cssText =
-      "display:flex; justify-content:space-between; align-items:center; background:#f9f9f9; border-left:5px solid #00c897; padding:15px; margin-bottom:10px; border-radius:4px;";
 
     item.innerHTML = `
-            <div>
-                <strong style="color:#333;">Khách: ${
-      order.customer.name
-    }</strong> - <span style="color:#555;">${order.customer.phone}</span><br>
-                <span style="font-size:14px; color:#001b80;">Chuyến: ${
-      order.route.from
-    } ➝ ${order.route.to}</span><br>
-                <span style="font-size:12px; color:#888;">Ngày đi: ${
-      order.route.date
-    }</span>
-            </div>
-            <div style="text-align:right;">
-                <strong style="color:#d35400; font-size:16px;">${
-      order.route.price
-    }</strong><br>
-                <span style="font-size:11px; color:#aaa;">${new Date(
-      order.bookingTime
-    ).toLocaleString("vi-VN")}</span>
-            </div>
-        `;
+        <div class="order-info">
+            <strong class="order-customer">Khách: ${
+              order.customer.name
+            }</strong> - 
+            <span class="order-phone">${order.customer.phone}</span><br>
+            <span class="order-route">Chuyến: ${order.route.from} ➝ ${
+      order.route.to
+    }</span><br>
+            <span class="order-date">Ngày đi: ${order.route.date}</span>
+        </div>
+        <div class="order-meta">
+            <strong class="order-price">${order.route.price}</strong><br>
+            <span class="order-time">${new Date(
+              order.bookingTime
+            ).toLocaleString("vi-VN")}</span>
+        </div>
+    `;
     container.appendChild(item);
   });
+}
+
+function viewVehicleDetails(index) {
+  const repo = JSON.parse(localStorage.getItem("repo_tuyen_xe") || "[]");
+  const item = repo[index];
+  if (!item) return;
+
+  const popup = document.getElementById("vehiclePopup");
+  const img = document.getElementById("popupVehicleImage");
+  const loai = document.getElementById("popupVehicleLoai");
+  const route = document.getElementById("popupVehicleRoute");
+  const seats = document.getElementById("popupVehicleSeats");
+  const gia = document.getElementById("popupVehicleGia");
+  const closeBtn = popup.querySelector(".close-btn");
+
+  img.src = item.image || "images/default-vehicle.jpg";
+  loai.textContent = item.vehicle || "Xe Khách";
+  route.textContent = `${item.from} ➝ ${item.to}`;
+  seats.textContent = `Số ghế: ${item.seatsAvailable || 0}`;
+  gia.textContent = `Giá: ${item.price || ""}`;
+
+  // Hiển thị popup
+  popup.style.display = "block";
+
+  // Đóng popup
+  closeBtn.onclick = () => (popup.style.display = "none");
+  window.onclick = (e) => {
+    if (e.target === popup) popup.style.display = "none";
+  };
+
+  // Nút đặt vé
+  const bookBtn = document.getElementById("popupBookBtn");
+  bookBtn.onclick = () => {
+    localStorage.setItem("selectedRoute", JSON.stringify(item));
+    window.location.href = "datve.html";
+  };
+
+  // Nút xóa
+  const deleteBtn = document.getElementById("popupDeleteBtn");
+  deleteBtn.onclick = () => {
+    repo.splice(index, 1);
+    localStorage.setItem("repo_tuyen_xe", JSON.stringify(repo));
+    loadServices();
+    popup.style.display = "none";
+  };
 }
 
 function calculateRevenue() {
   const el = document.getElementById("totalRevenue");
   if (!el) return;
 
-  const orders = JSON.parse(localStorage.getItem("bookedTickets") || "[]");
+  const orders = JSON.parse(
+    localStorage.getItem("bookedTickets_Khách hàng") || "[]"
+  );
 
   const total = orders.reduce((sum, order) => {
-    // Chuyển đổi chuỗi "750.000 VNĐ" thành số 750000
     let price = parseInt(
       order.route.price.toString().replace(/\./g, "").replace(/\D/g, "")
     );
