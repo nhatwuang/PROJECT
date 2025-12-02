@@ -258,7 +258,7 @@ body {
 /* Thông báo */
 #notification {
   position: fixed;
-  top: 80px;
+  top: 30px;
   right: 20px;
   z-index: 9999;
 }
@@ -269,6 +269,7 @@ body {
   border-radius: 6px;
   color: #fff;
   font-size: 14px;
+  font-weight: 900;
   animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
 }
 
