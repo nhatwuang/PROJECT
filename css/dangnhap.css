@@ -12,7 +12,7 @@ body {
   justify-content: flex-end;
   align-items: center;
   height: 100vh;
-  background-color: #000000;
+  background-color: #ffffff;
   position: relative;
   overflow: hidden;
 }
@@ -29,7 +29,7 @@ body::before {
   flex-direction: column;
   align-items: flex-start;
   font-family: "Poppins", sans-serif;
-  color: #ffcc00;
+  color: #004b9a;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   font-weight: 800;
   line-height: 1.4;
@@ -52,7 +52,7 @@ body::after {
   flex-direction: column;
   align-items: flex-start;
   font-family: "Poppins", sans-serif;
-  color: #ffcc00;
+  color: #004b9a;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   font-weight: 700;
   line-height: 1.4;
@@ -93,7 +93,7 @@ body::after {
 
 .tab-header div.active {
   color: #000000;
-  border-bottom: 3px solid #ffcc00;
+  border-bottom: 3px solid #004b9a;
 }
 
 /* Ẩn/hiện form đăng nhập / đăng ký */
@@ -124,7 +124,7 @@ input {
 button {
   width: 100%;
   padding: 12px;
-  background-color: #ffcc00;
+  background-color: #004b9a;
   color: rgb(0, 0, 0);
   border: none;
   border-radius: 6px;
@@ -239,7 +239,7 @@ select::-ms-expand {
 #show-register {
   background: none;
   border: none;
-  color: #ffcc00;
+  color: #004b9a;
   cursor: pointer;
   font-size: inherit;
   padding: 20px;
@@ -260,7 +260,7 @@ select::-ms-expand {
 .register-btn {
   background: none;
   border: none;
-  color: #ffcc00;
+  color: #004b9a;
   cursor: pointer;
   font-weight: bold;
   padding: 0;
@@ -268,13 +268,13 @@ select::-ms-expand {
 }
 
 .register-btn:hover {
-  color: #ffcc00;
+  color: #004b9a;
 }
 
 #show-login {
   background: none;
   border: none;
-  color: #ffcc00;
+  color: #004b9a;
   cursor: pointer;
   font-size: inherit;
   padding: 20px;
@@ -295,7 +295,7 @@ select::-ms-expand {
 .login-btn {
   background: none;
   border: none;
-  color: #ffcc00;
+  color: #004b9a;
   cursor: pointer;
   font-weight: bold;
   padding: 0;
@@ -303,5 +303,5 @@ select::-ms-expand {
 }
 
 .login-btn:hover {
-  color: #ffcc00;
+  color: #004b9a;
 }

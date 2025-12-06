@@ -67,29 +67,6 @@ const vietnamProvinces = [
   "Yên Bái",
 ];
 
-const backupRoutes = [
-  {
-    from: "Hà Nội",
-    to: "TP. Hồ Chí Minh",
-    date: "2025-12-01",
-    price: "750.000 VNĐ",
-  },
-  { from: "Hà Nội", to: "Đà Nẵng", date: "2025-12-01", price: "400.000 VNĐ" },
-  { from: "Đà Nẵng", to: "Huế", date: "2025-12-02", price: "120.000 VNĐ" },
-  {
-    from: "TP. Hồ Chí Minh",
-    to: "Cần Thơ",
-    date: "2025-12-05",
-    price: "200.000 VNĐ",
-  },
-  {
-    from: "Hà Nội",
-    to: "TP. Hồ Chí Minh",
-    date: "2025-12-10",
-    price: "700.000 VNĐ",
-  },
-];
-
 // ==========================================================
 // 2. HÀM KHỞI TẠO DỮ LIỆU
 // ==========================================================
@@ -355,7 +332,7 @@ function displayPopularRoutes() {
 
   const routes = JSON.parse(localStorage.getItem("routes") || "[]");
   container.innerHTML = routes
-    .slice(0, 4) // chỉ hiện 6 tuyến nổi bật
+    .slice(0, 4) // chỉ hiện 4 tuyến nổi bật
     .map(
       (item, index) => `
         <div class="service-item fade-in" data-from="${item.from}" data-to="${
@@ -365,7 +342,7 @@ function displayPopularRoutes() {
             item.image || "images/default-vehicle.jpg"
           }" alt="Xe">
           <div class="service-text">
-            <strong>${item.from} ➜ ${item.to}</strong>
+            <strong>${item.from} ➜➜➜➜➜➜➜➜➜➜➜➜➜➜➜➜➜ ${item.to}</strong>
             <p>${item.vehicle || "Xe Khách"} • ${
         item.seatsAvailable || 0
       } ghế</p>
@@ -478,7 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 2. Khởi tạo dữ liệu & Hiển thị
   initializeLocalStorage();
-  displayPopularRoutes(); // <-- gọi để hiển thị ngay
+  displayPopularRoutes();
   hideResultsContainer();
   displayBookedTickets();
 

@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BookNow - Trang chủ</title>
-    <link rel="stylesheet" href="css/customer.css" />
+    <link rel="stylesheet" href="css/danhsachve.css" />
   </head>
 
   <body>
     <!-- Thanh điều hướng -->
     <header>
-      <a href="#" class="logo">BookNow</a>
+      <a href="customer.html" class="logo">BookNow</a>
       <nav>
         <ul>
           <li><a href="customer.html">Đặt vé</a></li>
@@ -19,11 +19,16 @@
         </ul>
       </nav>
       <div class="auth-btns">
-        <!-- Ban đầu hiển thị đăng nhập / đăng ký -->
         <button class="login-btn">Đăng nhập</button>
         <button class="signup-btn">Đăng ký</button>
       </div>
     </header>
+
+    <!-- Thanh thông tin khách hàng -->
+    <section class="customer-info">
+      <h2>Thông tin khách hàng</h2>
+      <div class="customer-details" id="customerDetails"></div>
+    </section>
 
     <!-- Danh sách vé-->
     <section class="services-tickets" id="danhsachve">
