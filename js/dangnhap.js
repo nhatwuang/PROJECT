@@ -34,7 +34,7 @@ document
     // ✅ Lưu thông tin đăng nhập ngay sau khi đăng ký
     localStorage.setItem("currentUser", JSON.stringify(user));
     localStorage.setItem("username", name); // dùng để hiển thị trong header
-
+    localStorage.setItem("Email", email);
     // ✅ Thông báo
     showToast("Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.", "success");
 

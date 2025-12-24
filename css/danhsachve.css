@@ -142,86 +142,24 @@ nav ul li a.active {
 /*======================================*/
 /*====== Thông tin khách hàng==========*/
 /*======================================*/
-.customer-info {
-  width: 80%;
-  margin: 0 auto;
-  background-color: #ffffff;
-  padding: 30px 100px;
-  text-align: left;
-  position: relative;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-.customer-info h2 {
-  font-size: 32px;
-  color: rgb(0, 0, 0);
-  margin-bottom: 40px;
-  margin-top: 10px;
-  font-weight: 700;
-  color: #0056b3;
-}
-.customer-details {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-height: 360px;
-  overflow-y: auto;
-  transition: transform 0.3s ease;
-}
-.customer-details::-webkit-scrollbar {
-  width: 6px;
-}
-.customer-details::-webkit-scrollbar-thumb {
-  background-color: #0056b3;
-  border-radius: 3px;
-}
-.customer-details::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-  border-radius: 3px;
-}
-.customer-details .customer-card {
+.account-info-item {
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e0e0e0;
+  border: 1px solid #004b9a;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-  transition: transform 0.3s ease;
+  margin: 20px 40px 40px 20px;
 }
-.customer-details .customer-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
-  opacity: 0.95;
-}
-.customer-details .customer-card:active {
-  transform: scale(0.98);
-}
-.customer-details .customer-card .customer-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #0056b3;
+
+.account-info-item h3 {
+  font-size: 20px;
+  color: #333;
   margin-bottom: 10px;
 }
-.customer-details .customer-card .customer-id {
-  font-size: 14px;
-  color: #666666;
-  margin-bottom: 5px;
-}
-.customer-details .customer-card .customer-email {
-  font-size: 14px;
-  color: #666666;
-  margin-bottom: 5px;
-}
-.customer-details .customer-card .customer-phone {
-  font-size: 14px;
-  color: #666666;
-  margin-bottom: 5px;
-}
-.customer-details .customer-card .customer-address {
-  font-size: 14px;
-  color: #666666;
+
+.account-info-item p {
+  font-size: 16px;
+  color: #666;
   margin-bottom: 5px;
 }
 

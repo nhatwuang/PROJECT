@@ -243,6 +243,24 @@ function setupAutocomplete(inputElement) {
   });
 }
 
+// Hàm hiển thị thông tin tài khoản
+function displayAccountInfo() {
+  const username = localStorage.getItem("username");
+  if (!username) return;
+
+  const accountInfoContainer = document.getElementById("account-info");
+  if (!accountInfoContainer) return;
+
+  accountInfoContainer.innerHTML = `
+    <div class="account-info-item">
+      <h3>Tài khoản của bạn</h3>
+
+      <p><strong>Tên tài khoản:</strong> ${username}</p>
+      <p><strong>Email:</strong> ${localStorage.getItem("u.email")}</p>
+    </div>
+  `;
+}
+
 function displayBookedTickets() {
   const username = localStorage.getItem("username");
   if (!username) return;
@@ -275,7 +293,14 @@ function displayBookedTickets() {
               <p><strong>Khách:</strong> ${booking.customer.name}</p>
               <p><strong>SĐT:</strong> ${booking.customer.phone}</p>
           </div>
-          <button class="cancel-button" data-index="${index}">Hủy Vé</button>
+          <div style="display:flex;gap:8px; margin-top:12px;">
+            <button class="cancel-button" data-index="${index}">Hủy Vé</button>
+            <button class="write-review-btn" data-from="${
+              booking.route.from
+            }" data-to="${booking.route.to}" data-date="${
+        booking.route.date
+      }">Viết nhận xét</button>
+          </div>
       `;
       ticketsListElement.appendChild(ticketDiv);
     });
@@ -342,7 +367,7 @@ function displayPopularRoutes() {
             item.image || "images/default-vehicle.jpg"
           }" alt="Xe">
           <div class="service-text">
-            <strong>${item.from} ➜➜➜➜➜➜➜➜➜➜➜➜➜➜➜➜➜ ${item.to}</strong>
+            <strong>Từ : ${item.from} đến Đến : s${item.to}</strong>
             <p>${item.vehicle || "Xe Khách"} • ${
         item.seatsAvailable || 0
       } ghế</p>
@@ -455,6 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 2. Khởi tạo dữ liệu & Hiển thị
   initializeLocalStorage();
+  displayAccountInfo();
   displayPopularRoutes();
   hideResultsContainer();
   displayBookedTickets();
@@ -507,4 +533,208 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  // Initialize contact / feedback / chat features
+  if (typeof initContact === "function") initContact();
+  if (typeof initFeedback === "function") initFeedback();
+  if (typeof initChat === "function") initChat();
 });
+
+/* -------------------- Contact / Feedback / Chat -------------------- */
+function initContact() {
+  const form = document.getElementById("contactForm");
+  const msg = document.getElementById("contactMsg");
+  if (!form) return;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById("c-name").value.trim(),
+      email: document.getElementById("c-email").value.trim(),
+      subject: document.getElementById("c-subject").value.trim(),
+      message: document.getElementById("c-message").value.trim(),
+      createdAt: Date.now(),
+    };
+    const arr = JSON.parse(localStorage.getItem("contacts") || "[]");
+    arr.push(payload);
+    localStorage.setItem("contacts", JSON.stringify(arr));
+    if (msg) msg.innerText = "Cảm ơn! Chúng tôi đã nhận được liên hệ.";
+    form.reset();
+    setTimeout(() => {
+      if (msg) msg.innerText = "";
+    }, 4000);
+  });
+}
+
+function initFeedback() {
+  const form = document.getElementById("feedbackForm");
+  const select = document.getElementById("fb-trip");
+  const msg = document.getElementById("feedbackMsg");
+  if (!form) return;
+
+  // populate trips
+  const routes = JSON.parse(localStorage.getItem("routes") || "[]");
+  if (select) {
+    routes.forEach((r, i) => {
+      try {
+        select.insertAdjacentHTML(
+          "beforeend",
+          `<option value='${JSON.stringify({
+            from: r.from,
+            to: r.to,
+            date: r.date,
+          })}'>${r.from} → ${r.to} ${r.date ? "- " + r.date : ""}</option>`
+        );
+      } catch (e) {}
+    });
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const tripVal = document.getElementById("fb-trip").value;
+    const fb = {
+      id: "fb_" + Date.now(),
+      trip: tripVal ? JSON.parse(tripVal) : null,
+      name: document.getElementById("fb-name").value.trim() || "Khách",
+      rating: parseInt(document.getElementById("fb-rating").value) || 5,
+      message: document.getElementById("fb-message").value.trim(),
+      createdAt: Date.now(),
+      status: "pending",
+    };
+    const arr = JSON.parse(localStorage.getItem("feedbacks") || "[]");
+    arr.unshift(fb); // newest first
+    localStorage.setItem("feedbacks", JSON.stringify(arr));
+    if (msg)
+      msg.innerText = "Cảm ơn! Nhận xét của bạn đã được lưu và chờ duyệt.";
+    form.reset();
+    renderFeedbacks();
+    setTimeout(() => {
+      if (msg) msg.innerText = "";
+    }, 5000);
+  });
+
+  // initial render
+  renderFeedbacks();
+
+  // open via ticket button
+  document.addEventListener("click", (e) => {
+    if (
+      e.target &&
+      e.target.classList &&
+      e.target.classList.contains("write-review-btn")
+    ) {
+      const from = e.target.dataset.from;
+      const to = e.target.dataset.to;
+      const date = e.target.dataset.date;
+      openFeedbackFor(from, to, date);
+    }
+  });
+}
+
+function renderFeedbacks() {
+  const list = document.getElementById("feedbackList");
+  if (!list) return;
+  const arr = JSON.parse(localStorage.getItem("feedbacks") || "[]");
+  const approved = (arr || []).filter((fb) => fb.status === "approved");
+  if (approved.length === 0) {
+    list.innerHTML = "<p>Chưa có nhận xét nào.</p>";
+    return;
+  }
+  list.innerHTML = approved
+    .map(
+      (fb) => `
+    <div class="feedback-item">
+      <strong>${fb.name}</strong> <small>${
+        fb.trip
+          ? fb.trip.from +
+            " → " +
+            fb.trip.to +
+            (fb.trip.date ? " | " + fb.trip.date : "")
+          : "Không chọn chuyến"
+      }</small>
+      <div>Đánh giá: ${"★".repeat(fb.rating)}${"☆".repeat(5 - fb.rating)}</div>
+      <p>${fb.message || ""}</p>
+    </div>
+  `
+    )
+    .join("");
+}
+
+function openFeedbackFor(from, to, date) {
+  const select = document.getElementById("fb-trip");
+  if (!select) return;
+  const opts = Array.from(select.options);
+  const targetLabel = `${from} → ${to}` + (date ? " - " + date : "");
+  const found = opts.find(
+    (o) => o.textContent.includes(from) && o.textContent.includes(to)
+  );
+  if (found) {
+    select.value = found.value;
+  } else {
+    select.insertAdjacentHTML(
+      "afterbegin",
+      `<option value='${JSON.stringify({
+        from,
+        to,
+        date,
+      })}'>${targetLabel}</option>`
+    );
+    select.selectedIndex = 1;
+  }
+  const el = document.getElementById("feedbackForm");
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+  const nameInput = document.getElementById("fb-name");
+  if (nameInput) nameInput.focus();
+}
+
+function initChat() {
+  const toggle = document.getElementById("chatToggle");
+  const win = document.getElementById("chatWindow");
+  const closeBtn = document.getElementById("chatClose");
+  const send = document.getElementById("chatSend");
+  const input = document.getElementById("chatInput");
+  const box = document.getElementById("chatMessages");
+  if (!toggle || !win) return;
+  function renderChat() {
+    const arr = JSON.parse(localStorage.getItem("site_chats") || "[]");
+    box.innerHTML = arr
+      .map(
+        (m) =>
+          `<div class="chat-message ${m.sender === "user" ? "user" : ""}">${
+            m.text
+          }</div>`
+      )
+      .join("");
+    box.scrollTop = box.scrollHeight;
+  }
+  toggle.addEventListener("click", () => {
+    win.style.display = "flex";
+    input.focus();
+    renderChat();
+  });
+  closeBtn &&
+    closeBtn.addEventListener("click", () => (win.style.display = "none"));
+  send &&
+    send.addEventListener("click", () => {
+      const text = input.value.trim();
+      if (!text) return;
+      const arr = JSON.parse(localStorage.getItem("site_chats") || "[]");
+      arr.push({ sender: "user", text, ts: Date.now() });
+      localStorage.setItem("site_chats", JSON.stringify(arr));
+      input.value = "";
+      renderChat();
+      setTimeout(() => {
+        arr.push({
+          sender: "support",
+          text: "Cảm ơn bạn, chúng tôi sẽ trả lời sớm.",
+        });
+        localStorage.setItem("site_chats", JSON.stringify(arr));
+        renderChat();
+      }, 800);
+    });
+  input &&
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        send.click();
+      }
+    });
+}

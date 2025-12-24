@@ -15,7 +15,7 @@
         <ul>
           <li><a href="customer.html">Đặt vé</a></li>
           <li><a href="danhsachve.html">Danh sách vé</a></li>
-          <li><a href="lienhe.html">Liên hệ</a></li>
+          <li><a href="lienhe.html" class="active">Liên hệ</a></li>
         </ul>
       </nav>
       <div class="auth-btns">
@@ -24,42 +24,79 @@
         <button class="signup-btn">Đăng ký</button>
       </div>
     </header>
-    <!-- Thanh tìm kiếm -->
-    <div class="search-container" id="trangchu">
-      <h2>Tìm chuyến đi của bạn</h2>
-      <form id="search-form" class="search-bar">
-        <div class="input-group">
-          <i class="fas fa-bus-alt"></i>
-          <input type="text" id="departure" placeholder="TỪ" required />
-        </div>
+    <!-- Nội dung: Liên hệ & Đánh giá -->
+    <main class="main-contact">
+      <section class="contact-section">
+        <div class="contact-wrap">
+          <div class="contact-form">
+            <h2>Liên hệ với BookNow</h2>
+            <form id="contactForm">
+              <input id="c-name" placeholder="Họ và tên" required />
+              <input id="c-email" placeholder="Email" type="email" required />
+              <input id="c-subject" placeholder="Tiêu đề" />
+              <textarea
+                id="c-message"
+                placeholder="Nội dung"
+                required
+              ></textarea>
+              <button type="submit">Gửi liên hệ</button>
+              <div id="contactMsg" class="form-msg" aria-live="polite"></div>
+            </form>
+          </div>
 
-        <div class="input-group">
-          <i class="fas fa-bus-alt"></i>
-          <input type="text" id="destination" placeholder="ĐẾN" required />
-        </div>
+          <div class="feedback-form">
+            <h2>Đánh giá chuyến đi</h2>
+            <form id="feedbackForm">
+              <label for="fb-trip">Chọn chuyến (tuỳ chọn)</label>
+              <select id="fb-trip">
+                <option value="">Không chọn</option>
+              </select>
+              <input id="fb-name" placeholder="Tên (hiển thị)" />
+              <label for="fb-rating">Đánh giá</label>
+              <select id="fb-rating">
+                <option value="5">5 - Tuyệt vời</option>
+                <option value="4">4 - Tốt</option>
+                <option value="3">3 - Khá</option>
+                <option value="2">2 - Trung bình</option>
+                <option value="1">1 - Kém</option>
+              </select>
+              <textarea
+                id="fb-message"
+                placeholder="Viết nhận xét..."
+              ></textarea>
+              <button type="submit">Gửi đánh giá</button>
+              <div id="feedbackMsg" class="form-msg" aria-live="polite"></div>
+            </form>
 
-        <div class="input-group">
-          <i class="far fa-calendar-alt"></i>
-          <input type="date" id="travel-date" placeholder="NGÀY ĐI" />
+            <div id="feedbackList" class="feedback-list"></div>
+          </div>
         </div>
+      </section>
+    </main>
 
-        <button type="submit" class="search-button">TÌM KIẾM CHUYẾN ĐI</button>
-      </form>
+    <!-- Chat widget -->
+    <div class="chat-widget" id="chatWidget">
+      <button id="chatToggle" class="chat-toggle" aria-label="Mở chat">
+        💬
+      </button>
+      <div
+        class="chat-window"
+        id="chatWindow"
+        style="display: none"
+        role="dialog"
+        aria-label="Hộp thoại chat"
+      >
+        <div class="chat-header">
+          <strong>Hỗ trợ BookNow</strong>
+          <button id="chatClose" aria-label="Đóng">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+        <div class="chat-input">
+          <input id="chatInput" placeholder="Gõ tin nhắn..." />
+          <button id="chatSend">Gửi</button>
+        </div>
+      </div>
     </div>
-
-    <div class="results-container">
-      <h2>Kết Quả Tìm Kiếm</h2>
-      <ul id="results-list"></ul>
-      <p id="no-results" style="display: none; color: #555">
-        Không tìm thấy chuyến xe phù hợp. Vui lòng thử lại.
-      </p>
-    </div>
-
-    <!-- Dịch vụ -->
-    <section class="services" id="datve">
-      <h2 class="section-title">Các tuyến đường phổ biến</h2>
-      <div class="service-list" id="popular-routes-container"></div>
-    </section>
     <!-- Chân trang -->
     <footer class="footer">
       <div class="footer-container">
