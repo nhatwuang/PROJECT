@@ -1,0 +1,136 @@
+/* Styles for danhgia (admin) */
+.admin-controls {
+  margin-bottom: 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-controls label {
+  font-weight: 600;
+  color: #333;
+}
+.admin-controls input[type="text"],
+.admin-controls select,
+.admin-controls input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+#pageSize {
+  min-width: 70px;
+}
+.admin-controls button {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+#bulkApprove {
+  background: #28a745;
+  color: #fff;
+}
+#bulkReject {
+  background: #dc3545;
+  color: #fff;
+}
+#bulkDelete {
+  background: #6c757d;
+  color: #fff;
+}
+#exportCSV {
+  background: #004b9a;
+  color: #fff;
+  margin-left: auto;
+}
+#refreshReviews {
+  background: #004b9a;
+  color: #fff;
+}
+#reviewsCount {
+  margin-left: 8px;
+  color: #555;
+  font-weight: 600;
+}
+#pagination {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+#pagination button {
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.feedback-list {
+  display: grid;
+  gap: 12px;
+}
+.feedback-item {
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+}
+.feedback-item .meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.feedback-item .meta strong {
+  font-size: 16px;
+}
+.feedback-item .meta small {
+  color: #777;
+}
+.feedback-item .rating {
+  font-size: 18px;
+  color: #ffb300;
+}
+.feedback-item .status {
+  margin-left: auto;
+  font-weight: 600;
+  color: #444;
+}
+.feedback-item p {
+  margin: 8px 0;
+  color: #333;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .admin-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #exportCSV {
+    margin-left: 0;
+  }
+}
+
+.approve-btn {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #2ecc71;
+  color: #fff;
+  border: none;
+}
+.reject-btn {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #f39c12;
+  color: #fff;
+  border: none;
+}
+.delete-btn {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+}

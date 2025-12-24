@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookNow - Đánh giá</title>
+    <link rel="stylesheet" href="css/business.css" />
+    <link rel="stylesheet" href="css/lienhe.css" />
+    <link rel="stylesheet" href="css/danhgia.css" />
+  </head>
+  <body>
+    <!-- Header (from business.html) -->
+    <header>
+      <a href="#" class="logo">BookNow</a>
+      <nav>
+        <ul>
+          <li><a href="dichvu.html">Quản lý dịch vụ</a></li>
+          <li><a href="doanhthu.html">Doanh thu</a></li>
+          <li><a href="danhgia.html" class="active">Đánh giá</a></li>
+        </ul>
+      </nav>
+      <div class="auth-btns">
+        <span class="welcome-text">xin chào .doanh nghiệp</span>
+        <a href="dangnhap.html" class="login-btn">Đăng xuất</a>
+      </div>
+    </header>
+
+    <!-- Main content: Feedback list -->
+    <main class="container" style="padding: 40px 20px">
+      <section
+        id="reviews"
+        style="width: 100%; max-width: 1200px; margin: 0 auto"
+      >
+        <h2 style="color: #004b9a; margin-bottom: 12px">Quản lý đánh giá</h2>
+
+        <div
+          style="
+            margin-bottom: 18px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+          "
+        >
+          <label for="filterStatus">Lọc trạng thái:</label>
+          <select id="filterStatus" style="padding: 8px; border-radius: 6px">
+            <option value="all">Tất cả</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <button
+            id="refreshReviews"
+            style="
+              padding: 8px 12px;
+              background: #004b9a;
+              color: #fff;
+              border: none;
+              border-radius: 6px;
+              cursor: pointer;
+            "
+          >
+            Làm mới
+          </button>
+          <label for="searchInput" style="margin-left: 8px">Tìm kiếm:</label>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Tên, nội dung, chuyến"
+            style="
+              padding: 8px;
+              border-radius: 6px;
+              border: 1px solid #ccc;
+              min-width: 200px;
+            "
+          />
+          <label for="pageSize">Hiển thị:</label>
+          <select id="pageSize" style="padding: 8px; border-radius: 6px">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+
+        <div id="adminFeedbackList" class="feedback-list"></div>
+        <div
+          id="pagination"
+          style="margin-top: 16px; display: flex; gap: 8px; align-items: center"
+        ></div>
+      </section>
+    </main>
+
+    <!-- Footer (from business.html) -->
+    <footer class="footer-business">
+      <div class="footer-container">
+        <div class="footer-about">
+          <h2>BookNow Business</h2>
+          <p>
+            Nền tảng kết nối doanh nghiệp và khách hàng nhanh chóng, hỗ trợ đặt
+            vé, và quản lý dịch vụ dễ dàng trên cùng một hệ thống.
+          </p>
+        </div>
+
+        <div class="footer-contact">
+          <h3>Liên hệ</h3>
+          <p>📍 81/2 Bà Triệu, P. Xuân Phú, TP. Huế</p>
+          <p>📞 0338 397 090</p>
+          <p>✉️ business@booknow.vn</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 BookNow Business. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="js/customer.js"></script>
+    <script src="js/danhgia.js"></script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookNow - Trang chủ</title>
+    <link rel="stylesheet" href="css/danhsachve.css" />
+  </head>
+
+  <body>
+    <!-- Thanh điều hướng -->
+    <header>
+      <a href="customer.html" class="logo">BookNow</a>
+      <nav>
+        <ul>
+          <li><a href="customer.html">Đặt vé</a></li>
+          <li><a href="danhsachve.html" class="active">Danh sách vé</a></li>
+          <li><a href="lienhe.html">Liên hệ</a></li>
+        </ul>
+      </nav>
+      <div class="auth-btns">
+        <button class="login-btn">Đăng nhập</button>
+        <button class="signup-btn">Đăng ký</button>
+      </div>
+    </header>
+
+    <!-- Thanh thông tin khách hàng -->
+    <div id="account-info"></div>
+
+    <!-- Danh sách vé-->
+    <section class="services-tickets" id="danhsachve">
+      <h2>Danh sách vé</h2>
+      <div class="tickets-list" id="ticketsList"></div>
+    </section>
+
+    <!-- Chân trang -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-about">
+          <h2>BookNow</h2>
+          <p>BookNow giúp bạn đặt vé xe chỉ với vài cú nhấp chuột.</p>
+        </div>
+
+        <div class="footer-contact" id="lienhe">
+          <h3>Liên hệ</h3>
+          <p>81/2 Bà Triệu, P.Xuân phú, TP.Huế</p>
+          <p>0338397090</p>
+          <p>contact@booknow.vn</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 BookNow. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="js/customer.js"></script>
+  </body>
+</html>

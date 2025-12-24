@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookNow - Trang chủ</title>
+    <link rel="stylesheet" href="css/lienhe.css" />
+  </head>
+
+  <body>
+    <!-- Thanh điều hướng -->
+    <header>
+      <a href="customer.html" class="logo">BookNow</a>
+      <nav>
+        <ul>
+          <li><a href="customer.html">Đặt vé</a></li>
+          <li><a href="danhsachve.html">Danh sách vé</a></li>
+          <li><a href="lienhe.html" class="active">Liên hệ</a></li>
+        </ul>
+      </nav>
+      <div class="auth-btns">
+        <!-- Ban đầu hiển thị đăng nhập / đăng ký -->
+        <button class="login-btn">Đăng nhập</button>
+        <button class="signup-btn">Đăng ký</button>
+      </div>
+    </header>
+    <!-- Nội dung: Liên hệ & Đánh giá -->
+    <main class="main-contact">
+      <section class="contact-section">
+        <div class="contact-wrap">
+          <div class="contact-form">
+            <h2>Liên hệ với BookNow</h2>
+            <form id="contactForm">
+              <input id="c-name" placeholder="Họ và tên" required />
+              <input id="c-email" placeholder="Email" type="email" required />
+              <input id="c-subject" placeholder="Tiêu đề" />
+              <textarea
+                id="c-message"
+                placeholder="Nội dung"
+                required
+              ></textarea>
+              <button type="submit">Gửi liên hệ</button>
+              <div id="contactMsg" class="form-msg" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <div class="feedback-form">
+            <h2>Đánh giá chuyến đi</h2>
+            <form id="feedbackForm">
+              <label for="fb-trip">Chọn chuyến (tuỳ chọn)</label>
+              <select id="fb-trip">
+                <option value="">Không chọn</option>
+              </select>
+              <input id="fb-name" placeholder="Tên (hiển thị)" />
+              <label for="fb-rating">Đánh giá</label>
+              <select id="fb-rating">
+                <option value="5">5 - Tuyệt vời</option>
+                <option value="4">4 - Tốt</option>
+                <option value="3">3 - Khá</option>
+                <option value="2">2 - Trung bình</option>
+                <option value="1">1 - Kém</option>
+              </select>
+              <textarea
+                id="fb-message"
+                placeholder="Viết nhận xét..."
+              ></textarea>
+              <button type="submit">Gửi đánh giá</button>
+              <div id="feedbackMsg" class="form-msg" aria-live="polite"></div>
+            </form>
+
+            <div id="feedbackList" class="feedback-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Chat widget -->
+    <div class="chat-widget" id="chatWidget">
+      <button id="chatToggle" class="chat-toggle" aria-label="Mở chat">
+        💬
+      </button>
+      <div
+        class="chat-window"
+        id="chatWindow"
+        style="display: none"
+        role="dialog"
+        aria-label="Hộp thoại chat"
+      >
+        <div class="chat-header">
+          <strong>Hỗ trợ BookNow</strong>
+          <button id="chatClose" aria-label="Đóng">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+        <div class="chat-input">
+          <input id="chatInput" placeholder="Gõ tin nhắn..." />
+          <button id="chatSend">Gửi</button>
+        </div>
+      </div>
+    </div>
+    <!-- Chân trang -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-about">
+          <h2>BookNow</h2>
+          <p>BookNow giúp bạn đặt vé xe chỉ với vài cú nhấp chuột.</p>
+        </div>
+
+        <div class="footer-contact" id="lienhe">
+          <h3>Liên hệ</h3>
+          <p>81/2 Bà Triệu, P.Xuân phú, TP.Huế</p>
+          <p>0338397090</p>
+          <p>contact@booknow.vn</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 BookNow. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="js/customer.js"></script>
+  </body>
+</html>

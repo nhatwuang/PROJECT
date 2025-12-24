@@ -1,7 +1,29 @@
-# vidu
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookNow - Doanh nghiệp</title>
+    <link rel="stylesheet" href="css/dichvu.css" />
+  </head>
+  <body>
+    <!-- ================= Header ================= -->
+    <header>
+      <a href="business.html" class="logo">BookNow</a>
+      <nav>
+        <ul>
+          <li><a href="#dichvu">Quản lý dịch vụ</a></li>
+          <li><a href="#danhsachve">Danh sách chuyến đi</a></li>
+          <li><a href="doanhthu.html">Doanh thu</a></li>
+        </ul>
+      </nav>
+      <div class="auth-btns">
+        <span class="welcome-text">xin chào .doanh nghiệp</span>
+        <a href="dangnhap.html" class="login-btn">Đăng xuất</a>
+      </div>
+    </header>
 
- <!-- THêm chuyến đi-->
-
+    <!-- THêm chuyến đi-->
     <section class="container" id="dichvu">
       <div class="admin-card" id="services">
         <div class="card-header">
@@ -70,14 +92,45 @@
       <div class="trips-list" id="tripsList"></div>
     </section>
 
-    <!-- ================= Vé đã đặt ================= -->
-    <section class="container" id="tickets">
-      <h2>Vé đã đặt</h2>
-      <div class="ticket-list" id="ticketsList"></div>
-    </section>
+    <!-- ================= Footer ================= -->
+    <footer class="footer-business">
+      <div class="footer-container">
+        <div class="footer-about">
+          <h2>BookNow Business</h2>
+          <p>
+            Nền tảng kết nối doanh nghiệp và khách hàng nhanh chóng, hỗ trợ đặt
+            vé, và quản lý dịch vụ dễ dàng trên cùng một hệ thống.
+          </p>
+        </div>
 
-    <!-- ================= Doanh thu ================= -->
-    <section class="container" id="revenue">
-      <h2>Doanh thu</h2>
-      <p id="totalRevenue"></p>
-    </section>
+        <div class="footer-contact">
+          <h3>Liên hệ</h3>
+          <p>📍 81/2 Bà Triệu, P. Xuân Phú, TP. Huế</p>
+          <p>📞 0338 397 090</p>
+          <p>✉️ business@booknow.vn</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 BookNow Business. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div id="vehiclePopup" class="popup">
+      <div class="popup-content">
+        <span class="close-btn">&times;</span>
+        <img id="popupVehicleImage" src="" alt="Hình ảnh phương tiện" />
+        <h2 id="popupVehicleLoai"></h2>
+        <p id="popupVehicleRoute"></p>
+        <p id="popupVehicleSeats"></p>
+        <p id="popupVehicleGia"></p>
+        <div class="popup-actions">
+          <button id="popupDeleteBtn">🗑 Xóa</button>
+        </div>
+      </div>
+    </div>
+    <div id="notification"></div>
+
+    <script src="js/business.js"></script>
+  </body>
+</html>
