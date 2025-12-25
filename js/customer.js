@@ -142,7 +142,7 @@ function displayResults(results) {
       li.className = "route-item";
 
       const imageHTML = route.image
-        ? `<img src="${route.image}" style="width:80px; height:60px; object-fit:cover; border-radius:5px; margin-right:15px;">`
+        ? `<img src="${route.image}" style="width:120px; height:100%; object-fit:cover; border-radius:5px; margin-right:15px;">`
         : "";
 
       const vehicleType = route.vehicle || "Xe Khách";
@@ -163,7 +163,7 @@ function displayResults(results) {
                 data-date="${route.date}" 
                 data-price="${route.price}"
                 data-vehicle="${vehicleType}">
-            🎫 ĐẶT VÉ
+            ĐẶT VÉ
         </button>
       `;
       resultsList.appendChild(li);
@@ -254,9 +254,9 @@ function displayAccountInfo() {
   accountInfoContainer.innerHTML = `
     <div class="account-info-item">
       <h3>Tài khoản của bạn</h3>
-
+      <img src="images/anh.jpg" alt="Avatar">
       <p><strong>Tên tài khoản:</strong> ${username}</p>
-      <p><strong>Email:</strong> ${localStorage.getItem("u.email")}</p>
+      <p><strong>Email:</strong> ${username}</p>
     </div>
   `;
 }
@@ -295,11 +295,7 @@ function displayBookedTickets() {
           </div>
           <div style="display:flex;gap:8px; margin-top:12px;">
             <button class="cancel-button" data-index="${index}">Hủy Vé</button>
-            <button class="write-review-btn" data-from="${
-              booking.route.from
-            }" data-to="${booking.route.to}" data-date="${
-        booking.route.date
-      }">Viết nhận xét</button>
+            
           </div>
       `;
       ticketsListElement.appendChild(ticketDiv);
@@ -367,7 +363,7 @@ function displayPopularRoutes() {
             item.image || "images/default-vehicle.jpg"
           }" alt="Xe">
           <div class="service-text">
-            <strong>Từ : ${item.from} đến Đến : s${item.to}</strong>
+            <strong>Từ : ${item.from} → Đến : ${item.to}</strong>
             <p>${item.vehicle || "Xe Khách"} • ${
         item.seatsAvailable || 0
       } ghế</p>
