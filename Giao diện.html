@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bách Hoá Green - Cửa Hàng Mua Sắm Xanh</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-left">
+                <a class="logo" href="#home">
+                    <img src="GiaodienBachhoa.png" alt="Bách Hoá Green logo">
+                    <div class="brand">
+                        <span class="brand-name">Bách Hoá Green</span>
+                        <span class="brand-tag">Sống Xanh • Mua Sạch</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="header-center">
+                <nav class="nav-menu" id="mainNav">
+                    <a href="Giao diện.html">Trang Chủ</a>
+                    <a href="Hiển thị sản phẩm.html">Sản Phẩm</a>
+                    <a href="#about">Giới Thiệu</a>
+                    <a href="#services">Dịch Vụ</a>
+                    <a href="#contact">Liên Hệ</a>
+                </nav>
+                <button id="hamburger" class="hamburger" aria-label="Mở menu">☰</button>
+            </div>
+
+            <div class="header-right">
+                <div class="search-wrapper">
+                    <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm...">
+                    <button class="search-btn" aria-label="Tìm kiếm">🔍</button>
+                </div>
+                <button class="cart-btn">🛒 Giỏ Hàng (0)</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Chào Mừng Đến Bách Hoá Green</h2>
+            <p>Mua sắm xanh, sống xanh, yêu thương thiên nhiên</p>
+            <button class="cta-btn">Khám Phá Ngay</button>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section id="products" class="products">
+        <div class="section-header">
+            <h2>Sản Phẩm Nổi Bật</h2>
+            <p>Các sản phẩm có nhiều lượt mua và được khách hàng đánh giá cao</p>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <a class="product-link" href="Hiển thị sản phẩm.html?id=cai-ngot" data-id="cai-ngot" data-name="Cải Ngọt" data-price="15.000 đ" data-image="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/223330/bhx/223330optimized_202506131009251564.jpg" data-short="Rau hữu cơ tươi mới">
+                    <div class="product-image">
+                        <img src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/223330/bhx/223330optimized_202506131009251564.jpg" alt=" Cải Ngọt Chuẩn Organik">
+                    </div>
+                    <h3> Cải Ngọt</h3>
+                </a>
+                <p>Rau hữu cơ tươi mới</p>
+                <div class="price">15.000 đ</div>
+                <button class="add-to-cart">Thêm Vào Giỏ</button>
+            </div>
+
+            <div class="product-card">
+                <a class="product-link" href="Hiển thị sản phẩm.html?id=chuoi-vang" data-id="chuoi-vang" data-name="Chuối Vàng" data-price="25.000 đ" data-image="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/313132/bhx/chuoi-gia-giong-nam-my-1kg_202512031458452979.jpg" data-short="Trái cây nhập khẩu">
+                    <div class="product-image">
+                        <img src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/313132/bhx/chuoi-gia-giong-nam-my-1kg_202512031458452979.jpg" alt="Trái Cây Tươi">
+                    </div>
+                    <h3>Chuối Vàng</h3>
+                </a>
+                <p>Trái cây nhập khẩu</p>
+                <div class="price">65.000 đ</div>
+                <button class="add-to-cart">Thêm Vào Giỏ</button>
+            </div>
+
+            <div class="product-card">
+                <a class="product-link" href="Hiển thị sản phẩm.html?id=hat-yen-mach" data-id="hat-yen-mach" data-name="Yến Mạch" data-price="55.000 đ" data-image="https://cdn.tgdd.vn/Products/Images/2903/313780/bhx/granola-sunrise-goi-300g-202309071048258437.jpg" data-short="Yến mạch giàu dinh dưỡng">
+                    <div class="product-image">
+                        <img src="https://cdn.tgdd.vn/Products/Images/2903/313780/bhx/granola-sunrise-goi-300g-202309071048258437.jpg" alt="Yến Mạch">
+                    </div>
+                    <h3>Yến Mạch</h3>
+                </a>
+                <p>Yến mạch giàu dinh dưỡng</p>
+                <div class="price">55.000 đ</div>
+                <button class="add-to-cart">Thêm Vào Giỏ</button>
+            </div>
+
+            <div class="product-card">
+                <a class="product-link" href="Hiển thị sản phẩm.html?id=7-up" data-id="7-up" data-name="7 Up" data-price="35.000 đ" data-image="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2443/312727/bhx/312727-thumb_202508010925271718.jpg" data-short="Nước ngọt thơm ngon">
+                    <div class="product-image">
+                        <img src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2443/312727/bhx/312727-thumb_202508010925271718.jpg" alt="Nước 7 Up hương chanh">
+                    </div>
+                    <h3>7 Up</h3>
+                </a>
+                <p>Nước ngọt thơm ngon</p>
+                <div class="price">35.000 đ</div>
+                <button class="add-to-cart">Thêm Vào Giỏ</button>
+            </div>
+
+            <div class="product-card">
+                <a class="product-link" href="Hiển thị sản phẩm.html?id=nac-than-tuoi" data-id="nac-than-tuoi" data-name="Nạc Thăn Heo" data-price="25.000 đ" data-image="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8781/233785/bhx/than-chuot-heo-1kg_202511041326340976.jpg" data-short="Thăn Heo Tươi">
+                    <div class="product-image">
+                        <img src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8781/233785/bhx/than-chuot-heo-1kg_202511041326340976.jpg" alt="Thăn Heo Tươi Sạch">
+                    </div>
+                    <h3>Nạc Thăn Heo</h3>
+                </a>
+                <p>Thăn Heo Tươi</p>
+                <div class="price">25.000 đ</div>
+                <button class="add-to-cart">Thêm Vào Giỏ</button>
+            </div>
+
+            <div class="product-card">
+                <a class="product-link" href="Hiển thị sản phẩm.html?id=nuoc-xa-vai" data-id="nuoc-xa-vai" data-name="Nước Xả" data-price="85.000 đ" data-image="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3023/197390/bhx/thiet-ke-chua-co-ten-2024-12-23t192358067_202412231924387103.jpg" data-short="Nước Xả Cho Bé">
+                    <div class="product-image">
+                        <img src="https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3023/197390/bhx/thiet-ke-chua-co-ten-2024-12-23t192358067_202412231924387103.jpg" alt="Nước Xả Cho Bé">
+                    </div>
+                    <h3>Nước Xả</h3>
+                </a>
+                <p>Nước Xả Cho Bé</p>
+                <div class="price">85.000 đ</div>
+                <button class="add-to-cart">Thêm Vào Giỏ</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Về Bách Hoá Green</h2>
+                <p>Bách Hoá Green được thành lập với sứ mệnh mang đến các sản phẩm xanh, sạch, an toàn cho cộng đồng. Chúng tôi cam kết:</p>
+                <ul class="about-list">
+                    <li>✓ Chỉ bán những sản phẩm hữu cơ, không hóa chất độc hại</li>
+                    <li>✓ Hỗ trợ nông dân địa phương và bền vững</li>
+                    <li>✓ Đóng gói thân thiện với môi trường</li>
+                    <li>✓ Cung cấp sản phẩm tươi sạch hàng ngày</li>
+                    <li>✓ Giá cả cạnh tranh, chất lượng hàng đầu</li>
+                </ul>
+            </div>
+            <div class="about-stats">
+                <div class="stat-box">
+                    <h3>10K+</h3>
+                    <p>Khách Hàng Hài Lòng</p>
+                </div>
+                <div class="stat-box">
+                    <h3>500+</h3>
+                    <p>Sản Phẩm Đa Dạng</p>
+                </div>
+                <div class="stat-box">
+                    <h3>50+</h3>
+                    <p>Nông Dân Hợp Tác</p>
+                </div>
+                <div class="stat-box">
+                    <h3>100%</h3>
+                    <p>Chứng Nhận Chuẩn Organik</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="section-header">
+            <h2>Dịch Vụ Của Chúng Tôi</h2>
+            <p>Các dịch vụ tiện ích cho bạn</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚚</div>
+                <h3>Giao Hàng Nhanh</h3>
+                <p>Giao hàng miễn phí cho đơn từ 200.000đ. Giao trong 24h</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">💚</div>
+                <h3>Tư Vấn Sức Khỏe</h3>
+                <p>Chuyên gia dinh dưỡng sẵn sàng tư vấn miễn phí</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🔄</div>
+                <h3>Đổi Trả Dễ Dàng Trong Vòng 24H</h3>
+                <p>Đổi trả trong 24h nếu quý khách không hài lòng</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Mua Online Tiện</h3>
+                <p>Ứng dụng dễ sử dụng, thanh toán an toàn chỉ trong vài giây</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🎁</div>
+                <h3>Chương Trình Chăm Sóc Khách Hàng</h3>
+                <p>Tích điểm, nhận hàng ngàn Vocher ưu đãi và những quà tặng hấp dẫn</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📞</div>
+                <h3>Hỗ Trợ 24/7</h3>
+                <p>Đội ngũ hỗ trợ khách hàng luôn sẵn sàng</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="section-header">
+            <h2>Liên Hệ Với Chúng Tôi</h2>
+            <p>Chúng tôi luôn sẵn lòng lắng nghe bạn</p>
+        </div>
+
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h4>📍 Địa Chỉ</h4>
+                    <p>138, Nguyễn Sinh Cung ,Thành phố Huế, </p>
+                </div>
+                <div class="contact-item">
+                    <h4>📞 Điện Thoại</h4>
+                    <p>(0918649335)</p>
+                </div>
+                <div class="contact-item">
+                    <h4>✉️ Email</h4>
+                    <p>info@bachhoagreen.vn</p>
+                </div>
+                <div class="contact-item">
+                    <h4>🕐 Giờ Mở Cửa</h4>
+                    <p>Thứ 2 - Chủ Nhật: 6:00 - 23:00</p>
+                </div>
+            </div>
+
+            <form class="contact-form">
+                <input type="text" placeholder="Tên của bạn" required>
+                <input type="email" placeholder="Email của bạn" required>
+                <textarea placeholder="Tin nhắn của bạn..." rows="5" required></textarea>
+                <button type="submit" class="submit-btn">Gửi Tin Nhắn</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Về Bách Hoá Green</h4>
+                <ul>
+                    <li><a href="#about">Giới Thiệu</a></li>
+                    <li><a href="#">Tin Tức</a></li>
+                    <li><a href="#">Sự Kiện</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Hỗ Trợ Khách Hàng</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Trả Hàng & Hoàn Tiền</a></li>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Kết Nối Với Chúng Tôi</h4>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">YouTube</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Đăng Ký Nhận Tin</h4>
+                <form class="newsletter">
+                    <input type="email" placeholder="Email của bạn...">
+                    <button type="submit">Đăng Ký</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Bách Hoá Green. Tất cả quyền được bảo lưu. | <a href="#">Chính Sách Bảo Mật</a></p>
+        </div>
+    </footer>   
+
+    <script src="script.js"></script>
+</body>
+</html>

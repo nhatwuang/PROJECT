@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sản Phẩm - Bách Hoá Green</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header (same structure as index) -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-left">
+                <a class="logo" href="Giao diện.html">
+                    <img src="GiaodienBachhoa.png" alt="Bách Hoá Green logo">
+                    <div class="brand">
+                        <span class="brand-name">Bách Hoá Green</span>
+                        <span class="brand-tag">Sống Xanh • Mua Sạch</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="header-center">
+                <nav class="nav-menu" id="mainNav">
+                    <a href="Giao diện.html">Trang Chủ</a>
+                    <a href="Hiển thị sản phẩm.html">Sản Phẩm</a>
+                    <a href="Giao diện.html#about">Giới Thiệu</a>
+                    <a href="Giao diện.html#services">Dịch Vụ</a>
+                    <a href="Giao diện.html#contact">Liên Hệ</a>
+                </nav>
+                <button id="hamburger" class="hamburger" aria-label="Mở menu">☰</button>
+            </div>
+
+            <div class="header-right">
+                <div class="search-wrapper">
+                    <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm...">
+                    <button class="search-btn" aria-label="Tìm kiếm">🔍</button>
+                </div>
+                <button class="cart-btn">🛒 Giỏ Hàng (0)</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-page">
+        <div class="product-container">
+            <div class="product-gallery">
+                <img id="productImage" src="" alt="">
+            </div>
+            <div class="product-details">
+                <h1 id="productName">Sản Phẩm</h1>
+                <p id="productDesc">Mô tả sản phẩm...</p>
+                <div class="product-meta">
+                    <div class="price" id="productPrice">0 đ</div>
+                    <div class="actions">
+                        <input type="number" id="productQty" value="1" min="1" style="width:80px;padding:8px;border-radius:6px;border:1px solid #ddd;">
+                        <button id="addToCartBtn" class="add-to-cart" style="margin-left:8px;">Thêm Vào Giỏ</button>
+                    </div>
+                </div>
+                <div class="more-info">
+                    <h3>Thông tin chi tiết</h3>
+                    <p id="productLongDesc"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2025 Bách Hoá Green</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Get product ID from URL query parameter
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // Synchronized product data from products.html (~60 products across all categories)
+        const PRODUCTS_DATA = {
+            // Rau & Củ (10 products)
+            'rau-ma': { id: 'rau-ma', name: 'Rau Má', price: 5000, priceText: '5.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/271747/bhx/rau-ma-goi-200g_202505081310424357.jpg', category: 'rau', short: 'Rau hữu cơ tươi mới', long: 'Rau hữu cơ 100%, nhập khẩu từ Raumania, không thuốc bảo vệ thực vật.' },
+            'su-su': { id: 'su-su', name: 'Su Su', price: 20000, priceText: '20.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/357886/bhx/su-su-200g_202510141006430904.jpg', category: 'rau', short: 'Su su tươi, giàu vitamin', long: 'Su su tươi ngon, giàu chất xơ.' },
+            'cai-ngot': { id: 'cai-ngot', name: 'Cải Ngọt', price: 15000, priceText: '15.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/223330/bhx/223330optimized_202506131009251564.jpg', category: 'rau', short: 'Cải ngọt chuẩn organik', long: 'Cải ngọt hữu cơ, siêu thực phẩm.' },
+            'rau-den': { id: 'rau-den', name: 'Rau Dền', price: 10000, priceText: '10.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/223344/bhx/rau-den-baby-tick-xanh_202509050855212115.jpg', category: 'rau', short: 'Rau dền ngon', long: 'Rau dển bổ máu bổ sung vitamin.' },
+            'ca-rot': { id: 'ca-rot', name: 'Cà Rốt Tây Ninh', price: 25000, priceText: '25.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/234529/bhx/ca-rot-1kg_202504140920251335.jpg', category: 'rau', short: 'Cà rốt ngọt, cam', long: 'Cà rốt tây ninh ngọt tự nhiên.' },
+            'hanh-tim': { id: 'hanh-tim', name: 'Hành Tím', price: 25000, priceText: '25.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/309133/bhx/hanh-tim-200g_202508070941435928.jpg', category: 'rau', short: 'Hành tím tươi', long: 'Hành tím chất lượng, không mục.' },
+            'khoai-lang': { id: 'khoai-lang', name: 'Khoai Lang', price: 30000, priceText: '30.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/220470/bhx/khoai-lang-nhat-1kg_202504140831119959.jpg', category: 'rau', short: 'Khoai lang tây', long: 'Khoai lang chất lượng cao.' },
+            'rau-muong': { id: 'rau-muong', name: 'Rau Muống', price: 9000, priceText: '9.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/309140/bhx/thumb-rau-muong-nuoc-tich-xanh_202506161011231890.jpg', category: 'rau', short: 'Rau muống siêu sạch', long: 'Rau đạt chuẩn, xanh mát, tốt cho sức khoẻ.' },
+            'bap': { id: 'bap', name: 'Bắp Mỹ', price: 10000, priceText: '10.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/241815/bhx/bap-my-1-trai_202504140933150847.jpg', category: 'rau', short: 'Bắp Mỹ', long: 'Bắp ngô tươi, ngọt tự nhiên, sản xuất tại Mỹ Tho.' },
+            'ca-chua': { id: 'ca-chua', name: 'Cà Chua', price: 30000, priceText: '30.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/233988/bhx/ca-chua-beef-1kg_202504140835039640.jpg', category: 'rau', short: 'Cà chua ngon', long: 'Ngon, ngọt, bổ, đạt chuẩn chất lượng cao.' },
+
+            // Trái Cây (12 products)
+            'kiwi-vang': { id: 'kiwi-vang', name: 'Kiwi vàng', price: 90000, priceText: '90.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/316300/bhx/kiwi-vang-noi-dia-trung_202510291330499988.jpg', category: 'traicay', short: 'Kiwi vàng nhập khẩu', long: 'Kiwi vàng tươi, bảo quản lạnh.' },
+            'cam-tay': { id: 'cam-tay', name: 'Cam Tây', price: 50000, priceText: '50.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/223036/bhx/quyt-mini-noi-dia-trung-2_202512031507295855.jpg', category: 'traicay', short: 'Cam tây ngọt', long: 'Cam tây chọn lọc ngọt lịm.' },
+            'tao-do': { id: 'tao-do', name: 'Táo Đỏ', price: 48000, priceText: '48.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/341013/bhx/tao-gala-chua-ngot-3_202512062212223170.jpg', category: 'traicay', short: 'Táo đỏ mọng', long: 'Táo đỏ tươi, sắc đẹp.' },
+            'chuoi-vang': { id: 'chuoi', name: 'Chuối Vàng', price: 25000, priceText: '25.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/313132/bhx/chuoi-gia-giong-nam-my-1kg_202512031458452979.jpg', category: 'traicay', short: 'Chuối vàng chín đẹp', long: 'Chuối vàng chín tự nhiên.' },
+            'dua-luoi': { id: 'dua', name: 'Dưa Lưới', price: 58000, priceText: '58.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/333560/bhx/dua-luoi-hoang-kim_202512101702157804.jpg', category: 'traicay', short: 'Dưa lưới thơm ngon', long: 'Dưa lưới chất lượng cao.' },
+            'buoi-da-xanh': { id: 'buoi-da-xanh', name: 'Bưởi Da Xanh', price: 72000, priceText: '72.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/359138/bhx/buoi-da-xanh-trai-13kgg_202511120858569628.jpg', category: 'traicay', short: 'Bưởi Da Xanh ngọt', long: 'Bưởi Da Xanh nhập khẩu ngon.' },
+            'man-non': { id: 'man-non', name: 'Mận Non', price: 38000, priceText: '38.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/222844/bhx/man-an-phuoc-tui-1kg_202510311135469664.jpg', category: 'traicay', short: 'Mận non tươi', long: 'Mận non ngon lành.' },
+            'mit-thai': { id: 'mit-thai', name: 'Mít Thái', price: 65000, priceText: '65.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/313137/bhx/mit-thai-1-kg_202504121355314537.jpg', category: 'traicay', short: 'Mít Thái chất lượng', long: 'Mít Thái tuyển chọn.' },
+            'nho-mau-don': { id: 'nho-mau-don', name: 'Nho Mẫu Đơn', price: 85000, priceText: '85.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/312875/bhx/nho-mau-don-noi-dia-trung_202510291307224156.jpg', category: 'traicay', short: 'Nho Mẫu Đơn', long: 'Nho mẫu đơn nhập khẩu tươi.' },
+            'combo-xoai-cat': { id: 'combo-xoai-cat', name: 'Xoài Cát', price: 29000, priceText: '29.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/358199/bhx/xoai-keo-1kg-trai-tu-350g-muoi-cham-hao-hao-tom-chua-cay-hu-120g_202510231641459251.jpg', category: 'traicay', short: 'Combo Xoài Cát', long: 'Xoài Cát sạch, chất lượng.' },
+            'dua-hau-khong-hat': { id: 'dua-hau-khong-hat', name: 'Dưa Hấu Không Hạt', price: 18000, priceText: '18.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/283839/bhx/dua-hau-ruot-do-tui-2kg_202512090848523437.jpg', category: 'traicay', short: 'Dưa Hấu không hạt', long: 'Dưa Hấu không hạt tuyển chọn.' },
+
+            // Hạt & Ngũ Cốc (10 products)
+            'hat-huong-duong': { id: 'hat-huong-duong', name: 'Hạt Hướng Dương', price: 15000, priceText: '15.000 đ', image: 'https://cdn.tgdd.vn/Products/Images/3487/309663/bhx/hat-huong-duong-nguyen-vi-chacheer-goi-130g-202307052328084173.jpg', category: 'hat', short: 'Hạt hướng dương chọn lọc', long: 'Giàu dinh dưỡng.' },
+            'hat-dieu-ngon': { id: 'hat-dieu-ngon', name: 'Hạt Điều Ngon', price: 90000, priceText: '90.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3487/319216/bhx/thumb-319216-1_202412111514239855.jpg', category: 'hat', short: 'Hạt Điều chất lượng', long: 'Hạt được tuyển chọn kĩ càng.' },
+            'hat-dau-phong': { id: 'hat-dau-phong', name: 'Hạt Đậu Phộng', price: 28000, priceText: '28.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3487/193766/bhx/dau-phong-tan-tan-nuoc-cot-dua-lon-135g_202505270929542272.jpg', category: 'hat', short: 'Đậu phộng tươi ngon', long: 'Đậu phộng cốt dừa tuyển chọn.' },
+            'hat-dau-ha-lan': { id: 'hat-dau-ha-lan', name: 'Hạt Đậu Hà Lan', price: 25000, priceText: '25.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3487/324832/bhx/324832-2_202501071032542631.jpg', category: 'hat', short: 'Đậu Hà Lan Tươi', long: 'Hạt đậu chất lượng cao.' },
+            'hat-de-cuoi': { id: 'hat-de-cuoi', name: 'Hạt Dẻ Cười', price: 32000, priceText: '32.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3487/328496/bhx/thumb-328496-1_202501071024033980.jpg', category: 'hat', short: 'Hạt Dẻ chọn lọc', long: 'Hạt dẻ không chất bảo quản.' },
+            'hat-chia': { id: 'hat-chia', name: 'Hạt Chia', price: 31000, priceText: '31.000 đ', image: 'https://cdn.tgdd.vn/Products/Images/2903/234410/bhx/hat-chia-sunrise-goi-300g-202208290912294350.jpg', category: 'hat', short: 'Hạt Chia Ngon', long: 'Hạt chia nguyên chất sạch.' },
+            'hat-ngu-coc': { id: 'hat-ngu-coc', name: 'Hạt Ngũ Cốc', price: 59000, priceText: '59.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8286/79376/bhx/79376-thumb-moi_202412211900158396.jpg', category: 'hat', short: 'Ngũ Cốc chất lượng', long: 'Ngũ cốc ngon.' },
+            'hat-yen-mach': { id: 'hat-yen-mach', name: 'Hạt Yến Mạch', price: 30000, priceText: '30.000 đ', image: 'https://cdn.tgdd.vn/Products/Images/2903/313780/bhx/granola-sunrise-goi-300g-202309071048258437.jpg', category: 'hat', short: 'Đậu Yến Mạch Ngon', long: 'Yến mạch đảm chất lượng.' },
+
+            // Thịt (8 products)
+            'nac-than-tuoi': { id: 'nac-than-tuoi', name: 'Nạc Thăn Tươi', price: 100000, priceText: '100.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8781/233785/bhx/than-chuot-heo-1kg_202511041326340976.jpg', category: 'thit', short: 'Nạc Thăn tươi sạch', long: 'Nạc Thăn tươi ngon từ nông trại.' },
+            'gio-song': { id: 'gio-song', name: 'Giò Sống', price: 50000, priceText: '50.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/12718/222941/bhx/gio-song-tui-200g_202504141459332720.jpg', category: 'thit', short: 'Giò Sống tươi', long: 'Giò Sống tươi, khẩu phần chuẩn.' },
+            'ba-roi': { id: 'ba-roi', name: 'Ba Rọi Heo', price: 69000, priceText: '69.000', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8781/275804/bhx/ba-roi-heo-nhap-khau_202511031507017089.jpg', category: 'thit', short: 'Ba Rọi Ngon', long: 'Ba Rọi tươi,sạch.' },
+             'thit-lon-xay': { id: 'thit-lon-xay', name: 'Thịt Lợn Xay', price: 110000, priceText: '110.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8781/283165/bhx/thit-heo-xay-cp-khay-200g_202510221101221805.jpg', category: 'thit', short: 'Lợn tươi xay sạch', long: 'Thịt lợn tươi nuôi sạch.' },
+             'dui-toi-ga': { id: 'dui-toi-ga', name: 'Đùi Tỏi Gà', price: 60000, priceText: '60.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8790/226882/bhx/thumb-dui-toi-ga_202512101427488123.jpg', category: 'thit', short: 'Đùi tỏi gà sạch', long: 'Đảm bảo vệ sinh thực phẩm.' },
+             'dui-ga-goc-tu': { id: 'dui-ga-goc-tu', name: 'Đùi Gà Góc Tư', price: 110000, priceText: '110.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8790/226949/bhx/thumb-dui-ga-goc-tu_202512101423074735.jpg', category: 'thit', short: 'Đùi gà góc tư sạch', long: 'Đùi gà sản xuất sạch.' },
+             'ga-chay-doi': { id: 'ga-chay-doi', name: 'Gà Chạy Đồi', price: 189000, priceText: '189.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8790/316860/bhx/ga-vuon-dat-do_202511041052089498.jpg', category: 'thit', short: 'Gà chạy đồi ngon', long: 'Gà chạy đồi nuôi đạt chuẩn.' },
+             'tim-ga': { id: 'tim-ga', name: 'Tim Gà', price: 36000, priceText: '36.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8790/319502/bhx/tim-ga-cp-250g_202511041053255109.jpg', category: 'thit', short: 'Tim gà ngon', long: 'Tim gà bổ dưỡng.' },
+            // Hải Sản
+             'ca-hoi': { id: 'ca-hoi', name: 'Cá Hồi Chi Lê', price: 125000, priceText: '125.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/309115/bhx/309115-1_202510291546036346.jpg', category: 'haisan', short: 'Cá hồi Chi Lê tươi', long: 'Cá hồi tươi nhập khẩu từ ChiLe sạch.' },
+            'tom-tay': { id: 'tom-tay', name: 'Tôm Tây', price: 80000, priceText: '80.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/341616/bhx/thit-tom-gion-minh-phu_202507291015013470.jpg', category: 'haisan', short: 'Tôm tây cao cấp', long: 'Tôm tây nhập khẩu tươi.' },
+            'bach-tuoc': { id: 'bach-tuoc', name: 'Bạch Tuộc', price: 150000, priceText: '150.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/273353/bhx/273353-1_202510291547510758.jpg', category: 'haisan', short: 'Bạch tuộc premium', long: 'Bạch tuộc cao cấp tươi.' },
+            'muc-tuoi': { id: 'muc-tuoi', name: 'Mực Tươi', price: 110000, priceText: '110.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/233740/bhx/muc-nut-lam-sach-1kg_202506211141172532.jpg', category: 'haisan', short: 'Mực tươi sạch', long: 'Mực tươi khẩu phần chuẩn.' },
+             'so-long': { id: 'so-long', name: 'Sò Lông', price: 75000, priceText: '75.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/333044/bhx/thit-so-long_202506211227236717.jpg', category: 'haisan', short: 'Sò lông tươi', long: 'Sò lông tươi nhập khẩu từ Raumania.' },
+            'cua-dong': { id: 'cua-dong', name: 'Cua Đồng', price: 80000, priceText: '80.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/341648/bhx/cua-dong-xay-250g_202508201322417160.jpg', category: 'haisan', short: 'Cua đồng tươi sạch', long: 'Cua đồng nhập khẩu tươi.' },
+            // Đồ Ăn Nhanh (10 products)
+            'com-tay-cam': { id: 'com-tay-cam', name: 'Cơm Tay Cầm', price: 32000, priceText: '32.000 đ', image: 'https://images.unsplash.com/photo-1599599820778-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Cơm tay cầm nóng', long: 'Cơm tay cầm tươi mỗi ngày.' },
+            'banh-my': { id: 'banh-my', name: 'Bánh Mỳ', price: 28000, priceText: '28.000 đ', image: 'https://images.unsplash.com/photo-1599599821889-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Bánh mỳ ngon', long: 'Bánh mỳ Việt kinh điển.' },
+            'banh-chung': { id: 'banh-chung', name: 'Bánh Chưng', price: 48000, priceText: '48.000 đ', image: 'https://images.unsplash.com/photo-1599599823000-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Bánh chưng truyền thống', long: 'Bánh chưng cách làm truyền.' },
+            'pho-bo': { id: 'pho-bo', name: 'Phở Bò', price: 42000, priceText: '42.000 đ', image: 'https://images.unsplash.com/photo-1599599824111-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Phở bò nóng', long: 'Phở bò ngon đúng vị.' },
+            'bun-cha': { id: 'bun-cha', name: 'Bún Chả', price: 38000, priceText: '38.000 đ', image: 'https://images.unsplash.com/photo-1599599825222-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Bún chả Hà Nội', long: 'Bún chả ngon, nước dùng đậm.' },
+            'canh-chua': { id: 'canh-chua', name: 'Canh Chua', price: 35000, priceText: '35.000 đ', image: 'https://images.unsplash.com/photo-1599599826333-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Canh chua tôm cá', long: 'Canh chua nóng, dễ chịu.' },
+            'mien-ga': { id: 'mien-ga', name: 'Miến Gà', price: 42000, priceText: '42.000 đ', image: 'https://images.unsplash.com/photo-1599599827444-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Miến gà nóng', long: 'Miến gà ngon, nguyên chất.' },
+            'banh-trang-nuong': { id: 'banh-trang-nuong', name: 'Bánh Tráng Nướng', price: 25000, priceText: '25.000 đ', image: 'https://images.unsplash.com/photo-1599599828555-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Bánh tráng nướng', long: 'Bánh tráng nướng giòn.' },
+            'banh-canh': { id: 'banh-canh', name: 'Bánh Canh', price: 36000, priceText: '36.000 đ', image: 'https://images.unsplash.com/photo-1599599829666-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Bánh canh nóng', long: 'Bánh canh mềm, nước dừa.' },
+            'com-tam': { id: 'com-tam', name: 'Cơm Tấm', price: 31000, priceText: '31.000 đ', image: 'https://images.unsplash.com/photo-1599599830777-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'doanhnhanh', short: 'Cơm tấm ngon', long: 'Cơm tấm miền tây đặc sắc.' },
+
+            // Gia Vị (8 products)
+            'hanh-kho': { id: 'hanh-kho', name: 'Hành Khô', price: 18000, priceText: '18.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/309133/bhx/hanh-tim-200g_202508070941435928.jpg', category: 'giavi', short: 'Hành khô chất lượng', long: 'Hành khô hong gió sạch.' },
+            'bot-nghe': { id: 'bot-nghe', name: 'Bột Nghệ', price: 22000, priceText: '22.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8275/219653/bhx/219653-thumb-moi_202411122148502613.jpg', category: 'giavi', short: 'Bột nghệ nguyên chất', long: 'Bột nghệ hảo hạng không chế biến.' },
+            'tieu-den': { id: 'tieu-den', name: 'Tiêu Đen', price: 8000, priceText: '8.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2809/227716/bhx/227716-thumb-moi_202412191649360546.jpg', category: 'giavi', short: 'Tiêu đen chất lượng', long: 'Tiêu đen nguyên hạt sạch.' },
+            'ngu-vi-huong': { id: 'ngu-vi-huong', name: 'Ngũ Vị Hương', price: 8000, priceText: '8.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8275/77205/bhx/77205-thumb-moi_202411122149530264.jpg', category: 'giavi', short: 'Ngũ vị hương nguyên chất', long: 'Ngũ vị hương nguyên chất không hóa chất.' },
+            'sa-tach': { id: 'sa-tach', name: 'Sa Tách', price: 35000, priceText: '35.000 đ', image: 'https://images.unsplash.com/photo-1599599836222-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'giavi', short: 'Sa tách ngon', long: 'Sa tách thơm lừng, tươi.' },
+
+            // Đồ Uống
+            'yen-sao': { id: 'yen-sao', name: 'Nước Yến Sào', price: 190000, priceText: '190.000 đ', image: 'https://cdn.tgdd.vn/Products/Images/4585/215631/bhx/hop-6-hu-nuoc-yen-nhan-sam-song-yen-70ml-202407101633520105.jpg', category: 'douong', short: 'Yến sào sạch', long: 'Yến sào nguyên chất.' },
+            'nuoc-cam-tay': { id: 'nuoc-cam-tay', name: 'Nước Cam Tây', price: 48000, priceText: '48.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3265/219795/bhx/nuoc-cam-ep-twister-cam-1-lit_202511201050253565.jpg', category: 'douong', short: 'Nước cam tây tươi', long: 'Nước cam tây ép tươi nguyên chất.' },
+            'tra-xanh': { id: 'tra-xanh', name: 'Trà Xanh', price: 68000, priceText: '68.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8938/200303/bhx/200303_202410301501010341.jpg', category: 'douong', short: 'Trà xanh chất lượng', long: 'Trà xanh Việt nguyên chất từ Đà Lạt.' },
+            '7-up': { id: '7-up', name: '7 Up', price: 11000, priceText: '11.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2443/312727/bhx/312727-thumb_202508010925271718.jpg', category: 'douong', short: 'Nước ngọt có ga 7 Up', long: '7 Up làm từ chanh tươi.' },
+            'nuoc-suoi': { id: 'nuoc-suoi', name: 'Nước suối', price: 72000, priceText: '72.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2563/358188/bhx/thung-2-chai-nuoc-khoang-la-vie-5-lit_202510200926511624.jpg', category: 'douong', short: 'Nước suối nguyên chất LaVie', long: 'Nước suối tự nhiên không hóa chất.' },
+            'tra-o-long': { id: 'tra-o-long', name: 'Trà Ô Long', price: 15000, priceText: '15.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8938/236378/bhx/tra-o-long-tea-plus-1-lit_202511011515241680.jpg', category: 'douong', short: 'Trà ô long cao cấp', long: 'Trà ô long chất lượng hảo hạng tự nhiên.' },
+
+            // Chăm Sóc (6 products)
+            'nuoc-xa-vai': { id: 'nuoc-xa-vai', name: 'Nước Xả Vải', price: 85000, priceText: '85.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3023/197390/bhx/thiet-ke-chua-co-ten-2024-12-23t192358067_202412231924387103.jpg', category: 'chamsoc', short: 'Hương Thơm Dịu Nhẹ', long: 'Sản phẩm an toàn cho da nhạy cảm.' },
+            'sua-tam': { id: 'sua-tam', name: 'Sữa Tắm', price: 68000, priceText: '68.000 đ', image: 'https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2444/359915/bhx/sua-tam-duong-sang-hazeline-yen-mach-dau-tam-chai-800g-va-tui-900g_202512011144144064.jpg', category: 'chamsoc', short: 'Sữa tắm thiên nhiên', long: 'Sữa tắm không hóa chất hại.' },
+            'kem-duong': { id: 'kem-duong', name: 'Kem Dưỡng Da', price: 95000, priceText: '95.000 đ', image: 'https://images.unsplash.com/photo-1599599851777-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'chamsoc', short: 'Kem dưỡng cao cấp', long: 'Kem dưỡng da từ thiên nhiên.' },
+            'serum-toc': { id: 'serum-toc', name: 'Serum Tóc', price: 125000, priceText: '125.000 đ', image: 'https://images.unsplash.com/photo-1599599852888-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'chamsoc', short: 'Serum dưỡng tóc', long: 'Serum tóc từ dầu thiên nhiên.' },
+            'nuoc-hoa-hieu': { id: 'nuoc-hoa-hieu', name: 'Nước Hoa Hiệu', price: 250000, priceText: '250.000 đ', image: 'https://images.unsplash.com/photo-1599599853999-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'chamsoc', short: 'Nước hoa cao cấp', long: 'Nước hoa từ hoa thiên nhiên.' },
+            'dau-coconut': { id: 'dau-coconut', name: 'Dầu Dừa Nguyên Chất', price: 72000, priceText: '72.000 đ', image: 'https://images.unsplash.com/photo-1599599865000-7e8e7e8c9d8f?w=900&h=900&fit=crop', category: 'chamsoc', short: 'Dầu dừa tinh khiết', long: 'Dầu dừa ép lạnh tự nhiên.' }
+      };
+
+        // Function to calculate max quantity based on price
+        function getMaxQuantity(price) {
+          if (price < 10000) return 10;      // < 10K: max 10 units
+          if (price < 50000) return 5;       // 10K-50K: max 5 units
+          if (price < 100000) return 3;      // 50K-100K: max 3 units
+          if (price < 200000) return 2;      // 100K-200K: max 2 units
+          return 1;                           // >= 200K: max 1 unit
+        }
+
+        function renderProductPage() {
+            const id = getQueryParam('id');
+            const product = PRODUCTS_DATA[id];
+            if (!product) {
+                document.getElementById('productName').textContent = 'Sản phẩm không tìm thấy';
+                document.getElementById('productDesc').textContent = '';
+                document.getElementById('productLongDesc').textContent = '';
+                document.getElementById('productImage').src = '';
+                return;
+            }
+
+            document.getElementById('productName').textContent = product.name;
+            document.getElementById('productDesc').textContent = product.short;
+            document.getElementById('productLongDesc').textContent = product.long;
+            document.getElementById('productPrice').textContent = product.priceText;
+            document.getElementById('productImage').src = product.image;
+            document.getElementById('productImage').alt = product.name;
+
+            // Add to cart using global `cart` from script.js
+            const addBtn = document.getElementById('addToCartBtn');
+            addBtn.addEventListener('click', function() {
+                const maxQty = getMaxQuantity(product.price);
+                let qty = parseInt(document.getElementById('productQty').value) || 1;
+                
+                // Enforce maximum quantity limit
+                if (qty > maxQty) {
+                  alert(`❌ Vượt quá hạn mức mua!\n\nGiá sản phẩm: ${product.priceText}\nHạn mức: ${maxQty} bịch\n\nVui lòng giảm số lượng.`);
+                  document.getElementById('productQty').value = maxQty;
+                  return;
+                }
+                
+                if (qty < 1) qty = 1;
+                
+                for (let i = 0; i < qty; i++) {
+                    cart.addItem({ name: product.name, price: product.priceText, image: product.image });
+                }
+                cart.showNotification(`${product.name} đã được thêm vào giỏ hàng (${qty})`);
+            });
+        }
+
+        // Wait for the global cart to be available (script.js defines it on DOMContentLoaded)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderProductPage);
+        } else {
+            renderProductPage();
+        }
+    </script>
+</body>
+</html>
