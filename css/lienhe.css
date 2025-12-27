@@ -379,6 +379,26 @@ footer {
   border-radius: 8px;
 }
 
+.chat-input button {
+  background: #004b9a;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.chat-header button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
 @media screen and (max-width: 768px) {
   .contact-wrap {
     flex-direction: column;

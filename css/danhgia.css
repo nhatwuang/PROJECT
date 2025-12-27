@@ -1,3 +1,151 @@
+/* ============================================================
+  CẤU HÌNH CHUNG (RESET & GLOBAL)
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Container chung cho các section */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* ============================================================
+  HEADER & NAVIGATION
+   ============================================================ */
+header {
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  color: rgb(45, 45, 45);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 80px;
+  box-shadow: 0 4px 15px rgba(0, 75, 154, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  flex-wrap: wrap;
+  border-bottom: 3px solid #00aa5e;
+}
+
+.logo {
+  font-size: 28px;
+  margin-left: 60px;
+  color: #00aa5e;
+  text-decoration: none;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin-left: 90px;
+}
+
+nav ul li a {
+  color: #555;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+  border: 1px solid #555;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: #00c897;
+  border: 1px solid #38cc89;
+}
+
+.auth-btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.auth-btns .welcome-text {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  margin-right: 8px;
+  user-select: none;
+}
+
+.login-btn,
+.signup-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(180deg, #ffffff);
+  color: #00c897;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid #00c897;
+}
+
+.login-btn:hover,
+.signup-btn:hover {
+  color: #00694f;
+  border: 1px solid #00694f;
+}
+
+.login-btn .welcome,
+.signup-btn .welcome {
+  color: #f9f8f8;
+  font-weight: 600;
+}
+
+/* ============================================================
+   3. BANNER BUSINESS
+   ============================================================ */
+.banner {
+  background: linear-gradient(180deg, #00c066, #ffffff);
+  color: #006838;
+  padding: 60px 20px;
+  text-align: center;
+  height: 250px;
+  border-bottom: 1px solid #38cc89;
+}
+.banner-content h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.banner-content p {
+  font-size: 18px;
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 500;
+}
+
 /* Styles for danhgia (admin) */
 .admin-controls {
   margin-bottom: 18px;
@@ -133,4 +281,76 @@
   background: #e74c3c;
   color: #fff;
   border: none;
+}
+
+/* ============================================================
+   8. FOOTER
+   ============================================================ */
+.footer-business {
+  background: linear-gradient(180deg, #ffffff, #38cc89);
+  color: #000000;
+  padding: 50px 0 25px;
+  font-family: "Poppins", sans-serif;
+  margin-top: 60px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 50px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-business h2,
+.footer-business h3 {
+  color: #006d3c;
+  text-align: center;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 18px;
+}
+
+.footer-business p {
+  color: #000000;
+  font-size: 16px;
+  text-align: center;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.footer-business ul {
+  list-style: none;
+  font-weight: 700;
+  padding: 0;
+  font-size: 16px;
+}
+
+.footer-links ul li {
+  margin: 10px 0;
+  font-weight: 500;
+  text-align: center;
+  font-size: 16px;
+}
+
+.footer-links ul li a {
+  color: #000000;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+  text-align: center;
+}
+
+.footer-links ul li a:hover {
+  color: #388a84;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding-top: 15px;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #000000;
 }

@@ -4,19 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BookNow - Đánh giá</title>
-    <link rel="stylesheet" href="css/business.css" />
-    <link rel="stylesheet" href="css/lienhe.css" />
     <link rel="stylesheet" href="css/danhgia.css" />
   </head>
   <body>
-    <!-- Header (from business.html) -->
+    <!-- ================= Header ================= -->
     <header>
-      <a href="#" class="logo">BookNow</a>
+      <a href="business.html" class="logo">BookNow</a>
       <nav>
         <ul>
           <li><a href="dichvu.html">Quản lý dịch vụ</a></li>
           <li><a href="doanhthu.html">Doanh thu</a></li>
-          <li><a href="danhgia.html" class="active">Đánh giá</a></li>
+          <li><a href="#">Đánh giá</a></li>
         </ul>
       </nav>
       <div class="auth-btns">
@@ -25,8 +23,16 @@
       </div>
     </header>
 
+    <!-- ================= Banner ================= -->
+    <section class="banner">
+      <div class="banner-content">
+        <h1>Đánh giá</h1>
+        <p>Quản lý đánh giá từ khách hàng</p>
+      </div>
+    </section>
+
     <!-- Main content: Feedback list -->
-    <main class="container" style="padding: 40px 20px">
+    <main class="container" style="padding: 40px 100px">
       <section
         id="reviews"
         style="width: 100%; max-width: 1200px; margin: 0 auto"
@@ -115,7 +121,7 @@
       </div>
     </footer>
 
-    <script src="js/customer.js"></script>
+    <script src="js/business.js"></script>
     <script src="js/danhgia.js"></script>
   </body>
 </html>
