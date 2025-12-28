@@ -26,7 +26,7 @@ body {
 }
 
 /* ============================================================
-  HEADER & NAVIGATION
+   2. HEADER & NAVIGATION
    ============================================================ */
 header {
   background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
@@ -40,13 +40,13 @@ header {
   top: 0;
   z-index: 10;
   flex-wrap: wrap;
-  border-bottom: 2px solid #38cc89;
+  border-bottom: 2px solid #00532c;
 }
 
 .logo {
   font-size: 28px;
   margin-left: 60px;
-  color: #38cc89;
+  color: #00532c;
   text-decoration: none;
   font-weight: 900;
   letter-spacing: 1px;
@@ -71,8 +71,8 @@ nav ul li a {
 
 nav ul li a:hover,
 nav ul li a.active {
-  color: #00c897;
-  border: 1px solid #38cc89;
+  color: #00532c;
+  border: 1px solid#00532c;
 }
 
 .auth-btns {
@@ -97,7 +97,7 @@ nav ul li a.active {
   width: 100%;
   padding: 12px;
   background: linear-gradient(180deg, #ffffff);
-  color: #00c897;
+  color: #00532c;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -107,13 +107,14 @@ nav ul li a.active {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  border: 1px solid #00c897;
+  border: 1px solid #00532c;
 }
 
 .login-btn:hover,
 .signup-btn:hover {
-  color: #00694f;
-  border: 1px solid #00694f;
+  color: #ffffff;
+  border: 1px solid #00532c;
+  background: #00532c;
 }
 
 .login-btn .welcome,
@@ -151,14 +152,16 @@ nav ul li a.active {
 }
 
 .banner h1 {
-  color: #38cc89;
+  color: #00532c;
   font-size: 48px;
-  font-weight: 700;
+  font-weight: 900;
   margin-bottom: 15px;
 }
 
 .banner p {
   font-size: 20px;
+  color: #ffffff;
+  font-weight: 500;
 }
 
 /* ============================================================

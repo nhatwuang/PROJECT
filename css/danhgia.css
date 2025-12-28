@@ -27,7 +27,7 @@ body {
 }
 
 /* ============================================================
-  HEADER & NAVIGATION
+   2. HEADER & NAVIGATION
    ============================================================ */
 header {
   background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
@@ -41,13 +41,13 @@ header {
   top: 0;
   z-index: 10;
   flex-wrap: wrap;
-  border-bottom: 3px solid #00aa5e;
+  border-bottom: 2px solid #00532c;
 }
 
 .logo {
   font-size: 28px;
   margin-left: 60px;
-  color: #00aa5e;
+  color: #00532c;
   text-decoration: none;
   font-weight: 900;
   letter-spacing: 1px;
@@ -72,8 +72,8 @@ nav ul li a {
 
 nav ul li a:hover,
 nav ul li a.active {
-  color: #00c897;
-  border: 1px solid #38cc89;
+  color: #00532c;
+  border: 1px solid#00532c;
 }
 
 .auth-btns {
@@ -98,7 +98,7 @@ nav ul li a.active {
   width: 100%;
   padding: 12px;
   background: linear-gradient(180deg, #ffffff);
-  color: #00c897;
+  color: #00532c;
   text-align: center;
   text-decoration: none;
   border: none;
@@ -108,13 +108,14 @@ nav ul li a.active {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  border: 1px solid #00c897;
+  border: 1px solid #00532c;
 }
 
 .login-btn:hover,
 .signup-btn:hover {
-  color: #00694f;
-  border: 1px solid #00694f;
+  color: #ffffff;
+  border: 1px solid #00532c;
+  background: #00532c;
 }
 
 .login-btn .welcome,
@@ -126,24 +127,24 @@ nav ul li a.active {
 /* ============================================================
    3. BANNER BUSINESS
    ============================================================ */
+/* Banner */
 .banner {
-  background: linear-gradient(180deg, #00c066, #ffffff);
-  color: #006838;
-  padding: 60px 20px;
+  width: 100%;
+  padding: 60px 0;
+  background: linear-gradient(180deg, #00ff88, #ffffff);
+  background-size: cover;
+  color: #00532c;
+}
+
+.banner h1 {
+  font-size: 38px;
+  font-weight: 600;
   text-align: center;
-  height: 250px;
-  border-bottom: 1px solid #38cc89;
 }
-.banner-content h1 {
-  font-size: 36px;
-  margin-bottom: 15px;
-  font-weight: 700;
-}
-.banner-content p {
-  font-size: 18px;
-  max-width: 700px;
-  margin: 0 auto;
-  font-weight: 500;
+.banner p {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* Styles for danhgia (admin) */
@@ -225,6 +226,10 @@ nav ul li a.active {
   border-radius: 8px;
   background: #fff;
 }
+.feedback-item:hover {
+  border: 1px solid #000000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
 .feedback-item .meta {
   display: flex;
   align-items: center;
@@ -305,7 +310,7 @@ nav ul li a.active {
 
 .footer-business h2,
 .footer-business h3 {
-  color: #006d3c;
+  color: #00532c;
   text-align: center;
   font-weight: 700;
   font-size: 28px;
@@ -313,7 +318,7 @@ nav ul li a.active {
 }
 
 .footer-business p {
-  color: #000000;
+  color: #00532c;
   font-size: 16px;
   text-align: center;
   line-height: 1.8;
@@ -347,7 +352,7 @@ nav ul li a.active {
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #00532c;
   text-align: center;
   padding-top: 15px;
   margin-top: 30px;

@@ -80,8 +80,9 @@ nav ul li a.active {
 }
 
 .auth-btns button:hover {
-  color: #2a91ff;
-  border: 1px solid #2a91ff;
+  color: #ffffff;
+  background: #2a91ff;
+  border: 1px solid #004b9a;
 }
 
 .auth-btns .welcome {
@@ -163,12 +164,13 @@ nav ul li a.active {
 /*======================================*/
 .services-tickets {
   width: 80%;
-  margin: 0 auto;
+  margin: 40px auto;
   background-color: #ffffff;
   padding: 30px 100px;
   text-align: left;
   position: relative;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+  border-radius: 12px;
 }
 
 .services-tickets h2 {
