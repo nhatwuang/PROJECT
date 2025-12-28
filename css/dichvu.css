@@ -9,70 +9,76 @@
 }
 
 body {
-  background-color: #29bb8b;
+  background-color: #ffffff;
   color: #333;
 }
 
 /* Container chung cho các section */
 .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: flex-start;
+  grid-template-areas: "dichvu danhsachve";
   justify-content: center;
   padding: 40px 20px;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 40px auto;
   background: #ffffff;
   border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
 }
 
 /* ============================================================
    2. HEADER & NAVIGATION
    ============================================================ */
 header {
-  background-color: #ffffff;
-  color: #000000;
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  color: rgb(45, 45, 45);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 80px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  padding: 15px 80px;
+  box-shadow: 0 4px 15px rgba(0, 75, 154, 0.15);
   position: sticky;
   top: 0;
   z-index: 10;
   flex-wrap: wrap;
-  border-bottom: 2px solid #38cc89;
+  border-bottom: 2px solid #00532c;
 }
 
 .logo {
   font-size: 28px;
-  font-weight: 700;
   margin-left: 60px;
-  color: #38cc89;
+  color: #00532c;
   text-decoration: none;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
 
 nav ul {
   display: flex;
   list-style: none;
-  align-items: center;
-  gap: 40px;
-  margin-left: 120px;
+  gap: 30px;
+  margin-left: 90px;
 }
 
 nav ul li a {
   color: #555;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: 500;
   transition: 0.3s;
-  font-weight: 500;
+  border: 1px solid #555;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
 nav ul li a:hover,
 nav ul li a.active {
-  color: #00c897;
+  color: #00532c;
+  border: 1px solid#00532c;
 }
 
-/* Nút Auth (Đăng nhập/Đăng ký/Đăng xuất) */
 .auth-btns {
   display: flex;
   align-items: center;
@@ -94,24 +100,25 @@ nav ul li a.active {
   display: inline-block;
   width: 100%;
   padding: 12px;
-  background: #ffffff;
-  color: #38cc89;
+  background: linear-gradient(180deg, #ffffff);
+  color: #00532c;
   text-align: center;
   text-decoration: none;
-  border: 3px solid #38cc89;
+  border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid #00532c;
 }
 
 .login-btn:hover,
 .signup-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
-  opacity: 0.95;
+  color: #ffffff;
+  border: 1px solid #00532c;
+  background: #00532c;
 }
 
 .login-btn .welcome,
@@ -121,42 +128,26 @@ nav ul li a.active {
 }
 
 /* ============================================================
-   3. BANNER (PHẦN ĐẦU TRANG)
+   3. BANNER BUSINESS
    ============================================================ */
+/* Banner */
 .banner {
   width: 100%;
-  height: 100vh;
-  background: url("../images/anhnen-doanhnghiep.jpg") center center / cover
-    no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  position: relative;
-}
-
-.banner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5); /* Lớp phủ tối màu */
-}
-
-.banner-text {
-  position: relative;
-  z-index: 1;
+  padding: 60px 0;
+  background: linear-gradient(180deg, #00ff88, #ffffff);
+  background-size: cover;
+  color: #00532c;
 }
 
 .banner h1 {
-  color: #38cc89;
-  font-size: 48px;
-  font-weight: 700;
-  margin-bottom: 15px;
+  font-size: 38px;
+  font-weight: 600;
+  text-align: center;
 }
-
 .banner p {
   font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* ============================================================
@@ -165,7 +156,7 @@ nav ul li a.active {
 .admin-card {
   background: #ffffff;
   width: 100%;
-  max-width: 800px;
+  max-width: 700px;
   margin: 40px auto 10px;
   border-radius: 20px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
@@ -312,159 +303,9 @@ nav ul li a.active {
   box-shadow: 0 8px 20px rgba(0, 132, 71, 0.3);
 }
 
-/* Container chứa danh sách vé (Dạng lưới) */
-#ticketsList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 35px;
-  margin-right: 30px;
-}
-
-/* Thẻ vé (Card) */
-.ticket-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Hiệu ứng khi di chuột vào vé */
-.ticket-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 132, 71, 0.15);
-  border-color: #008447;
-}
-
-/* --- Phần Header của vé --- */
-.ticket-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #008447;
-  padding-bottom: 12px;
-  margin-bottom: 15px;
-}
-
-.ticket-header h3 {
-  margin: 0;
-  font-size: 18px;
-  color: #333;
-  font-weight: 700;
-}
-
-/* Trạng thái "Đã xác nhận" */
-.status.booked {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-/* --- Phần Thông tin chi tiết --- */
-.ticket-details {
-  flex-grow: 1;
-  font-size: 14px;
-  color: #555;
-  line-height: 1.6;
-}
-
-.ticket-details p {
-  margin: 8px 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-.ticket-details strong {
-  color: #333;
-}
-
-/* Giá tiền nổi bật */
-.price-value {
-  color: #d32f2f; /* Màu đỏ */
-  font-weight: bold;
-  font-size: 16px;
-}
-
-/* Đường gạch ngang phân cách */
-.ticket-details hr {
-  border: 0;
-  border-top: 1px dashed #ccc;
-  margin: 12px 0;
-}
-
-/* --- Nút Hủy Vé --- */
-.cancel-button {
-  margin-top: 20px;
-  width: 100%;
-  padding: 12px;
-  background-color: white;
-  border: 1px solid #d32f2f;
-  color: #d32f2f;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
-.cancel-button:hover {
-  background-color: #d32f2f;
-  color: white;
-  box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
-}
-
-/* --- Thông báo khi chưa có vé --- */
-.no-tickets {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 50px 20px;
-  background-color: #f9f9f9;
-  border: 2px dashed #ccc;
-  border-radius: 10px;
-  color: #777;
-  font-size: 16px;
-}
-
 /* ============================================================
    5. CÁC SECTION DANH SÁCH (Thẻ bao ngoài)
    ============================================================ */
-/* Style chung cho các khối: Danh sách chuyến đi, Vé đã đặt, Doanh thu */
-#danhsachve,
-#revenue {
-  background-color: #fff;
-  width: 100%;
-  max-width: 1000px;
-  margin: 120px auto;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid #eee;
-  display: block;
-}
-
-/* Tiêu đề của các Section này */
-#danhsachve h2,
-#tickets h2,
-#revenue h2 {
-  font-size: 22px;
-  color: #001b80;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #f4f4f4;
-  text-align: left;
-}
-
-/* Riêng phần Doanh thu căn giữa */
 #revenue {
   text-align: center;
 }
@@ -479,22 +320,27 @@ nav ul li a.active {
    6. ITEM DANH SÁCH (Giao diện từng chuyến xe/vé)
    ============================================================ */
 /* Container chứa list */
-#addedPhuongTienList,
-#tripsList,
-#bookedTicketsList {
-  display: flex;
+#tripsList {
+  margin-top: 45px;
+  grid-area: danhsachve;
+  margin: 40px auto 10px 10px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  display: grid;
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  max-height: 500px;
+  max-height: 575px;
   overflow-y: auto;
-  padding: 30px;
+  padding: 30px 20px 40px;
+  background: #ffffff;
+  border: 1px solid #ffffff;
 }
 
 /* Thẻ Item con */
 .service-item {
   background: #ffffff;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #000000;
   border-radius: 15px;
   padding: 20px 25px;
   display: flex;
@@ -521,7 +367,7 @@ nav ul li a.active {
   bottom: 0;
   width: 6px;
   background-color: #009a56;
-  border-radius: 6px 0 0 6px;
+  border-radius: 15px 0 0 15px;
 }
 
 /* Thẻ Item con chung */
@@ -905,7 +751,7 @@ nav ul li a.active {
 
 .footer-business h2,
 .footer-business h3 {
-  color: #006d3c;
+  color: #00532c;
   text-align: center;
   font-weight: 700;
   font-size: 28px;
@@ -913,7 +759,7 @@ nav ul li a.active {
 }
 
 .footer-business p {
-  color: #000000;
+  color: #00532c;
   font-size: 16px;
   text-align: center;
   line-height: 1.8;
@@ -947,7 +793,7 @@ nav ul li a.active {
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #00532c;
   text-align: center;
   padding-top: 15px;
   margin-top: 30px;
@@ -1004,8 +850,8 @@ nav ul li a.active {
   margin: 8% auto;
   padding: 20px;
   border-radius: 12px;
-  width: 400px;
-  max-width: 90%;
+  width: 500px;
+  max-width: 80%;
   position: relative;
   text-align: center;
 }

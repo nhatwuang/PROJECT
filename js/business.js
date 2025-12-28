@@ -278,44 +278,53 @@ function viewVehicleDetails(index) {
   if (!item) return;
 
   const popup = document.getElementById("vehiclePopup");
-  const img = document.getElementById("popupVehicleImage");
-  const loai = document.getElementById("popupVehicleLoai");
-  const route = document.getElementById("popupVehicleRoute");
-  const seats = document.getElementById("popupVehicleSeats");
-  const gia = document.getElementById("popupVehicleGia");
-  const closeBtn = popup.querySelector(".close-btn");
+  if (!popup) return;
 
-  img.src = item.image || "images/default-vehicle.jpg";
-  loai.textContent = item.vehicle || "Xe Khách";
-  route.textContent = `${item.from} ➝ ${item.to}`;
-  seats.textContent = `Số ghế: ${item.seatsAvailable || 0}`;
-  gia.textContent = `Giá: ${item.price || ""}`;
+  document.getElementById("popupVehicleImage").src =
+    item.image || "images/default-vehicle.jpg";
+  document.getElementById("popupVehicleLoai").textContent =
+    item.vehicle || "Xe Khách";
+  document.getElementById(
+    "popupVehicleRoute"
+  ).textContent = `${item.from} ➝ ${item.to}`;
+  document.getElementById("popupVehicleSeats").textContent = `Số ghế: ${
+    item.seatsAvailable || 0
+  }`;
+  document.getElementById("popupVehicleGia").textContent = `Giá: ${
+    item.price || ""
+  }`;
 
-  popup.style.display = "block";
+  popup.style.display = "flex";
 
-  closeBtn.onclick = () => (popup.style.display = "none");
-  window.onclick = (e) => {
-    if (e.target === popup) popup.style.display = "none";
-  };
+  // Đóng popup
+  popup
+    .querySelector(".close-btn")
+    ?.addEventListener("click", () => (popup.style.display = "none"), {
+      once: true,
+    });
 
-  const bookBtn = document.getElementById("popupBookBtn");
-  bookBtn.onclick = () => {
-    localStorage.setItem("selectedRoute", JSON.stringify(item));
-    window.location.href = "datve.html";
-  };
+  popup.addEventListener(
+    "click",
+    (e) => {
+      if (e.target === popup) popup.style.display = "none";
+    },
+    { once: true }
+  );
 
+  // XÓA
   const deleteBtn = document.getElementById("popupDeleteBtn");
-  if (deleteBtn) {
-    deleteBtn.onclick = () => {
-      if (confirm("Bạn có chắc muốn xóa chuyến đi này không?")) {
-        repo.splice(index, 1);
-        localStorage.setItem("repo_tuyen_xe", JSON.stringify(repo));
-        loadServices();
-        popup.style.display = "none";
-        showToast("Đã xóa chuyến đi thành công!", "success");
-      }
-    };
-  }
+  deleteBtn?.addEventListener(
+    "click",
+    () => {
+      const newRepo = repo.filter((r) => r.id !== item.id);
+      localStorage.setItem("repo_tuyen_xe", JSON.stringify(newRepo));
+
+      popup.style.display = "none";
+      loadServices();
+      showToast("Đã xóa chuyến đi thành công!", "success");
+    },
+    { once: true }
+  );
 }
 
 function calculateRevenue() {

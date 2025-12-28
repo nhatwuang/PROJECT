@@ -142,7 +142,7 @@ function displayResults(results) {
       li.className = "route-item";
 
       const imageHTML = route.image
-        ? `<img src="${route.image}" style="width:80px; height:60px; object-fit:cover; border-radius:5px; margin-right:15px;">`
+        ? `<img src="${route.image}" style="width:120px; height:100%; object-fit:cover; border-radius:5px; margin-right:15px;">`
         : "";
 
       const vehicleType = route.vehicle || "Xe Khách";
@@ -163,7 +163,7 @@ function displayResults(results) {
                 data-date="${route.date}" 
                 data-price="${route.price}"
                 data-vehicle="${vehicleType}">
-            🎫 ĐẶT VÉ
+            ĐẶT VÉ
         </button>
       `;
       resultsList.appendChild(li);
@@ -254,9 +254,9 @@ function displayAccountInfo() {
   accountInfoContainer.innerHTML = `
     <div class="account-info-item">
       <h3>Tài khoản của bạn</h3>
-
+      <img src="images/anh.jpg" alt="Avatar">
       <p><strong>Tên tài khoản:</strong> ${username}</p>
-      <p><strong>Email:</strong> ${localStorage.getItem("u.email")}</p>
+      <p><strong>Email:</strong> ${username}</p>
     </div>
   `;
 }
@@ -295,11 +295,7 @@ function displayBookedTickets() {
           </div>
           <div style="display:flex;gap:8px; margin-top:12px;">
             <button class="cancel-button" data-index="${index}">Hủy Vé</button>
-            <button class="write-review-btn" data-from="${
-              booking.route.from
-            }" data-to="${booking.route.to}" data-date="${
-        booking.route.date
-      }">Viết nhận xét</button>
+            
           </div>
       `;
       ticketsListElement.appendChild(ticketDiv);
@@ -367,7 +363,7 @@ function displayPopularRoutes() {
             item.image || "images/default-vehicle.jpg"
           }" alt="Xe">
           <div class="service-text">
-            <strong>Từ : ${item.from} đến Đến : s${item.to}</strong>
+            <strong>Từ : ${item.from} → Đến : ${item.to}</strong>
             <p>${item.vehicle || "Xe Khách"} • ${
         item.seatsAvailable || 0
       } ghế</p>
@@ -694,9 +690,71 @@ function initChat() {
   const input = document.getElementById("chatInput");
   const box = document.getElementById("chatMessages");
   if (!toggle || !win) return;
+
+  function getEmail() {
+    let email = localStorage.getItem("chatEmail") || "";
+    if (!email) {
+      email = (
+        prompt(
+          "Vui lòng nhập email để bắt đầu trò chuyện (để nhận trả lời):"
+        ) || ""
+      ).trim();
+      if (!email) return "";
+      localStorage.setItem("chatEmail", email);
+    }
+    return email;
+  }
+
+  function loadConvs() {
+    try {
+      const a = JSON.parse(localStorage.getItem("conversations") || "[]");
+      return Array.isArray(a) ? a : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function saveConvs(arr) {
+    localStorage.setItem("conversations", JSON.stringify(arr));
+  }
+
   function renderChat() {
-    const arr = JSON.parse(localStorage.getItem("site_chats") || "[]");
-    box.innerHTML = arr
+    const email = localStorage.getItem("chatEmail") || "";
+    if (!email) {
+      box.innerHTML =
+        '<div style="padding:8px">Vui lòng mở chat và nhập email để bắt đầu.</div>';
+      return;
+    }
+    const convs = loadConvs();
+    const conv = convs.find((c) => c.email === email);
+    const site = JSON.parse(localStorage.getItem("site_chats") || "[]");
+    const siteForEmail = site.filter((s) => !s.email || s.email === email);
+
+    const convMessages = (conv && conv.messages) || [];
+    const merged = convMessages
+      .map((m) => ({
+        sender: m.sender === "user" ? "user" : "support",
+        text: m.text,
+        ts: m.ts || 0,
+      }))
+      .concat(
+        siteForEmail.map((s) => ({
+          sender: s.sender === "user" ? "user" : "support",
+          text: s.text,
+          ts: s.ts || 0,
+        }))
+      );
+
+    const seen = new Set();
+    const mergedUnique = merged
+      .sort((a, b) => (a.ts || 0) - (b.ts || 0))
+      .filter((m) => {
+        const key = `${m.ts}|${m.sender}|${m.text}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+    box.innerHTML = mergedUnique
       .map(
         (m) =>
           `<div class="chat-message ${m.sender === "user" ? "user" : ""}">${
@@ -706,35 +764,71 @@ function initChat() {
       .join("");
     box.scrollTop = box.scrollHeight;
   }
+
   toggle.addEventListener("click", () => {
+    const email = getEmail();
+    if (!email) return;
     win.style.display = "flex";
     input.focus();
     renderChat();
+    // mark conversation as read for user
+    try {
+      const convs = loadConvs();
+      const idx = convs.findIndex((c) => c.email === email);
+      if (idx !== -1) {
+        convs[idx].unreadByUser = false;
+        saveConvs(convs);
+      }
+    } catch (e) {}
   });
+
   closeBtn &&
     closeBtn.addEventListener("click", () => (win.style.display = "none"));
+
   send &&
     send.addEventListener("click", () => {
       const text = input.value.trim();
       if (!text) return;
-      const arr = JSON.parse(localStorage.getItem("site_chats") || "[]");
-      arr.push({ sender: "user", text, ts: Date.now() });
-      localStorage.setItem("site_chats", JSON.stringify(arr));
+      const ts = Date.now();
+      const email = localStorage.getItem("chatEmail");
+
+      // push to site_chats (legacy)
+      const site = JSON.parse(localStorage.getItem("site_chats") || "[]");
+      site.push({ sender: "user", text, ts, email });
+      localStorage.setItem("site_chats", JSON.stringify(site));
+
+      // push to conversations so admin sees it
+      const convs = loadConvs();
+      let conv = convs.find((c) => c.email === email);
+      if (!conv) {
+        conv = {
+          id: `conv_${email}_${ts}`,
+          email,
+          messages: [],
+          lastTs: ts,
+          unreadByBusiness: true,
+          unreadByUser: false,
+        };
+        convs.push(conv);
+      }
+      conv.messages.push({ sender: "user", role: "user", text, ts });
+      conv.lastTs = ts;
+      conv.unreadByBusiness = true;
+      saveConvs(convs);
+
       input.value = "";
       renderChat();
-      setTimeout(() => {
-        arr.push({
-          sender: "support",
-          text: "Cảm ơn bạn, chúng tôi sẽ trả lời sớm.",
-        });
-        localStorage.setItem("site_chats", JSON.stringify(arr));
-        renderChat();
-      }, 800);
     });
+
   input &&
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         send.click();
       }
     });
+
+  // poll for updates while open so admin replies appear quickly
+  const poll = setInterval(() => {
+    if (win.style.display === "flex") renderChat();
+  }, 1000);
 }
