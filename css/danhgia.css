@@ -498,7 +498,7 @@ nav ul li a.active {
   z-index: 1001;
 }
 .chat-window #chatCloseAdmin:hover {
-  background: rgba(0,0,0,0.04);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .chat-messages {
