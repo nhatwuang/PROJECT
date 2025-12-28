@@ -104,6 +104,259 @@
       </section>
     </main>
 
+    <!-- Admin chat widget (conversations) -->
+    <div
+      class="admin-chat-widget"
+      style="position: fixed; right: 20px; bottom: 20px; z-index: 9999"
+    >
+      <button
+        id="adminChatToggle"
+        aria-label="Mở quản lý chat"
+        style="
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          background: #00532c;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          font-size: 20px;
+        "
+      >
+        💬
+      </button>
+
+      <div
+        id="adminChatWindow"
+        class="chat-window"
+        role="dialog"
+        aria-label="Hộp thoại chat doanh nghiệp"
+        style="
+          display: none;
+          width: 320px;
+          height: 420px;
+          background: #fff;
+          border: 1px solid #ddd;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+          border-radius: 8px;
+          overflow: hidden;
+          margin-bottom: 12px;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+        "
+      >
+        <!-- compact chat-like header (keeps convoSearch & refresh) -->
+        <div
+          class="chat-header"
+          style="
+            display: block;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: #f5f7fb;
+            border-bottom: 1px solid #eee;
+          "
+        >
+          <div style="display: flex; flex-direction: column">
+            <strong style="font-size: 14px">Hỗ trợ - Doanh nghiệp</strong>
+            <div
+              id="convoHeader"
+              style="font-size: 12px; color: #666; margin-top: 4px"
+            >
+              Chưa chọn cuộc hội thoại
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px; align-items: center">
+            <input
+              id="convoSearch"
+              placeholder="Tìm email..."
+              style="
+                padding: 6px 8px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                min-width: 120px;
+              "
+            />
+            <button
+              id="refreshConvos"
+              title="Làm mới"
+              style="
+                padding: 6px 8px;
+                border-radius: 6px;
+                border: none;
+                background: #eee;
+              "
+            >
+              ⟳
+            </button>
+            <button
+              id="openConvoList"
+              title="Danh sách"
+              style="
+                padding: 6px 8px;
+                border-radius: 6px;
+                border: none;
+                background: #eee;
+              "
+            >
+              ☰
+            </button>
+          </div>
+        </div>
+
+        <button
+          id="chatCloseAdmin"
+          aria-label="Đóng"
+          style="
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 6px 8px;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            z-index: 1;
+          "
+        >
+          &times;
+        </button>
+
+        <!-- messages area (main) -->
+        <div
+          class="chat-messages"
+          id="convoMessages"
+          aria-live="polite"
+          style="flex: 1; overflow: auto; padding: 12px; background: #fff"
+        ></div>
+
+        <!-- input area -->
+        <div
+          class="chat-input"
+          style="
+            padding: 8px;
+            border-top: 1px solid #f1f1f1;
+            display: flex;
+            gap: 8px;
+          "
+        >
+          <input
+            id="convoReplyInput"
+            placeholder="Gõ tin nhắn..."
+            style="
+              flex: 1;
+              padding: 8px;
+              border-radius: 6px;
+              border: 1px solid #ccc;
+            "
+          />
+          <button
+            id="convoReplySend"
+            style="
+              padding: 8px 12px;
+              border-radius: 6px;
+              border: none;
+              background: #00532c;
+              color: #fff;
+            "
+          >
+            Gửi
+          </button>
+        </div>
+
+        <!-- hidden slide-out list (keeps original convoListItems content) -->
+        <div
+          id="convoListItems"
+          style="
+            display: none;
+            position: absolute;
+            right: 8px;
+            bottom: 64px;
+            width: 320px;
+            height: 360px;
+            overflow: auto;
+            border: 1px solid #eee;
+            background: #fff;
+            border-radius: 6px;
+            padding: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            z-index: 10000;
+          "
+        ></div>
+      </div>
+    </div>
+
+    <script>
+      // toggle admin chat window and compact conversation list
+      (function () {
+        const btn = document.getElementById("adminChatToggle");
+        const win = document.getElementById("adminChatWindow");
+        const listBox = document.getElementById("convoListItems");
+        const openList = document.getElementById("openConvoList");
+        const closeBtn = document.getElementById("chatCloseAdmin");
+        const closeIfNeeded = (e) => {
+          if (!win || !btn) return;
+          if (!win.contains(e.target) && e.target !== btn)
+            win.style.display = "none";
+          if (listBox) listBox.style.display = "none";
+        };
+
+        if (btn)
+          btn.addEventListener("click", () => {
+            if (!win) return;
+            const willOpen = !(
+              win.style.display === "flex" || win.style.display === "block"
+            );
+            win.style.display = willOpen ? "flex" : "none";
+            if (willOpen) {
+              try {
+                if (
+                  window._adminFeedback &&
+                  typeof window._adminFeedback.renderConversationsList ===
+                    "function"
+                ) {
+                  window._adminFeedback.renderConversationsList();
+                }
+                const s = document.getElementById("convoSearch");
+                if (s) s.focus();
+              } catch (e) {}
+            } else {
+              if (listBox) listBox.style.display = "none";
+            }
+          });
+
+        // open/hide convo list (overlay)
+        if (openList && listBox) {
+          openList.addEventListener("click", (e) => {
+            e.stopPropagation();
+            listBox.style.display =
+              listBox.style.display === "block" ? "none" : "block";
+            if (listBox.style.display === "block") {
+              try {
+                if (
+                  window._adminFeedback &&
+                  typeof window._adminFeedback.renderConversationsList ===
+                    "function"
+                )
+                  window._adminFeedback.renderConversationsList();
+              } catch (e) {}
+            }
+          });
+        }
+
+        // close internal close button
+        if (closeBtn)
+          closeBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (win) win.style.display = "none";
+            if (listBox) listBox.style.display = "none";
+          });
+
+        document.addEventListener("click", closeIfNeeded);
+      })();
+    </script>
+
     <!-- Footer (from business.html) -->
     <footer class="footer-business">
       <div class="footer-container">

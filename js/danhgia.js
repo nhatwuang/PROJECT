@@ -299,6 +299,364 @@
     bulkDeleteBtn && bulkDeleteBtn.addEventListener("click", bulkDelete);
   });
 
+  // Conversations helpers
+  function loadConversations() {
+    try {
+      const arr = JSON.parse(localStorage.getItem("conversations") || "[]");
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function saveConversations(arr) {
+    localStorage.setItem("conversations", JSON.stringify(arr));
+  }
+
+  function renderConversationsList(search = "") {
+    const box = document.getElementById("convoListItems");
+    if (!box) return;
+    const convs = loadConversations().sort(
+      (a, b) => (b.lastTs || 0) - (a.lastTs || 0)
+    );
+    const filtered = search
+      ? convs.filter((c) =>
+          (c.email || "").toLowerCase().includes(search.toLowerCase())
+        )
+      : convs;
+    if (filtered.length === 0) {
+      box.innerHTML = "<p>Không có cuộc hội thoại.</p>";
+      return;
+    }
+    box.innerHTML = filtered
+      .map(
+        (c) => `
+      <div class="convo-item" data-id="${
+        c.id
+      }" style="padding:8px; border-radius:6px; border:1px solid #eee; cursor:pointer; ${
+          c.unreadByBusiness ? "background:#eef6ff;" : ""
+        }">
+        <strong>${c.email || "Khách ẩn danh"}</strong>
+        <div style="font-size:12px;color:#666">${
+          c.lastTs ? new Date(c.lastTs).toLocaleString() : ""
+        }</div>
+      </div>
+    `
+      )
+      .join("");
+
+    box
+      .querySelectorAll(".convo-item")
+      .forEach((el) =>
+        el.addEventListener("click", () => renderConversation(el.dataset.id))
+      );
+  }
+
+  let currentConvoId = null;
+  function renderConversation(id) {
+    const convs = loadConversations();
+    const conv = convs.find((c) => c.id === id);
+    const header = document.getElementById("convoHeader");
+    const msgsBox = document.getElementById("convoMessages");
+    const delBtn = document.getElementById("convoDelete");
+    const searchEl = document.getElementById("convoSearch");
+
+    if (!id || !conv || !msgsBox) {
+      // no conversation selected: show search, refresh, list buttons, disable delete, clear messages
+      if (searchEl) searchEl.style.display = "block";
+      const refreshBtn = document.getElementById("refreshConvos");
+      if (refreshBtn) refreshBtn.style.display = "block";
+      const listBtn = document.getElementById("openConvoList");
+      if (listBtn) listBtn.style.display = "block";
+      if (delBtn) {
+        delBtn.disabled = true;
+        delBtn.title = "Chưa chọn cuộc hội thoại";
+      }
+      if (msgsBox) msgsBox.innerHTML = "";
+      currentConvoId = null;
+      return;
+    }
+
+    // hide search, refresh, list buttons when a conversation is open
+    if (searchEl) searchEl.style.display = "none";
+    const refreshBtn = document.getElementById("refreshConvos");
+    if (refreshBtn) refreshBtn.style.display = "none";
+    const listBtn = document.getElementById("openConvoList");
+    if (listBtn) listBtn.style.display = "none";
+
+    currentConvoId = id;
+    if (header)
+      header.innerHTML = `<strong>${
+        conv.email || "Khách ẩn danh"
+      }</strong> <small style="color:#555; margin-left:8px">${new Date(
+        conv.lastTs
+      ).toLocaleString()}</small>`;
+    msgsBox.innerHTML = (conv.messages || [])
+      .map((m) => {
+        const who = m.sender === "user" ? "Khách" : "Doanh nghiệp";
+        const time = m.ts
+          ? ` <small style="color:#666; font-size:11px">${new Date(
+              m.ts
+            ).toLocaleTimeString()}</small>`
+          : "";
+        return `<div style="padding:6px; margin-bottom:6px; border-radius:6px; background:${
+          m.sender === "user" ? "#fff" : "#e8f2ff"
+        }; border:1px solid #eee;"><strong>${who}</strong>${time}<div style="margin-top:6px">${
+          m.text
+        }</div></div>`;
+      })
+      .join("");
+
+    // auto-scroll to newest and focus reply input
+    try {
+      msgsBox.scrollTop = msgsBox.scrollHeight;
+      const replyInputEl = document.getElementById("convoReplyInput");
+      if (replyInputEl) replyInputEl.focus();
+    } catch (e) {}
+
+    // mark read
+    const idx = convs.findIndex((c) => c.id === id);
+    if (idx !== -1) {
+      convs[idx].unreadByBusiness = false;
+      saveConversations(convs);
+      renderConversationsList(
+        document.getElementById("convoSearch")?.value || ""
+      );
+    }
+    // enable delete button with contextual title
+    if (delBtn) {
+      delBtn.disabled = false;
+      delBtn.title = `Xóa cuộc hội thoại của ${conv.email || "Khách ẩn danh"}`;
+    }
+  }
+
+  function sendBusinessMessageToCurrent(text) {
+    if (!currentConvoId) return alert("Chưa chọn cuộc hội thoại");
+    const convs = loadConversations();
+    const idx = convs.findIndex((c) => c.id === currentConvoId);
+    if (idx === -1) return;
+    const ts = Date.now();
+    convs[idx].messages.push({
+      sender: "business",
+      role: "business",
+      text,
+      ts,
+    });
+    convs[idx].lastTs = ts;
+    convs[idx].unreadByUser = true;
+    saveConversations(convs);
+
+    // also add a lightweight message to 'site_chats' so older widgets or pages can pick it up
+    try {
+      const site = JSON.parse(localStorage.getItem("site_chats") || "[]");
+      site.push({
+        sender: "support",
+        text,
+        ts,
+        email: convs[idx].email,
+        convoId: convs[idx].id,
+      });
+      localStorage.setItem("site_chats", JSON.stringify(site));
+    } catch (e) {
+      console.warn("Failed to push to site_chats", e);
+    }
+
+    renderConversation(currentConvoId);
+    renderConversationsList(
+      document.getElementById("convoSearch")?.value || ""
+    );
+    // ensure reply input focused and scrolled to newest
+    try {
+      const replyInputEl = document.getElementById("convoReplyInput");
+      const msgsBox = document.getElementById("convoMessages");
+      if (replyInputEl) replyInputEl.focus();
+      if (msgsBox) msgsBox.scrollTop = msgsBox.scrollHeight;
+    } catch (e) {}
+  }
+
+  function deleteConversation(id) {
+    if (!id) return alert("Chưa chọn cuộc hội thoại");
+    const convsAll = loadConversations();
+    const conv = convsAll.find((c) => c.id === id);
+    if (!conv) return alert("Cuộc hội thoại không tồn tại");
+    const cnt = (conv.messages || []).length;
+    const email = conv.email || "Khách ẩn danh";
+    if (
+      !confirm(
+        `Xóa cuộc hội thoại của ${email}? (${cnt} tin)\nHành động này sẽ xóa cả tin nhắn liên quan.`
+      )
+    )
+      return;
+    const convs = convsAll.filter((c) => c.id !== id);
+    saveConversations(convs);
+
+    // remove related site_chats entries (by convoId or email)
+    try {
+      const site = JSON.parse(localStorage.getItem("site_chats") || "[]");
+      const filtered = site.filter(
+        (s) => !(s.convoId === id || (conv.email && s.email === conv.email))
+      );
+      localStorage.setItem("site_chats", JSON.stringify(filtered));
+    } catch (e) {}
+
+    currentConvoId = null;
+    const msgsBox = document.getElementById("convoMessages");
+    if (msgsBox) msgsBox.innerHTML = "";
+
+    const delBtn = document.getElementById("convoDelete");
+    if (delBtn) {
+      delBtn.disabled = true;
+      delBtn.title = "Chưa chọn cuộc hội thoại";
+    }
+
+    // show search, refresh, list buttons again after deletion
+    const sEl = document.getElementById("convoSearch");
+    if (sEl) sEl.style.display = "block";
+    const refreshBtn = document.getElementById("refreshConvos");
+    if (refreshBtn) refreshBtn.style.display = "block";
+    const listBtn = document.getElementById("openConvoList");
+    if (listBtn) listBtn.style.display = "block";
+
+    renderConversationsList(
+      document.getElementById("convoSearch")?.value || ""
+    );
+    alert("Đã xóa cuộc hội thoại.");
+  }
+
+  function exportConversationsCSV() {
+    const convs = loadConversations();
+    const headers = ["convoId", "email", "sender", "text", "ts"];
+    // build rows safely
+    const rows = convs.flatMap((c) =>
+      (c.messages || []).map((m) =>
+        [
+          `"${c.id}"`,
+          `"${(c.email || "").replace(/"/g, '""')}"`,
+          `"${(m.sender || "").replace(/"/g, '""')}"`,
+          `"${(m.text || "").replace(/"/g, '""')}"`,
+          `"${m.ts || ""}"`,
+        ].join(",")
+      )
+    );
+
+    const csv = [headers.join(",")].concat(rows).join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "conversations.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // helper: send business message to an arbitrary email (used by quick-send UI)
+  function sendBusinessMessageToEmail(email, text) {
+    if (!email || !text) return false;
+    const convs = loadConversations();
+    let conv = convs.find((c) => c.email === email);
+    const ts = Date.now();
+    if (!conv) {
+      conv = {
+        id: `conv_${email}_${ts}`,
+        email,
+        messages: [],
+        lastTs: ts,
+        unreadByBusiness: false,
+        unreadByUser: true,
+      };
+      convs.push(conv);
+    }
+    conv.messages.push({ sender: "business", role: "business", text, ts });
+    conv.lastTs = ts;
+    conv.unreadByUser = true;
+    // save conversations
+    saveConversations(convs);
+    // also push to legacy site_chats
+    try {
+      const site = JSON.parse(localStorage.getItem("site_chats") || "[]");
+      site.push({
+        sender: "support",
+        text,
+        ts,
+        email: conv.email,
+        convoId: conv.id,
+      });
+      localStorage.setItem("site_chats", JSON.stringify(site));
+    } catch (e) {}
+    // refresh UI
+    try {
+      renderConversationsList(
+        document.getElementById("convoSearch")?.value || ""
+      );
+    } catch (e) {}
+    return true;
+  }
+
+  // bind conversation UI on DOM ready
+  document.addEventListener("DOMContentLoaded", () => {
+    const convoSearch = document.getElementById("convoSearch");
+    const refreshConvos = document.getElementById("refreshConvos");
+    const convoReplySend = document.getElementById("convoReplySend");
+    const convoReplyInput = document.getElementById("convoReplyInput");
+    const convoDelete = document.getElementById("convoDelete");
+    if (convoDelete) {
+      convoDelete.disabled = true;
+      convoDelete.title = "Chưa chọn cuộc hội thoại";
+    }
+
+    convoSearch &&
+      convoSearch.addEventListener("input", () =>
+        renderConversationsList(convoSearch.value)
+      );
+    refreshConvos &&
+      refreshConvos.addEventListener("click", () =>
+        renderConversationsList(convoSearch?.value || "")
+      );
+    convoReplySend &&
+      convoReplySend.addEventListener("click", () => {
+        const text = convoReplyInput.value.trim();
+        if (!text) return;
+        sendBusinessMessageToCurrent(text);
+        convoReplyInput.value = "";
+      });
+    // send on Enter (Shift+Enter for newline)
+    convoReplyInput &&
+      convoReplyInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          convoReplySend && convoReplySend.click();
+        }
+      });
+
+    convoDelete &&
+      convoDelete.addEventListener("click", () => {
+        if (!currentConvoId) return alert("Chưa chọn cuộc hội thoại");
+        deleteConversation(currentConvoId);
+      });
+
+    // auto refresh to pick up new messages from customers
+    setInterval(() => {
+      renderConversationsList(
+        document.getElementById("convoSearch")?.value || ""
+      );
+      if (currentConvoId) renderConversation(currentConvoId);
+    }, 2000);
+
+    renderConversationsList();
+  });
+
   // expose for debugging (optional)
-  window._adminFeedback = { renderAdminReviews, loadFeedbacks, saveFeedbacks };
+  window._adminFeedback = {
+    renderAdminReviews,
+    loadFeedbacks,
+    saveFeedbacks,
+    renderConversationsList,
+    loadConversations,
+    saveConversations,
+    sendBusinessMessageToCurrent,
+    deleteConversation,
+    exportConversationsCSV,
+  };
 })();
